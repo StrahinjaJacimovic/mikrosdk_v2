@@ -163,6 +163,7 @@ foreach( $defFile in $defFiles ) {
                                                  -Configuration $configuration
                 if ( $LASTEXITCODE -ne 0 ) {
                     Write-Host "`n`nConfiguring $mcu FAILED!!!" -ForegroundColor Red
+                    Write-Host $memakeOutput
                 }
                 # Utils-CheckForErrors -mcu $mcuName `
                                     #  -buildLogFile $buildLogFile `
@@ -177,7 +178,8 @@ foreach( $defFile in $defFiles ) {
                                     #  -outDirPath $outDir `
                                     #  -build
                 if ( $LASTEXITCODE -ne 0 ) {
-                    Write-Host "`nBuilding $mcu FAILED!!!" -ForegroundColor Red
+                    Write-Host "`n`nBuilding $mcu FAILED!!!" -ForegroundColor Red
+                    Write-Host $memakeOutput
                 }
                 ## Log output
                 # Utils-RecursionLog -Mcu $mcuName -LogFile $buildLogFile
