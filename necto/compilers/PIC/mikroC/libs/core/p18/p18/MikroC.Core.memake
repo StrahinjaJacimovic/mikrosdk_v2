@@ -1,0 +1,17 @@
+{
+    "alias": "MikroC.Core",
+    "arch": "P18",
+    "binaries": [
+        "lib_core.a"
+    ],
+    "defines": [
+    ],
+    "dependencies": [
+    ],
+    "global_visibility": true,
+    "include_paths": [
+    ],
+    "selector": "(^PIC18C.+$)|(^PIC18F[124-9][2-7][^KQ].+$)|(^PIC18LF[124-9][2-7][^KQ].+$)|(^PIC18F[124-9][2-7]K[0-35-9].+$)|(^PIC18LF[124-9][2-7]K[0-35-9].+$)|(^PIC18F[124-9][2-7]K4[1-9]$)|(^PIC18LF[124-9][2-7]K4[1-9]$)|(^PIC18F[24][45][28]$)",
+    "toolchain": "mikrocpic",
+    "version": "1.0.0"
+}

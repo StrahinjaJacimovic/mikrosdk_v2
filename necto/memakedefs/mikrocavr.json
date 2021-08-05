@@ -1,0 +1,22 @@
+{
+    "name": "mikroC AI for AVR",
+    "version": "1.0.0",
+    "id": "mikrocavr",
+    "language": "MikroC",
+    "command": "compilers/AVR/mikroCAvr",
+    "options": {
+        "build": "-jcom -DL -NRL -p${MCU} -b${OUTPUT_DIR} -fo${OSC} ${COMPILER_FLAGS} ${DEFINES} ${SEARCH_PATHS} ${MCU_CFG_FILE} ${INCLUDE_PATHS} -out ${BINARY_NAME} ${SOURCE} ${DEP_BINARIES}",
+        "link": "-p${MCU} -NRL -b${OUTPUT_DIR} -fo${OSC} ${LINKER_FLAGS} ${SEARCH_PATHS} ${MCU_CFG_FILE} -out ${TARGET_NAME} ${BINARIES} ${DEP_BINARIES}",
+        "link.library": "-ARH -NRL -b${OUTPUT_DIR} ${SEARCH_PATHS} -out ${TARGET_NAME} ${BINARIES}"
+    },
+    "suffixes": {
+        "binary": "mcl",
+        "target": "hex",
+        "source": "c"
+    },
+    "paths": {
+        "delays": "delays",
+        "defs": "Defs",
+        "libs": "libs"
+    }
+}

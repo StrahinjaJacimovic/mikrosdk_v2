@@ -1,0 +1,17 @@
+{
+    "alias": "MikroC.Core",
+    "arch": "P16",
+    "binaries": [
+        "lib_core.a"
+    ],
+    "defines": [
+    ],
+    "dependencies": [
+    ],
+    "global_visibility": true,
+    "include_paths": [
+    ],
+    "selector": "(^PIC10F3.+$)|(^PIC10LF3.+$)|(^PIC12C6.+$)|(^PIC12CE6.+$)|(^PIC12F[2-9].+$)|(^PIC12HV[67].+$)|(^PIC16C.+$)|(^PIC16F[2-9].+$)|(^PIC16LF[2-9].+$)|(^PIC16HV[67].+$)",
+    "toolchain": "mikrocpic",
+    "version": "1.0.0"
+}

@@ -1,0 +1,18 @@
+{
+    "uid": "mikrocpic",
+    "name": "mikroC AI for PIC",
+    "version": "1.1.1",
+    "vendor": "MikroElektronika",
+    "defsFolder": "PIC/mikroC/Defs",
+    "icon": "mikroC_pic.png",
+    "buy_link": "https://www.mikroe.com/necto?license=architecture:2,language:1,license_type:1,license_usage:5",
+    "desc": "mikroC AI for PIC is a full-featured ANSI C compiler. It offers a unique mechanism to easily use libraries in your project, select the libraries you need, and they are instantly available in your code — no need for dozens of #include directives. You can also install and manage third-party libraries using our package manager and library manager. Select the libraries you need for your project by checking the box.",
+    "language": "mikroC",
+    "lid" : "45",
+    "supported-families": [
+        "PIC18",
+        "PIC16",
+        "PIC12",
+        "PIC10"
+    ]
+}
