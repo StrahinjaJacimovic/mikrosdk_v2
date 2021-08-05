@@ -32,7 +32,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: Changde directory to scripts
         shell: pwsh
-        run: cd ./scripts
+        run: Set-Location scripts
       
       # Runs a single command using the runners shell
       - name: Start script
