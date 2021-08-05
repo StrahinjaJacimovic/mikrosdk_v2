@@ -12,6 +12,7 @@ param (
 
 if ( $(Get-Location) -notmatch 'scripts' ) {
     Set-Location scripts
+    Write-Host $(Get-Location)
 }
 
 . '.\utility.ps1'
