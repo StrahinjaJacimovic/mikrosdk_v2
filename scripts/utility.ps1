@@ -88,9 +88,9 @@ Function Memake-Configure {
     )
 
     if ($Toolchain -eq 'mikrocarm') {
-        $MikroCCmd = Join-Path -Path "../necto/compilers/ARM/mikroC/mikroCARM" -ChildPath "."
+        $MikroCCmd = Join-Path -Path $Global:scriptLocationParent -ChildPath "necto/compilers/ARM/mikroC/mikroCARM.exe"
     } elseif ($Toolchain -eq 'mikrocpic') {
-        $MikroCCmd = Join-Path -Path "../necto/compilers/PIC/mikroC/mikroCPIC1618" -ChildPath "."
+        $MikroCCmd = Join-Path -Path $Global:scriptLocationParent -ChildPath "necto/compilers/PIC/mikroC/mikroCPIC1618.exe"
     } elseif ($Toolchain -eq 'mikrocpic32') {
         $MikroCCmd = Join-Path -Path "../necto/compilers/PIC32/mikroC/mikroCPIC32" -ChildPath "."
     } elseif ($Toolchain -eq 'mikrocdspic') {
