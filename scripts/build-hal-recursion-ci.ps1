@@ -10,6 +10,10 @@ param (
     [Switch]$customParams = $false
 )
 
+if ( $(Get-Location) -notmatch 'scripts' ) {
+    Set-Location scripts
+}
+
 . '.\utility.ps1'
 
 if ( $customParams ) {
