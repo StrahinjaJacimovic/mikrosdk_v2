@@ -28,7 +28,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: Signal start
         run: echo Script started!
-      
+
       # Runs a single command using the runners shell
       - name: Start script
         shell: pwsh
