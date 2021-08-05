@@ -86,7 +86,7 @@ $mcuDefinitions = Get-ChildItem -Path $(Join-Path -Path $PSScriptRoot `
 
 # -----------------------------------------------------------------------------
 # Set output paths.
-$srcDir = Join-Path -Path $Global:scriptLocation -ChildPath '..'
+$srcDir = Split-Path -Path $Global:scriptLocation -Parent -Resolve
 $rootOutDir = Join-Path -Path $srcDir -ChildPath ../build/$Global:buildOut
 # -----------------------------------------------------------------------------
 
