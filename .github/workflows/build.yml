@@ -33,5 +33,5 @@ jobs:
       - name: Run a multi-line script
         shell: pwsh
         run: |
-          - Set-Location ./scripts
+          - cd ./scripts
           - ./build-hal-recursion-ci.ps1 -coreSelect "PIC18"
