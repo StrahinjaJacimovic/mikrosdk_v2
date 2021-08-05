@@ -161,19 +161,24 @@ foreach( $defFile in $defFiles ) {
                                                  -Freq $freq `
                                                  -Toolchain $toolchain `
                                                  -Configuration $configuration
-                Utils-CheckForErrors -mcu $mcuName `
-                                     -buildLogFile $buildLogFile `
-                                     -errorLogFile $errorLogFile `
-                                     -outDirPath $outDir
+                if ( $LASTEXITCODE -ne 0 ) {
+                    Write-Host "`n`nConfiguring $mcu FAILED!!!" -ForegroundColor Red
+                }
+                # Utils-CheckForErrors -mcu $mcuName `
+                                    #  -buildLogFile $buildLogFile `
+                                    #  -errorLogFile $errorLogFile `
+                                    #  -outDirPath $outDir
 
                 ## Build SDK
                 $memakeOutput = Memake-BuildAll -OutDir $outDir
-                Utils-CheckForErrors -mcu $mcuName `
-                                     -buildLogFile $buildLogFile `
-                                     -errorLogFile $errorLogFile `
-                                     -outDirPath $outDir `
-                                     -build
-
+                # Utils-CheckForErrors -mcu $mcuName `
+                                    #  -buildLogFile $buildLogFile `
+                                    #  -errorLogFile $errorLogFile `
+                                    #  -outDirPath $outDir `
+                                    #  -build
+                if ( $LASTEXITCODE -ne 0 ) {
+                    Write-Host "`nBuilding $mcu FAILED!!!" -ForegroundColor Red
+                }
                 ## Log output
                 # Utils-RecursionLog -Mcu $mcuName -LogFile $buildLogFile
                 # Remove-Item -Path $outDir -Recurse
