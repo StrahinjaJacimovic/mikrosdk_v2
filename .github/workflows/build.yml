@@ -28,13 +28,8 @@ jobs:
       # Runs a single command using the runners shell
       - name: Signal start
         run: echo Script started!
-
-      # Runs a single command using the runners shell
-      - name: Changde directory to scripts
-        shell: pwsh
-        run: Set-Location scripts
       
       # Runs a single command using the runners shell
       - name: Start script
         shell: pwsh
-        run: ./build-hal-recursion-ci.ps1 -coreSelect "PIC18"
+        run: ./scripts/build-hal-recursion-ci.ps1 -coreSelect "PIC18"
