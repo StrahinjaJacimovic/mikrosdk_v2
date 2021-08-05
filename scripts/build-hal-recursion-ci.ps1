@@ -175,8 +175,8 @@ foreach( $defFile in $defFiles ) {
                                      -build
 
                 ## Log output
-                Utils-RecursionLog -Mcu $mcuName -LogFile $buildLogFile
-                Remove-Item -Path $outDir -Recurse
+                # Utils-RecursionLog -Mcu $mcuName -LogFile $buildLogFile
+                # Remove-Item -Path $outDir -Recurse
 
             }
 
