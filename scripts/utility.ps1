@@ -88,20 +88,20 @@ Function Memake-Configure {
     )
 
     if ($Toolchain -eq 'mikrocarm') {
-        $CompilerLibsPath = Utils-JoinPath -Path "../necto/compilers/ARM/mikroC/" -ChildPath "libs"
-        $MikroCCmd = Utils-JoinPath -Path "../necto/compilers/ARM/mikroC/mikroCARM" -ChildPath "."
+        $CompilerLibsPath = Join-Path -Path "../necto/compilers/ARM/mikroC/" -ChildPath "libs"
+        $MikroCCmd = Join-Path -Path "../necto/compilers/ARM/mikroC/mikroCARM" -ChildPath "."
     } elseif ($Toolchain -eq 'mikrocpic') {
-        $CompilerLibsPath = Utils-JoinPath -Path "../necto/compilers/PIC/mikroC/" -ChildPath "libs"
-        $MikroCCmd = Utils-JoinPath -Path "../necto/compilers/PIC/mikroC/mikroCPIC1618" -ChildPath "."
+        $CompilerLibsPath = Join-Path -Path "../necto/compilers/PIC/mikroC/" -ChildPath "libs"
+        $MikroCCmd = Join-Path -Path "../necto/compilers/PIC/mikroC/mikroCPIC1618" -ChildPath "."
     } elseif ($Toolchain -eq 'mikrocpic32') {
-        $CompilerLibsPath = Utils-JoinPath -Path "../necto/compilers/PIC32/mikroC/" -ChildPath "libs"
-        $MikroCCmd = Utils-JoinPath -Path "../necto/compilers/PIC32/mikroC/mikroCPIC32" -ChildPath "."
+        $CompilerLibsPath = Join-Path -Path "../necto/compilers/PIC32/mikroC/" -ChildPath "libs"
+        $MikroCCmd = Join-Path -Path "../necto/compilers/PIC32/mikroC/mikroCPIC32" -ChildPath "."
     } elseif ($Toolchain -eq 'mikrocdspic') {
-        $CompilerLibsPath = Utils-JoinPath -Path "../necto/compilers/dsPIC/mikroC/" -ChildPath "libs"
-        $MikroCCmd = Utils-JoinPath -Path "../necto/compilers/dsPIC/mikroC/mikroCdsPIC" -ChildPath "."
+        $CompilerLibsPath = Join-Path -Path "../necto/compilers/dsPIC/mikroC/" -ChildPath "libs"
+        $MikroCCmd = Join-Path -Path "../necto/compilers/dsPIC/mikroC/mikroCdsPIC" -ChildPath "."
     } elseif ($Toolchain -eq 'mikrocavr') {
-        $CompilerLibsPath = Utils-JoinPath -Path "../necto/compilers/AVR/mikroC/" -ChildPath "libs"
-        $MikroCCmd = Utils-JoinPath -Path "../necto/compilers/AVR/mikroC/mikroCAvr" -ChildPath "."
+        $CompilerLibsPath = Join-Path -Path "../necto/compilers/AVR/mikroC/" -ChildPath "libs"
+        $MikroCCmd = Join-Path -Path "../necto/compilers/AVR/mikroC/mikroCAvr" -ChildPath "."
     }
 
     $PrefixPaths += $CompilerLibsPath
