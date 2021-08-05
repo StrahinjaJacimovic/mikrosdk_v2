@@ -68,7 +68,7 @@ $flags = $Global:selectedFlags
 
 # -----------------------------------------------------------------------------
 # Find NECTO Studio def files.
-$defsPath = JoinPath -Path $scriptLocationParent `
+$defsPath = Join-Path -Path $scriptLocationParent `
                            -ChildPath "necto/compilers/$Global:architecture/mikroC/Defs"
 if ( $chipRegex -ne $false ) {
     $defFiles = Get-ChildItem -Path $defsPath | `
@@ -86,8 +86,8 @@ $mcuDefinitions = Get-ChildItem -Path $(Join-Path -Path $PSScriptRoot `
 
 # -----------------------------------------------------------------------------
 # Set output paths.
-$srcDir = JoinPath -Path $scriptLocation -ChildPath '..'
-$rootOutDir = JoinPath -Path $srcDir -ChildPath ../build/$Global:buildOut
+$srcDir = Join-Path -Path $scriptLocation -ChildPath '..'
+$rootOutDir = Join-Path -Path $srcDir -ChildPath ../build/$Global:buildOut
 # -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
@@ -130,7 +130,7 @@ foreach( $defFile in $defFiles ) {
 
             if ( $def.core -eq $selectedCore ) {
 
-                $outDir = Utils-JoinPath -Path  $rootOutDir -ChildPath $mcuName
+                $outDir = Join-Path -Path  $rootOutDir -ChildPath $mcuName
 
                 $configuration = @()
                 if ( $packageCount -ne 0 ) {
