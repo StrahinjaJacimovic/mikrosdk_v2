@@ -108,6 +108,8 @@ if(Test-Path -Path $rootOutDir){
 }
 # -----------------------------------------------------------------------------
 
+$libsPath = Join-Path $Global:scriptLocationParent -ChildPath "necto/compilers/PIC/mikroC/libs"
+
 # -----------------------------------------------------------------------------
 foreach( $defFile in $defFiles ) {
     ## Get json content from def file.
@@ -150,6 +152,9 @@ foreach( $defFile in $defFiles ) {
                     -Name "MSDK_HAL_LOW_LEVEL_TARGET" -Value "mikroe"
                 $configuration += Utils-Config `
                     -Name "MEMAKE_SDK_TYPE" -Value "normal"
+                $configuration += Utils-Config `
+                    -Name "MEMAKE_PREFIX_PATH" -Value $libsPath
+
 
                 ## Configure project.
                 $memakeOutput = Memake-Configure -SrcDir $srcDir `
