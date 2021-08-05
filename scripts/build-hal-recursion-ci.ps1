@@ -14,8 +14,8 @@ if ( $(Get-Location) -notmatch 'scripts' ) {
     Set-Location scripts
 }
 
-$scriptLocation = $(Get-Location)
-$scriptLocationParent = Split-Path -Path $scriptLocation -Parent -Resolve
+$Global:scriptLocation = $(Get-Location)
+$Global:scriptLocationParent = Split-Path -Path $Global:scriptLocation -Parent -Resolve
 
 . '.\utility.ps1'
 
@@ -68,7 +68,7 @@ $flags = $Global:selectedFlags
 
 # -----------------------------------------------------------------------------
 # Find NECTO Studio def files.
-$defsPath = Join-Path -Path $scriptLocationParent `
+$defsPath = Join-Path -Path $Global:scriptLocationParent `
                            -ChildPath "necto/compilers/$Global:architecture/mikroC/Defs"
 if ( $chipRegex -ne $false ) {
     $defFiles = Get-ChildItem -Path $defsPath | `
@@ -86,7 +86,7 @@ $mcuDefinitions = Get-ChildItem -Path $(Join-Path -Path $PSScriptRoot `
 
 # -----------------------------------------------------------------------------
 # Set output paths.
-$srcDir = Join-Path -Path $scriptLocation -ChildPath '..'
+$srcDir = Join-Path -Path $Global:scriptLocation -ChildPath '..'
 $rootOutDir = Join-Path -Path $srcDir -ChildPath ../build/$Global:buildOut
 # -----------------------------------------------------------------------------
 

@@ -47,8 +47,8 @@ Function Utils-JoinPath {
     return [System.IO.Path]::GetFullPath($(Join-Path -Path $Path -ChildPath $ChildPath))
 }
 
-$HexToCecBin = "../necto/HexToCecBin"
-$Memake = "../necto/memake"
+$HexToCecBin = Join-Path -Path $Global:scriptLocationParent -ChildPath "necto/HexToCecBin.exe"
+$Memake = Join-Path -Path $Global:scriptLocationParent -ChildPath "necto/memake.exe"
 
 function Utils-Config {
     param (
@@ -88,19 +88,14 @@ Function Memake-Configure {
     )
 
     if ($Toolchain -eq 'mikrocarm') {
-        $CompilerLibsPath = Join-Path -Path "../necto/compilers/ARM/mikroC/" -ChildPath "libs"
         $MikroCCmd = Join-Path -Path "../necto/compilers/ARM/mikroC/mikroCARM" -ChildPath "."
     } elseif ($Toolchain -eq 'mikrocpic') {
-        $CompilerLibsPath = Join-Path -Path "../necto/compilers/PIC/mikroC/" -ChildPath "libs"
         $MikroCCmd = Join-Path -Path "../necto/compilers/PIC/mikroC/mikroCPIC1618" -ChildPath "."
     } elseif ($Toolchain -eq 'mikrocpic32') {
-        $CompilerLibsPath = Join-Path -Path "../necto/compilers/PIC32/mikroC/" -ChildPath "libs"
         $MikroCCmd = Join-Path -Path "../necto/compilers/PIC32/mikroC/mikroCPIC32" -ChildPath "."
     } elseif ($Toolchain -eq 'mikrocdspic') {
-        $CompilerLibsPath = Join-Path -Path "../necto/compilers/dsPIC/mikroC/" -ChildPath "libs"
         $MikroCCmd = Join-Path -Path "../necto/compilers/dsPIC/mikroC/mikroCdsPIC" -ChildPath "."
     } elseif ($Toolchain -eq 'mikrocavr') {
-        $CompilerLibsPath = Join-Path -Path "../necto/compilers/AVR/mikroC/" -ChildPath "libs"
         $MikroCCmd = Join-Path -Path "../necto/compilers/AVR/mikroC/mikroCAvr" -ChildPath "."
     }
 
