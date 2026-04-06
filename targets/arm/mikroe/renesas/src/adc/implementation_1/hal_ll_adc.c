@@ -105,6 +105,11 @@
 #define HAL_LL_ADC_ADANSA0_MAX_CHANNEL            (10)
 #define HAL_LL_ADC_ADANSA1_MIN_CHANNEL            (19)
 #define HAL_LL_ADC_ADANSA1_MAX_CHANNEL            (22)
+#elif defined(R7FA2E1)
+#define HAL_LL_ADC_ADANSA0_MIN_CHANNEL            (0)
+#define HAL_LL_ADC_ADANSA0_MAX_CHANNEL            (10)
+#define HAL_LL_ADC_ADANSA1_MIN_CHANNEL            (16)
+#define HAL_LL_ADC_ADANSA1_MAX_CHANNEL            (22)
 #elif (defined(R7FA4M2) || defined(R7FA8M1) || \
        defined(R7FA4L1) || defined(R7FA6E2))
 #define HAL_LL_ADC_ADANSA0_MIN_CHANNEL            (0)
