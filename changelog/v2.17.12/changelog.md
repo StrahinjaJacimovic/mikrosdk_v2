@@ -16,7 +16,14 @@
 
 - [`v2.17.12`](#v21712)
   - [Changes](#changes)
+    - [Fixes](#fixes)
     - [NEW HARDWARE](#new-hardware)
+
+### Fixes
+
++ Fixed setting of interrupt priority for the M23 core
+  + Manifested as UART receive interrupt issues on Renesas RA2 devices
+  + Incorrect interrupt priority register index and bit-shift calculation corrected in `hal_ll_core_port_nvic_set_priority_irq`
 
 ### NEW HARDWARE
 
