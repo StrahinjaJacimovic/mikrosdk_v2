@@ -16,7 +16,15 @@
 
 - [`v2.17.12`](#v21712)
   - [Changes](#changes)
+    - [New Features](#new-features)
     - [NEW HARDWARE](#new-hardware)
+
+### New Features
+
++ AGT module support for Renesas devices
+  + Implemented PWM mode for the AGT module
+  + Expands available PWM output pins (previously only GPT module was supported)
+  + Automatic module selection based on pin configuration is transparent to users
 
 ### NEW HARDWARE
 
