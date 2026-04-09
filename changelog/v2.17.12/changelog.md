@@ -22,7 +22,7 @@
 ### Improvements
 
 + Reduced the amount of `#ifdef` conditionals and regular expressions in various low-level implementations for Renesas MCUs
-  + Simplified conditional compilation and regex-based logic in Renesas MCU implementations
+  + Simplified conditional compilation and regex usage
   + Improved readability and maintainability across affected modules
 
 ### NEW HARDWARE
