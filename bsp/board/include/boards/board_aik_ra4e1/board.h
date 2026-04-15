@@ -37,47 +37,28 @@
 **
 ****************************************************************************/
 /*!
- * @file  mikroSDK_version.h
- * @brief mikroSDK Version support.
+ * @file  board.h
+ * @brief Main board pin mapping.
  */
 
-#ifndef _mikroSDK_VERSION_H_
-#define _mikroSDK_VERSION_H_
+#ifndef _BOARD_H_
+#define _BOARD_H_
 
 #ifdef __cplusplus
-extern "C"{
+extern "C"
+{
 #endif
 
-/**
-  * @brief mikroSDK_MAJOR_VERSION
-  * @note changes in major version indicate that there could be features
-  * of mikroSDK not compatible with previous version
-  */
-#define mikroSDK_MAJOR_VERSION 2
+#define BOARD_NAME "AI Kit Development Platform with RA4E1"
 
-/**
-  * @brief mikroSDK_MINOR_VERSION
-  * @note changes in minor version indicate that there have been
-  * significant improvements and/or features added
-  */
-#define mikroSDK_MINOR_VERSION 17
+#include "hal_target.h"
 
-/**
-  * @brief mikroSDK_PATCH_VERSION
-  * @note changes in patch version indicate smaller updates,
-  * bug fixes and improvements
-  */
-#define mikroSDK_PATCH_VERSION 12
-
-/**
-  * @brief mikroSDK_GET_VERSION
-  * @note get version of mikroSDK
-  */
-#define mikroSDK_GET_VERSION ((mikroSDK_MAJOR_VERSION)*10000 + (mikroSDK_MINOR_VERSION)*100 + (mikroSDK_PATCH_VERSION))
+// Mapping
+// Only Bare Metal support is available for this board at the moment
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // _mikroSDK_VERSION_H_
+#endif    // _BOARD_H_
 // ------------------------------------------------------------------------- END
