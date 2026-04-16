@@ -17,8 +17,9 @@
 - [`v2.17.12`](#v21712)
   - [Changes](#changes)
     - [RENESAS](#renesas)
-    - [Improvements](#improvements)
     - [New Features](#new-features)
+    - [Improvements](#improvements)
+    - [Fixes](#fixes)
     - [NEW HARDWARE](#new-hardware)
 
 ### <font color=red>RENESAS</font>
@@ -58,18 +59,24 @@
 + GPIO (Full module support)
 + 1-Wire (Full module support)
 
-### Improvements
-
-+ Reduced the amount of `#ifdef` conditionals and regular expressions in various low-level implementations for Renesas MCUs
-  + Simplified conditional compilation and regex usage
-  + Improved readability and maintainability across affected modules
-
 ### New Features
 
 + AGT module support for Renesas devices
   + Implemented PWM mode for the AGT module
   + Expands available PWM output pins (previously only GPT module was supported)
   + Automatic module selection based on pin configuration is transparent to users
+
+### Improvements
+
++ Reduced the amount of `#ifdef` conditionals and regular expressions in various low-level implementations for Renesas MCUs
+  + Simplified conditional compilation and regex usage
+  + Improved readability and maintainability across affected modules
+
+### Fixes
+
++ Fixed setting of interrupt priority for the M23 core
+  + Manifested as UART receive interrupt issues on Renesas RA2 devices
+  + Incorrect interrupt priority register index and bit-shift calculation corrected in `hal_ll_core_port_nvic_set_priority_irq`
 
 ### NEW HARDWARE
 
