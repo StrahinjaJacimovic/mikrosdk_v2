@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -42,8 +42,8 @@
  *
  * \brief The API for interfacing with TFT BOARD CAPCAITIVE display boards.
  */
-#ifndef TFT8_H
-#define TFT8_H
+#ifndef _TFT8_H_
+#define _TFT8_H_
 
 #include "drv_digital_out.h"
 #include "drv_port.h"
@@ -69,11 +69,13 @@
  * \see tft8_set_backlight
  */
 #define TFT8_MIN_BACKLIGHT (0x00)
+#define TFT_MIN_BACKLIGHT TFT8_MIN_BACKLIGHT
 /*!
  * \brief Constant for setting maximum backlight.
  * \see tft8_set_backlight
  */
 #define TFT8_MAX_BACKLIGHT (0xFF)
+#define TFT_MAX_BACKLIGHT TFT8_MAX_BACKLIGHT
 
 /*!
  * \brief Mapping controll pins.
@@ -86,7 +88,7 @@
   tft_cfg.tft_rd  = TFT_RD;  \
 
 /*!
- * \brief Mapping configuration strucutre to 8 bit host interface defined with
+ * \brief Mapping configuration structure to 8 bit host interface defined with
  * board.
  */
 #define TFT8_MAP_PINOUTS_8BIT(tft_cfg) \
@@ -95,8 +97,10 @@
   tft_cfg.data_channel_0_mask = TFT_8BIT_DATA_PORT_CH0_MASK; \
   tft_cfg.host_interface = TFT8_HOST_INTERFACE_8BIT;
 
+#define TFT_MAP_PINOUTS_8BIT TFT8_MAP_PINOUTS_8BIT
+
 /*!
- * \brief Mapping configuration strucutre to 16 bit host interface defined with board.
+ * \brief Mapping configuration structure to 16 bit host interface defined with board.
  */
 #define TFT8_MAP_PINOUTS_16BIT(tft_cfg) \
   TFT8_MAP_CTRL_BITS(tft_cfg) \
@@ -105,6 +109,8 @@
   tft_cfg.data_channel_1 = TFT_16BIT_DATA_PORT_CH1; \
   tft_cfg.data_channel_1_mask = TFT_16BIT_DATA_PORT_CH1_MASK; \
   tft_cfg.host_interface = TFT8_HOST_INTERFACE_16BIT;
+
+#define TFT_MAP_PINOUTS_16BIT TFT8_MAP_PINOUTS_16BIT
 
 /*!
  * \brief Host interface configuration enumeration.
@@ -127,6 +133,17 @@ typedef struct tft8_board_s
     void (*reset_procedure)(void);
 } tft8_board_t;
 
+/// Definition constant for TFT BOARD 3 RESISTIVE display board.
+extern const tft8_board_t TFT_BOARD_3_RESISTIVE;
+/// Definition constant for TFT BOARD 4 RESISTIVE display board.
+extern const tft8_board_t TFT_BOARD_4_RESISTIVE;
+/// Definition constant for TFT BOARD 5 RESISTIVE display board.
+extern const tft8_board_t TFT_BOARD_5_RESISTIVE;
+/// Definition constant for TFT BOARD 7 RESISTIVE display board.
+extern const tft8_board_t TFT_BOARD_7_RESISTIVE;
+/// Definition constant for MIKROMEDIA 3 RESISTIVE display board.
+extern const tft8_board_t MIKROMEDIA_3_RESISTIVE;
+
 /// Definition constant for TFT BOARD 3 CAPACITIVE display board.
 extern const tft8_board_t TFT_BOARD_3_CAPACITIVE;
 /// Definition constant for TFT BOARD 4 CAPACITIVE display board.
@@ -137,7 +154,6 @@ extern const tft8_board_t TFT_BOARD_5_CAPACITIVE;
 extern const tft8_board_t TFT_BOARD_7_CAPACITIVE;
 /// Definition constant for MIKROMEDIA 3 CAPACITIVE display board.
 extern const tft8_board_t MIKROMEDIA_3_CAPACITIVE;
-
 
 /*!
  * \brief TFT Board Capacitive library configuration structure.
@@ -211,5 +227,5 @@ void tft8_set_backlight(uint8_t intenisty);
 #ifdef __cplusplus
 }
 #endif
-#endif // TFT8_H
+#endif // _TFT8_H_
 /*! @} */

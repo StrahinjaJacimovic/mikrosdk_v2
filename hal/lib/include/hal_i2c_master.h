@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -50,6 +50,10 @@ extern "C"{
 
 #include "hal_target.h"
 
+#if !DRV_TO_HAL
+#include "hal_ll_i2c_master.h"
+#endif
+
 /**
  * @details The context for storing  HAL level object handlers.
  * Contains specific hardware module handle and
@@ -60,6 +64,7 @@ extern "C"{
 typedef struct
 {
     handle_t *hal_i2c_master_handle; /*!< I2C Master HAL level handle */
+    handle_t *drv_i2c_master_handle; /*!< I2C Master DRV level handle */
     bool init_state;                 /*!< I2C Master HAL object init state */
 } hal_i2c_master_handle_register_t;
 

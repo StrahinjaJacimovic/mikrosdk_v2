@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -43,6 +43,9 @@
 
 #ifndef _MCU_DEFINITIONS_H_
 #define _MCU_DEFINITIONS_H_
+
+#include "mcu_reg_addresses.h"
+#include "can_definitions.h"
 
 //ADC
 #define HAL_LL_RA0_AN0_ANSELA_BIT 0
@@ -175,6 +178,19 @@
 #define PWM_CCP4_RD1
 #define PWM_CCP5_RE2
 
+#define EPWM_CCP3_RE0_P3A
+#define EPWM_CCP3_RE1_P3B
+#define EPWM_CCP2_RC0_P2B
+#define EPWM_CCP2_RC1_P2A
+#define EPWM_CCP1_RC2_P1A
+#define EPWM_CCP2_RD2_P2B
+#define EPWM_CCP2_RD3_P2C
+#define EPWM_CCP2_RD4_P2D
+#define EPWM_CCP1_RD5_P1B
+#define EPWM_CCP1_RD6_P1C
+#define EPWM_CCP1_RD7_P1D
+#define EPWM_CCP2_RB3_P2A
+#define EPWM_CCP3_RB5_P3A
 
 #define CCP_MODULE_1 1
 #define CCP_MODULE_2 2
@@ -315,6 +331,9 @@
 // EOF PMD & PIR Register defines
 
 // TMR Register addresses
+#define HAL_LL_PSTR3CON_ADDRESS 0xF5AU
+#define HAL_LL_PSTR2CON_ADDRESS 0xF63U
+#define HAL_LL_PSTR1CON_ADDRESS 0xFB9U
 #define HAL_LL_CCP1CON_ADDRESS 0xFBDU
 #define HAL_LL_CCP2CON_ADDRESS 0xF66U
 #define HAL_LL_CCP3CON_ADDRESS 0xF5DU

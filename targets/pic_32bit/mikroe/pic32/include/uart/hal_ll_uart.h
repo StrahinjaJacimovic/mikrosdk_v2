@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -147,6 +147,7 @@ typedef struct
 typedef struct
 {
     handle_t *hal_ll_uart_handle;
+    handle_t *hal_drv_uart_handle;
     bool init_ll_state;
 } hal_ll_uart_handle_register_t;
 
@@ -254,6 +255,20 @@ hal_ll_err_t hal_ll_uart_set_stop_bits( handle_t *handle, hal_ll_uart_stop_bits_
 hal_ll_err_t hal_ll_uart_set_data_bits( handle_t *handle, hal_ll_uart_data_bits_t data_bit );
 
 /**
+ * @brief  Sets UART polling write timeout value.
+ *
+ * Registers UART timeout value in number of retries.
+ * Module shall retry any given operation
+ * `timeout` number of times before aborting operation.
+ *
+ * @param[in] *handle HAL context object handle.
+ * @param[in] timeout UART polling write timeout value.
+ *
+ * @return void None.
+ */
+void hal_ll_uart_set_polling_write_timeout( handle_t *handle, uint32_t timeout );
+
+/**
  * @brief  Enables module specific interrupt.
  *
  * Enables module specific interrupt and registers
@@ -285,9 +300,20 @@ void hal_ll_uart_irq_disable( handle_t *handle, hal_ll_uart_irq_t irq );
  *
  * @param[in] handle HAL context object handle.
  *
- * @return uint16_t Data read from hw register.
+ * @return uint8_t Data read from hw register.
  */
-uint16_t hal_ll_uart_read( handle_t *handle );
+uint8_t hal_ll_uart_read( handle_t *handle );
+
+/**
+ * @brief  Performs read operation in polling mode.
+ *
+ * Reads one byte on a hardware level.
+ *
+ * @param[in] handle HAL context object handle.
+ *
+ * @return uint8_t Data read from hw register.
+ */
+uint8_t hal_ll_uart_read_polling( handle_t *handle );
 
 /**
  * @brief  Performs write operation.
@@ -300,7 +326,20 @@ uint16_t hal_ll_uart_read( handle_t *handle );
  *
  * @return void None.
  */
-void hal_ll_uart_write( handle_t *handle, uint16_t wr_data);
+void hal_ll_uart_write( handle_t *handle, uint8_t wr_data);
+
+/**
+ * @brief  Performs write operation in polling mode.
+ *
+ * Accesses hardware data registers and
+ * writes data directly to it.
+ *
+ * @param[in] handle HAL context object handle.
+ * @param[in] wr_data Data to be written.
+ *
+ * @return void None.
+ */
+void hal_ll_uart_write_polling( handle_t *handle, uint8_t wr_data);
 
 /**
  * @brief  Closes UART HAL and HAL_LOW_LEVEL context object.

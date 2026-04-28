@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -87,6 +87,7 @@ typedef enum
 typedef struct
 {
     handle_t *hal_ll_spi_master_handle;
+    handle_t *hal_drv_spi_master_handle;
     bool init_ll_state;
 } hal_ll_spi_master_handle_register_t;
 
@@ -189,6 +190,31 @@ hal_ll_err_t hal_ll_spi_master_read(handle_t *handle, uint8_t *read_data_buffer,
   * Take into consideration that this is hardware specific.
   */
 hal_ll_err_t hal_ll_spi_master_write_then_read(handle_t *handle, uint8_t *write_data_buffer, size_t length_write_data, uint8_t *read_data_buffer, size_t length_read_data);
+
+/**
+ * @brief Performs simultaneous write and read on SPI bus.
+ *
+ * Executes a full-duplex SPI transfer. While writing `write_data_buffer`,
+ * the incoming bytes from the SPI slave are placed into `read_data_buffer`.
+ * This function is suitable for devices that require simultaneous
+ * transmission and reception.
+ *
+ * @param[in]  handle HAL context object handle.
+ * @param[in]  write_data_buffer Pointer to data to be written to the bus.
+ * @param[out] read_data_buffer Pointer to buffer where read data will be stored.
+ * @param[in]  data_length Number of bytes to transfer.
+ *
+ * @return hal_ll_err_t Returns #HAL_LL_SPI_MASTER_SUCCESS on success,
+ *                      otherwise returns #HAL_LL_SPI_MASTER_MODULE_ERROR
+ *                      if handle is invalid or data_length is 0.
+ *
+ * @note This function assumes the SPI module is already initialized via
+ *       #hal_ll_spi_master_register_handle and #hal_ll_module_configure_spi.
+ */
+hal_ll_err_t hal_ll_spi_master_transfer( handle_t *handle,
+                                         uint8_t *write_data_buffer,
+                                         uint8_t *read_data_buffer,
+                                         size_t data_length );
 
 /**
  * @brief  Closes SPI Master HAL and HAL_LOW_LEVEL context object.

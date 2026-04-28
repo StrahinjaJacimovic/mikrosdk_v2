@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -46,6 +46,12 @@
 #include "hal_ll_bit_control.h"
 
 void hal_ll_core_enable_interrupts( void ) {
+    #ifdef PRISS_REG_ADDRESS
+    write_reg( PRISS_REG_ADDRESS, HAL_LL_INT_PRI_SHADOW_SET ); // Configure priority shadow select register.
+    #endif
+    #ifdef INTCON_REG_ADDRESS
+    set_reg_bit( INTCON_REG_ADDRESS, HAL_LL_INTCON_MVEC_BIT ); // Configure interrupt controller for multi vectored mode.
+    #endif
     hal_ll_core_enable_int_asm;
 }
 

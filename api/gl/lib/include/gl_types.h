@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -91,6 +91,8 @@ typedef enum
 
 typedef int16_t  gl_int_t;    /**< 16-bit integer is used for gl_int_t */
 typedef uint16_t gl_uint_t;  /**< 16-bit unsigned integer is used for gl_uint_t */
+typedef int32_t  gl_long_int_t;    /**< 32-bit integer is used for gl_long_int_t */
+typedef uint32_t gl_long_uint_t;  /**< 32-bit unsigned integer is used for gl_long_uint_t */
 
 typedef uint16_t gl_angle_t; /**< The angle for the arc. Value should be positive. Value between 0 and 360 is expected, but if it happens to be bigger, it will be calculated like:
 * @code

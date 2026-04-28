@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -43,6 +43,10 @@
 
 #ifndef _MCU_DEFINITIONS_H_
 #define _MCU_DEFINITIONS_H_
+
+#include "mcu_reg_addresses.h"
+#include "dma_definitions.h"
+#include "can_definitions.h"
 
 //ADC
 #define ADC_PA0_CH0
@@ -176,12 +180,12 @@
 #define TIM4_BUS 1
 #define TIM9_BUS 2
 
-#define TIM_MODULE_10 9
-#define TIM_MODULE_11 10
-#define TIM_MODULE_2 2
-#define TIM_MODULE_3 4
-#define TIM_MODULE_4 6
-#define TIM_MODULE_9 8
+#define TIM_MODULE_2 1
+#define TIM_MODULE_3 2
+#define TIM_MODULE_4 3
+#define TIM_MODULE_9 4
+#define TIM_MODULE_10 5
+#define TIM_MODULE_11 6
 #define TIM_MODULE_TIMX_IC1 1
 #define TIM_MODULE_TIMX_IC2 3
 #define TIM_MODULE_TIMX_IC3 5

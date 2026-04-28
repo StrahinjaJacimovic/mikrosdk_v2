@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -44,8 +44,12 @@
 #include "hal_ll_pps_port.h"
 
 hal_ll_pps_err_t hal_ll_pps_map( hal_ll_port_name_t port_name, hal_ll_pin_name_t pin_num, hal_ll_gpio_direction_t direction, hal_ll_pps_functionality_t pps_func, hal_ll_pps_module_index_t module_num, bool hal_ll_state ) {
+    bool hal_ll_pps_lock_status = false;
     // First, unlock sequence
-    hal_ll_pps_lock_unlock( HAL_LL_PPS_UNLOCK );
+    if ( ( false != HAL_LL_CFGCON_ADDRESS ) && check_reg_bit( HAL_LL_CFGCON_ADDRESS, HAL_LL_IOLOCK_BIT ) ) {
+        hal_ll_pps_lock_unlock( HAL_LL_PPS_UNLOCK );
+        hal_ll_pps_lock_status = true;
+    }
 
     // Second, map functions to adequate pins
     if ( direction == HAL_LL_GPIO_DIGITAL_INPUT ) {
@@ -57,7 +61,9 @@ hal_ll_pps_err_t hal_ll_pps_map( hal_ll_port_name_t port_name, hal_ll_pin_name_t
     }
 
     // Finally, lock sequence
-    hal_ll_pps_lock_unlock( HAL_LL_PPS_LOCK );
+    if ( hal_ll_pps_lock_status ) {
+        hal_ll_pps_lock_unlock( HAL_LL_PPS_LOCK );
+    }
 
     // If it gets to this point, return success msg
     return HAL_LL_PPS_SUCCESS;

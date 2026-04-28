@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -43,6 +43,9 @@
 
 #ifndef _MCU_DEFINITIONS_H_
 #define _MCU_DEFINITIONS_H_
+
+#include "mcu_reg_addresses.h"
+#include "can_definitions.h"
 
 //ADC
 #define HAL_LL_RA0_AN0_ANCON0_BIT 0
@@ -122,6 +125,10 @@
 #define PWM_CCP4_RC7
 #define PWM_CCP5_RB5
 
+#define EPWM_CCP1_RB1_P1B
+#define EPWM_CCP1_RB2_P1C
+#define EPWM_CCP1_RB3_P1D
+#define EPWM_CCP1_RB4_P1A
 
 #define CCP_MODULE_1 1
 #define CCP_MODULE_2 2
@@ -233,6 +240,7 @@
 // EOF PMD & PIR Register defines
 
 // TMR Register addresses
+#define HAL_LL_PSTR1CON_ADDRESS 0xF9CU
 #define HAL_LL_CCP1CON_ADDRESS 0xFBBU
 #define HAL_LL_CCP2CON_ADDRESS 0xF50U
 #define HAL_LL_CCP3CON_ADDRESS 0xF4DU

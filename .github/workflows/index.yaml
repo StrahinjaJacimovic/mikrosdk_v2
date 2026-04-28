@@ -1,0 +1,204 @@
+name: Index Latest Release
+
+on:
+  workflow_dispatch:
+    inputs:
+        release_version:
+          type: string
+          description: Which release version to index (type mikroSDK-2.14.2 for example)
+          default: "mikroSDK-2.14.2"
+        select_index:
+          type: choice
+          description: Index as test or live
+          options:
+            - Test
+            - Live
+        set_as_latest:
+          type: boolean
+          description: Promote selected version to latest? (Only applied if index is set to "live")
+          default: false
+        keep_dates:
+          type: boolean
+          description: Update asset indexes for chosen tag without changing their dates? (Will update only hash values based on metadata.json)
+          default: false
+        notify_sdk:
+          type: boolean
+          description: Notify SDK
+          default: false
+  schedule:
+      - cron: "51 6 8 1 *"  # 08.01.2026 for RA6M4 SDK release
+
+jobs:
+  index:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Authorize Mikroe Actions App
+        uses: actions/create-github-app-token@v2
+        id: app-token
+        with:
+          app-id: ${{ vars.MIKROE_ACTIONS }}
+          private-key: ${{ secrets.MIKROE_ACTIONS_KEY_AUTHORIZE }}
+
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.x'
+
+      - name: Cache Python packages
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install aiohttp
+          pip install aiofiles
+          pip install requests
+          pip install py7zr
+          pip install beautifulsoup4
+          pip install "chardet==6.0.0"
+          pip install alive-progress
+          pip install elasticsearch==7.13.4
+          sudo apt-get install p7zip-full
+
+      - name: Trigger database update in Core repo
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.keep_dates == 'false' }}
+        run: |
+          # Set the required variables
+          repo_owner="MikroElektronika"
+          repo_name="core_packages"
+          event_type="trigger-workflow-update-database-from-sdk"
+          version="${{ github.event.inputs.release_version }}"
+
+          if [[ ${{ github.event.inputs.select_index }} == "Live" ]]; then
+            index="Live"
+          else
+            index="Test"
+          fi
+
+          curl -L \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.MIKROE_ACTIONS_KEY }}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/$repo_owner/$repo_name/dispatches \
+            -d "{\"event_type\": \"$event_type\", \"client_payload\": {\"version\": \"$version\", \"index\": \"$index\", \"unit\": false, \"integration\": true}}"
+
+      - name: Wait for Core repo updateDbFromSdk.yaml to finish
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.keep_dates == 'false' }}
+        env:
+          GH_TOKEN: ${{ secrets.MIKROE_ACTIONS_KEY }}
+        run: |
+          set -euo pipefail
+
+          sudo apt-get update
+          sudo apt-get install -y jq
+
+          repo_owner="MikroElektronika"
+          repo_name="core_packages"
+          workflow_file="updateDbFromSdk.yaml"
+
+          echo "Looking for triggered repository_dispatch run in ${repo_owner}/${repo_name}..."
+
+          run_id=""
+          for i in {1..30}; do
+            response=$(curl -s -L \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "https://api.github.com/repos/${repo_owner}/${repo_name}/actions/workflows/${workflow_file}/runs?event=repository_dispatch&per_page=10")
+
+            run_id=$(echo "$response" | jq -r '.workflow_runs[0].id // empty')
+
+            if [[ -n "$run_id" ]]; then
+              echo "Found run_id=${run_id}"
+              break
+            fi
+
+            echo "Run not visible yet, retrying..."
+            sleep 10
+          done
+
+          if [[ -z "$run_id" ]]; then
+            echo "Could not find triggered workflow run in core_packages"
+            exit 1
+          fi
+
+          while true; do
+            run=$(curl -s -L \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "https://api.github.com/repos/${repo_owner}/${repo_name}/actions/runs/${run_id}")
+
+            status=$(echo "$run" | jq -r '.status')
+            conclusion=$(echo "$run" | jq -r '.conclusion')
+
+            echo "Core workflow status=${status}, conclusion=${conclusion}"
+
+            if [[ "$status" == "completed" ]]; then
+              if [[ "$conclusion" == "success" ]]; then
+                echo "Core workflow finished successfully."
+                break
+              else
+                echo "Core workflow failed with conclusion=${conclusion}"
+                exit 1
+              fi
+            fi
+
+            sleep 15
+          done
+
+      - name: Run Index Script - Scheduled
+        if: ${{ github.event_name == 'schedule' }}
+        env:
+          ES_HOST: ${{ secrets.ES_HOST }}
+          ES_USER: ${{ secrets.ES_USER }}
+          ES_PASSWORD: ${{ secrets.ES_PASSWORD }}
+          MIKROE_NECTO_AWS: ${{ secrets.MIKROE_NECTO_AWS }}
+        run: |
+          echo "Indexing to Live."
+          python -u scripts/index.py ${{ github.repository }} ${{ steps.app-token.outputs.token }} "mikroSDK-2.17.4" ${{ secrets.ES_INDEX_LIVE }} "True"
+
+      - name: Run Index Script - Manual Run
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        env:
+          ES_HOST: ${{ secrets.ES_HOST }}
+          ES_USER: ${{ secrets.ES_USER }}
+          ES_PASSWORD: ${{ secrets.ES_PASSWORD }}
+          MIKROE_NECTO_AWS: ${{ secrets.MIKROE_NECTO_AWS }}
+        run: |
+          if [[ ${{ github.event.inputs.select_index }} == "Live" ]]; then
+            echo "Indexing to Live."
+            python -u scripts/index.py ${{ github.repository }} ${{ steps.app-token.outputs.token }} ${{ github.event.inputs.release_version }} ${{ secrets.ES_INDEX_LIVE }} ${{ github.event.inputs.set_as_latest }} "--keep_previous_dates" ${{ github.event.inputs.keep_dates }}
+          else
+            echo "Indexing to Test."
+            if [[ ${{ github.event.inputs.set_as_latest }} ]]; then
+              echo "Promote to latest requested, but ignored. Only available for LIVE updates."
+            fi
+            python -u scripts/index.py ${{ github.repository }} ${{ steps.app-token.outputs.token }} ${{ github.event.inputs.release_version }} ${{ secrets.ES_INDEX_TEST }} "False" "--keep_previous_dates" ${{ github.event.inputs.keep_dates }}
+          fi
+
+      - name: Build SDK Message with Python
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.notify_sdk == 'true' }}
+        run: |
+          python -u scripts/build_message_sdk.py "${{ github.event.inputs.release_version }}" > message.txt
+
+      - name: Send SDK notification to Mattermost
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.notify_sdk == 'true' }}
+        env:
+          MATTERMOST_WEBHOOK_URL: ${{ secrets.MATTERMOST_WEBHOOK_URL_SDK }}
+        run: |
+          MESSAGE=$(cat message.txt)
+          curl -X POST -H 'Content-Type: application/json' \
+          --data "{\"text\": \"$MESSAGE\"}" \
+          $MATTERMOST_WEBHOOK_URL

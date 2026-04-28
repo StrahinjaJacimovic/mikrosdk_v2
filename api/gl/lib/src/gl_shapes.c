@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -40,11 +40,17 @@
 #include "gl_shapes.h"
 #include "gl_utils.h"
 #include <math.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <stddef.h>
 #include <stdbool.h>
 
 extern gl_t instance;
+
+#ifdef __GNUC__
+static inline int32_t max(int32_t a, int32_t b) { return((a) > (b) ? a : b); }
+static inline int32_t min(int32_t a, int32_t b) { return((a) < (b) ? a : b); }
+#endif
 
 /** *************************************************
  * @brief Draw part of circle like pizza slice.
@@ -59,6 +65,10 @@ extern gl_t instance;
  * @param instance -> definition of all details about paint
  ***************************************************/
 static void _draw_slice(gl_arc_t* arc, gl_rectangle_t* border_rect);
+
+static double _round_num(double num) {
+    return (gl_long_int_t) num + (num - (gl_long_int_t) num >= 0.5);
+}
 
 gl_color_t gl_gradient(gl_color_t from, gl_color_t to, float ratio)
 {
@@ -98,9 +108,18 @@ static void _draw_horizontal_gradient_line(gl_rectangle_t *rect, gl_rectangle_t*
 static void _draw_vertical_gradient_line(gl_rectangle_t *rect, gl_rectangle_t* border_rect)
 {
     gl_color_t brush_color;
+    gl_rectangle_t my_rect;
 
-    brush_color = gl_gradient(instance.gradient_color.from, instance.gradient_color.to, (rect->top_left.y - border_rect->top_left.y) / (float) border_rect->height);
-    instance.driver.fill_f(rect, brush_color);
+    my_rect.height = 1;
+    my_rect.width = rect->width;
+    my_rect.top_left.y = rect->top_left.y + rect->height;
+    my_rect.top_left.x = rect->top_left.x;
+
+    while (--my_rect.top_left.y >= rect->top_left.y)
+    {
+        brush_color = gl_gradient(instance.gradient_color.from, instance.gradient_color.to, (my_rect.top_left.y - border_rect->top_left.y) / (float) border_rect->height);
+        instance.driver.fill_f(&my_rect, brush_color);
+    }
 }
 
 static void _draw_one_color_line(gl_rectangle_t *rect, gl_rectangle_t* unused)
@@ -189,7 +208,6 @@ inline static void _rect_gradient_crop(gl_rectangle_t* rect, gl_rectangle_t* gra
  ********************************************************/
 // void static _rect_fill_crop(gl_rectangle_t* rect, gl_color_t color);
 //#pragma ReentrancyCheck OFF _rect_fill_crop
-
 
 void static _rect_fill_crop(gl_rectangle_t* rect, gl_color_t color)
 {
@@ -315,8 +333,6 @@ static void _draw_diagonal_line_by_x(gl_point_t p, gl_point_t q, uint16_t len, g
     }
 }
 
-
-// NOTE: ovde je visak ovaj color argument
 static void _draw_diagonal_line_by_y(gl_point_t p, gl_point_t q, uint16_t len, bool no_crop)
 {
     gl_rectangle_t rect;
@@ -454,7 +470,7 @@ static void _draw_triangle_crop(gl_point_t a, gl_point_t b, gl_point_t c, gl_col
     rect.top_left.y = a.y;
 
     rect.top_left.y = min(rect.top_left.y, bottom_border-1);
-    for (;rect.top_left.y >= b.y && rect.top_left.y >= top_border; rect.top_left.y--) //NOTE: da li je nula dozvoljena za crtanje?!
+    for (;rect.top_left.y >= b.y && rect.top_left.y >= top_border; rect.top_left.y--)
     {
         rect.top_left.x = a.x + (rect.top_left.y - a.y) * k1;
         if (rect.top_left.x < left_border)
@@ -680,6 +696,22 @@ static void _draw_slice_crop(gl_arc_t* arc, gl_rectangle_t* border_rect)
     tg_angle_start = tan(arc->start_angle * storage);
     tg_angle_end = tan(arc->end_angle * storage);
 
+    // whatsnew: IR fix for issue of bad conversion for special case
+    // added check if result is +Inf, or -Inf
+    // since cast to integer is undefined
+    // added max and min int instead
+    if (tg_angle_start > INT32_MAX) {
+        tg_angle_start = INT32_MAX;
+    } else if (tg_angle_start < INT32_MIN) {
+      tg_angle_start = INT32_MIN;
+    }
+
+    if (tg_angle_end > INT32_MAX) {
+        tg_angle_end = INT32_MAX;
+    } else if (tg_angle_end < INT32_MIN) {
+        tg_angle_end = INT32_MIN;
+    }
+
     // finding pint A
     storage = sqrt(1.0 + tg_angle_start * tg_angle_start);
     x_ring_left = arc->radius / storage;
@@ -693,8 +725,11 @@ static void _draw_slice_crop(gl_arc_t* arc, gl_rectangle_t* border_rect)
     if (90 < arc->start_angle && arc->start_angle<= 270)
     {
         x_left *= -1;
-        y_left *= -1;
-        y_ring_left *= -1;
+        // whatsnew: IR fix for issue no need to negate it if already is negative
+        if(y_left > 0) {
+            y_left *= -1;
+            y_ring_left *= -1;
+        }
         x_ring_left *= -1;
     }
 
@@ -717,8 +752,11 @@ static void _draw_slice_crop(gl_arc_t* arc, gl_rectangle_t* border_rect)
     if (90 < arc->end_angle && arc->end_angle<= 270)
     {
         x_right *= -1;
-        y_right *= -1;
-        y_ring_right *= -1;
+        // whatsnew: IR fix for issue no need to negate it if already is negative
+        if(y_right > 0) {
+            y_right *= -1;
+            y_ring_right *= -1;
+        }
         x_ring_right *= -1;
     }
 
@@ -906,7 +944,7 @@ static void _draw_slice_crop(gl_arc_t* arc, gl_rectangle_t* border_rect)
         if (rect.top_left.y >= top_border
         && rect.top_left.y < bottom_border
         && rect.top_left.x < right_border
-        && buffer_right_x > left_border) //NOTE: testirati ovo, promenjen znak
+        && buffer_right_x > left_border)
         {
             rect.width = buffer_right_x - rect.top_left.x;
             instance.driver.fill_f(&rect, paint_color);
@@ -1569,7 +1607,7 @@ static void _draw_slice(gl_arc_t* arc, gl_rectangle_t* border_rect)
     else
         paint_color = instance.brush.color;
 
-    // if some preview part was skipped, set y coordinate //!- maybe not needed :/
+    // if some preview part was skipped, set y coordinate
     rect.top_left.y = y_extremum_ring_in;
 
     while (rect.top_left.y != y_extremum_ring_out)
@@ -1703,8 +1741,8 @@ void gl_draw_rect(gl_coord_t top_left_x, gl_coord_t top_left_y, gl_uint_t width,
         tmp_rect.height = pen;
         if (no_crop)
         {
-            instance.driver.fill_f(&tmp_rect, instance.pen.color);                // videti u listeru
-            tmp_rect.top_left.y = top_left_y - (inner_offset - 1) + (height - 1); // NOTE: Ivan: da li ce optimizator umeti da ukloni ove jedinice? Tj. da li da je sklonim, ovde stoji zbog citljivosti algoritma.
+            instance.driver.fill_f(&tmp_rect, instance.pen.color);
+            tmp_rect.top_left.y = top_left_y - (inner_offset - 1) + (height - 1);
             instance.driver.fill_f(&tmp_rect, instance.pen.color);
         }
         else
@@ -2084,6 +2122,334 @@ void gl_draw_circle(gl_coord_t x0, gl_coord_t y0, gl_uint_t radius)
 //     }
 }
 
+#pragma funcall gl_draw_ellipse
+void gl_draw_ellipse(gl_coord_t x0, gl_coord_t y0, gl_uint_t half_a,
+                     gl_uint_t half_b) {
+    if (NULL == instance.driver.fill_f) {
+        return;
+    }
+
+    const gl_int_t inner_offset = instance.pen.inner_width;
+    const gl_int_t outer_offset = instance.pen.outer_width;
+
+    half_a = max(half_a, inner_offset);
+    half_b = max(half_b, inner_offset);
+
+    if ((0 == half_a) || (0 == half_b)) {
+        return;
+    }
+
+    if (((x0 - (gl_int_t) half_a - outer_offset) >= instance.crop_rect.right)
+        || ((x0 + (gl_int_t) half_a + outer_offset) < instance.crop_rect.left)
+        || ((y0 - (gl_int_t) half_b - outer_offset)
+            >= instance.crop_rect.bottom)
+        || ((y0 + (gl_int_t) half_b + outer_offset) < instance.crop_rect.top)) {
+        return;
+    }
+
+    /*
+     * The following code uses the mid-point ellipse drawing algorithm.
+     */
+
+    gl_rectangle_t border_rect;
+    border_rect.top_left.x = x0 - (gl_long_int_t) half_a + inner_offset;
+    border_rect.top_left.y = y0 - (gl_long_int_t) half_b + inner_offset;
+    border_rect.width = 2U * (half_a - inner_offset);
+    border_rect.height = 2U * (half_b - inner_offset);
+
+    void (*fill_f_brush)(gl_rectangle_t *, gl_rectangle_t *);
+    switch (instance.brush.style) {
+        case GL_BRUSH_STYLE_FILL:
+            fill_f_brush = _draw_one_color_line;
+        break;
+        case GL_BRUSH_STYLE_GRADIENT_TOP_DOWN:
+            fill_f_brush = _draw_vertical_gradient_line;
+        break;
+        case GL_BRUSH_STYLE_GRADIENT_LEFT_RIGHT:
+            fill_f_brush = _draw_horizontal_gradient_line;
+        break;
+
+        default:
+            fill_f_brush = NULL;
+        break;
+    }
+
+    const gl_long_uint_t half_a_sqr = (gl_long_uint_t) half_a * half_a;
+    const gl_long_uint_t half_b_sqr = (gl_long_uint_t) half_b * half_b;
+
+    const gl_uint_t half_a_inner = half_a - inner_offset;
+    const gl_uint_t half_a_outer = half_a + outer_offset;
+    const gl_uint_t half_b_inner = half_b - inner_offset;
+    const gl_uint_t half_b_outer = half_b + outer_offset;
+
+    float decision_param = (float) half_b_sqr - (half_a_sqr * half_b)
+        + (0.25f * half_a_sqr);
+
+    gl_long_int_t dx = 0;
+    gl_long_int_t dy = 2 * half_a_sqr * half_b;
+
+    gl_coord_t x = 0;
+    gl_coord_t y = half_b;
+
+    gl_rectangle_t draw_rect;
+
+    for (gl_coord_t x_prev = x; dx < dy;) {
+        x++;
+        dx += 2 * half_b_sqr;
+
+        if (decision_param < 0.0f) {
+            decision_param += dx + (gl_long_int_t) half_b_sqr;
+        } else {
+            const double x_middle = (x + x_prev) / 2.0;
+
+            const gl_int_t y_inner = (half_a_inner == 0) ? 0
+                : _round_num(sqrt(((double) half_b_inner * half_b_inner)
+                    * (1.0 - ((x_middle / half_a_inner)
+                        * (x_middle / half_a_inner)))));
+            const gl_int_t y_outer =
+                _round_num(sqrt(((double) half_b_outer * half_b_outer)
+                    * (1.0 - ((x_middle / half_a_outer)
+                        * (x_middle / half_a_outer)))));
+
+            /* Pen drawing */
+
+            const gl_int_t x_right = max(instance.crop_rect.left,
+                                       min(instance.crop_rect.right,
+                                           x0 + x_prev));
+            const gl_int_t y_top = max(instance.crop_rect.top,
+                                       min(instance.crop_rect.bottom,
+                                           y0 - y_outer));
+            const gl_int_t x_left = max(instance.crop_rect.left,
+                                       min(instance.crop_rect.right, x0 - x));
+            const gl_int_t y_bottom = max(instance.crop_rect.top,
+                                       min(instance.crop_rect.bottom,
+                                           y0 + y_inner));
+
+            const gl_uint_t width_right = max(0, x - x_prev
+                - max(0, instance.crop_rect.left - (x0 + x_prev))
+                - max(0, (x0 + x) - instance.crop_rect.right));
+            const gl_uint_t height_top = max(0, y_outer - y_inner
+                - max(0, instance.crop_rect.top - (y0 - y_outer))
+                - max(0, (y0 - y_inner) - instance.crop_rect.bottom));
+            const gl_uint_t width_left = max(0, x - x_prev
+                - max(0, instance.crop_rect.left - (x0 - x))
+                - max(0, (x0 - x_prev) - instance.crop_rect.right));
+            const gl_uint_t height_bottom = max(0, y_outer - y_inner
+                - max(0, instance.crop_rect.top - (y0 + y_inner))
+                - max(0, (y0 + y_outer) - instance.crop_rect.bottom));
+
+            draw_rect.top_left.x = x_right;
+            draw_rect.top_left.y = y_top;
+            draw_rect.width = width_right;
+            draw_rect.height = height_top;
+            instance.driver.fill_f(&draw_rect, instance.pen.color);
+
+            draw_rect.top_left.x = x_left;
+            draw_rect.width = width_left;
+            instance.driver.fill_f(&draw_rect, instance.pen.color);
+
+            draw_rect.top_left.y = y_bottom;
+            draw_rect.height = height_bottom;
+            instance.driver.fill_f(&draw_rect, instance.pen.color);
+
+            draw_rect.top_left.x = x_right;
+            draw_rect.width = width_right;
+            instance.driver.fill_f(&draw_rect, instance.pen.color);
+
+            /* --- */
+
+            if (NULL != fill_f_brush) {
+                /* Brush drawing */
+
+                draw_rect.top_left.y = max(instance.crop_rect.top,
+                                        min(instance.crop_rect.bottom,
+                                            y0 - y_inner));
+                draw_rect.height = max(0, 2 * y_inner
+                    - max(0, instance.crop_rect.top - (y0 - y_inner))
+                    - max(0, (y0 + y_inner) - instance.crop_rect.bottom));
+                fill_f_brush(&draw_rect, &border_rect);
+
+                draw_rect.top_left.x = x_left;
+                draw_rect.width = width_left;
+                fill_f_brush(&draw_rect, &border_rect);
+
+                /* --- */
+            }
+
+            y--;
+            dy -= 2 * half_a_sqr;
+            decision_param += dx - dy + (gl_long_int_t) half_b_sqr;
+
+            x_prev = x;
+        }
+    }
+
+    if (outer_offset > 0) {
+        gl_coord_t x_corner =
+            _round_num(sqrt(((double) half_a_outer * half_a_outer)
+                * (1.0 - (((double) y / half_b_outer)
+                    * ((double) y / half_b_outer))))) - 1.0;
+        gl_coord_t y_corner = y;
+
+        gl_int_t decision_param_corner = 1 - x_corner;
+
+        const gl_coord_t x_corner_right_start = max(instance.crop_rect.left,
+                                              min(instance.crop_rect.right,
+                                                  x0 + x));
+        const gl_coord_t x_corner_left_end = max(instance.crop_rect.left,
+                                              min(instance.crop_rect.right,
+                                                  x0 - x));
+
+        for (gl_coord_t y_corner_prev = y_corner; x_corner >= x;) {
+            y_corner++;
+            decision_param += (2 * y_corner) + 1;
+
+            if (decision_param > 0) {
+                const gl_coord_t y_corner_outer =
+                    _round_num(sqrt(((double) half_b_outer * half_b_outer)
+                        * (1.0 - (((double) x_corner / half_a_outer)
+                            * ((double) x_corner / half_a_outer)))));
+
+                const gl_coord_t x_corner_right_end =
+                    max(instance.crop_rect.left, min(instance.crop_rect.right,
+                                                     x0 + x_corner));
+                const gl_coord_t y_corner_top_start =
+                    max(instance.crop_rect.top, min(instance.crop_rect.bottom,
+                                                     y0 - y_corner_outer));
+                const gl_coord_t y_corner_top_end =
+                    max(instance.crop_rect.top, min(instance.crop_rect.bottom,
+                                                     y0 - y_corner_prev));
+                const gl_coord_t x_corner_left_start =
+                    max(instance.crop_rect.left, min(instance.crop_rect.right,
+                                                  x0 - x_corner));
+                const gl_coord_t y_corner_bottom_start =
+                    max(instance.crop_rect.top, min(instance.crop_rect.bottom,
+                                                     y0 + y_corner_prev));
+                const gl_coord_t y_corner_bottom_end =
+                    max(instance.crop_rect.top, min(instance.crop_rect.bottom,
+                                                     y0 + y_corner_outer));
+
+                draw_rect.top_left.x = x_corner_right_start;
+                draw_rect.top_left.y = y_corner_top_start;
+                draw_rect.width = x_corner_right_end - x_corner_right_start;
+                draw_rect.height = y_corner_top_end - y_corner_top_start;
+                instance.driver.fill_f(&draw_rect, instance.pen.color);
+
+                draw_rect.top_left.x = x_corner_left_start;
+                draw_rect.width = x_corner_left_end - x_corner_left_start;
+                instance.driver.fill_f(&draw_rect, instance.pen.color);
+
+                draw_rect.top_left.y = y_corner_bottom_start;
+                draw_rect.height = y_corner_bottom_end - y_corner_bottom_start;
+                instance.driver.fill_f(&draw_rect, instance.pen.color);
+
+                draw_rect.top_left.x = x_corner_right_start;
+                draw_rect.width = x_corner_right_end - x_corner_right_start;
+                instance.driver.fill_f(&draw_rect, instance.pen.color);
+
+                x_corner--;
+                decision_param -= 2 * x_corner;
+
+                y_corner_prev = y_corner;
+            }
+        }
+    }
+
+    decision_param = (half_b_sqr * (x + 0.5f) * (x + 0.5f))
+        + (half_a_sqr * (y - 1) * (y - 1)) - (half_a_sqr * half_b_sqr);
+
+    for (gl_coord_t y_prev = y; y > 0;) {
+        y--;
+        dy -= 2 * (gl_long_int_t) half_a_sqr;
+
+        if (decision_param > 0.0f && y > 0) {
+            decision_param += (gl_long_int_t) half_a_sqr - dy;
+        } else {
+            const double y_middle = (y_prev + y) / 2.0;
+
+            const gl_int_t x_inner = (half_b_inner == 0) ? 0
+                : _round_num(sqrt(((double) half_a_inner * half_a_inner)
+                    * (1.0 - ((y_middle / half_b_inner)
+                        * (y_middle / half_b_inner)))));
+            const gl_int_t x_outer =
+                _round_num(sqrt(((double) half_a_outer * half_a_outer)
+                    * (1.0 - ((y_middle / half_b_outer)
+                        * (y_middle / half_b_outer)))));
+
+            /* Pen drawing */
+
+            const gl_int_t x_right = max(instance.crop_rect.left,
+                                    min(instance.crop_rect.right,
+                                        x0 + x_inner));
+            const gl_int_t y_top = max(instance.crop_rect.top,
+                                    min(instance.crop_rect.bottom,
+                                        y0 - y_prev));
+            const gl_int_t x_left = max(instance.crop_rect.left,
+                                    min(instance.crop_rect.right,
+                                        x0 - x_outer));
+            const gl_int_t y_bottom = max(instance.crop_rect.top,
+                                    min(instance.crop_rect.bottom, y0 + y));
+
+            const gl_uint_t width_right = max(0, x_outer - x_inner
+                - max(0, instance.crop_rect.left - (x0 + x_inner))
+                - max(0, (x0 + x_outer) - instance.crop_rect.right));
+            const gl_uint_t height_top = max(0, y_prev - y
+                - max(0, instance.crop_rect.top - (y0 - y_prev))
+                - max(0, (y0 - y) - instance.crop_rect.bottom));
+            const gl_uint_t width_left = max(0, x_outer - x_inner
+                - max(0, instance.crop_rect.left - (x0 - x_outer))
+                - max(0, (x0 - x_inner) - instance.crop_rect.right));
+            const gl_uint_t height_bottom = max(0, y_prev - y
+                - max(0, instance.crop_rect.top - (y0 + y))
+                - max(0, (y0 + y_prev) - instance.crop_rect.bottom));
+
+            draw_rect.top_left.x = x_right;
+            draw_rect.top_left.y = y_top;
+            draw_rect.width = width_right;
+            draw_rect.height = height_top;
+            instance.driver.fill_f(&draw_rect, instance.pen.color);
+
+            draw_rect.top_left.x = x_left;
+            draw_rect.width = width_left;
+            instance.driver.fill_f(&draw_rect, instance.pen.color);
+
+            draw_rect.top_left.y = y_bottom;
+            draw_rect.height = height_bottom;
+            instance.driver.fill_f(&draw_rect, instance.pen.color);
+
+            draw_rect.top_left.x = x_right;
+            draw_rect.width = width_right;
+            instance.driver.fill_f(&draw_rect, instance.pen.color);
+
+            /* --- */
+
+            if (NULL != fill_f_brush) {
+                /* Brush drawing */
+
+                draw_rect.top_left.x = max(instance.crop_rect.left,
+                                        min(instance.crop_rect.right,
+                                            x0 - x_inner));
+                draw_rect.width = max(0, 2 * x_inner
+                    - max(0, instance.crop_rect.left - (x0 - x_inner))
+                    - max(0, (x0 + x_inner) - instance.crop_rect.right));
+                fill_f_brush(&draw_rect, &border_rect);
+
+                draw_rect.top_left.y = y_top;
+                draw_rect.height = height_top;
+                fill_f_brush(&draw_rect, &border_rect);
+
+                /* --- */
+            }
+
+            x++;
+            dx += 2 * half_b_sqr;
+            decision_param += dx - dy + (gl_long_int_t) half_b_sqr;
+
+            y_prev = y;
+        }
+    }
+}
+
 void gl_draw_arc(gl_coord_t x, gl_coord_t y, gl_uint_t radius, gl_angle_t start_angle, gl_angle_t end_angle)
 {
     gl_arc_t arc_tmp;
@@ -2106,8 +2472,6 @@ void gl_draw_arc(gl_coord_t x, gl_coord_t y, gl_uint_t radius, gl_angle_t start_
     if (!instance.driver.fill_f)
         return;
 
-    // crtanje preko slice f-je iziskuje ranije handlovanje
-    // inner_offset-a pen-a
     if (inner_width  > radius)
         arc_tmp.radius = 0;
     else
@@ -2171,16 +2535,13 @@ void gl_draw_arc(gl_coord_t x, gl_coord_t y, gl_uint_t radius, gl_angle_t start_
         return;
     }
 
-    // neregularno stanje
     arc_tmp.start_angle = start_angle % 360;
     arc_tmp.end_angle = end_angle % 360;
 
-    // iscrtavamo odvojeno gornju i donju polovinu kruga
     if (arc_tmp.start_angle < 180)
     {
         if (arc_tmp.end_angle < arc_tmp.start_angle)
         {
-            // crtamo: start-180, 180-360, 0-end
             arc_tmp.end_angle = 180;
             if (no_crop_up)
                 _draw_slice(&arc_tmp, &border_rect);
@@ -2206,7 +2567,6 @@ void gl_draw_arc(gl_coord_t x, gl_coord_t y, gl_uint_t radius, gl_angle_t start_
 
         if (arc_tmp.end_angle <= 180)
         {
-            // crtamo: start-end
             if (no_crop_up)
                 _draw_slice(&arc_tmp, &border_rect);
             else if (draw_up)
@@ -2215,7 +2575,6 @@ void gl_draw_arc(gl_coord_t x, gl_coord_t y, gl_uint_t radius, gl_angle_t start_
             return;
         }
 
-        // crtamo: start-180, 180-end
         arc_tmp.end_angle = 180;
         if (no_crop_up)
             _draw_slice(&arc_tmp, &border_rect);
@@ -2232,10 +2591,8 @@ void gl_draw_arc(gl_coord_t x, gl_coord_t y, gl_uint_t radius, gl_angle_t start_
         return;
     }
 
-    // inace je arc_tmp.start_angle >= 180
     if (arc_tmp.end_angle > arc_tmp.start_angle)
     {
-        // crtamo: start-end
         if (no_crop_down)
             _draw_slice(&arc_tmp, &border_rect);
         else if (draw_down)
@@ -2246,7 +2603,6 @@ void gl_draw_arc(gl_coord_t x, gl_coord_t y, gl_uint_t radius, gl_angle_t start_
 
     if (arc_tmp.end_angle > 180)
     {
-        // crtamo start-360, 0-180, 180-end
         arc_tmp.end_angle = 360;
         if (no_crop_down)
             _draw_slice(&arc_tmp, &border_rect);
@@ -2270,8 +2626,6 @@ void gl_draw_arc(gl_coord_t x, gl_coord_t y, gl_uint_t radius, gl_angle_t start_
         return;
     }
 
-    // inace je end <= 180
-    // u tom slucaju crtamo start-360, 0-end
     arc_tmp.end_angle = 360;
     if (no_crop_down)
         _draw_slice(&arc_tmp, &border_rect);
@@ -2296,9 +2650,9 @@ static void _draw_rects_quarters(gl_point_t t1, gl_point_t t2, gl_int_t radius, 
     gl_int_t radius1;
     gl_int_t radius2;
 
-    bool no_pen;            // ako je pen.width = 0
-    bool has_brush;         // ako je brush_style != none
-    bool no_more_brush;     // ako je za crtanje ostao samo pen ili je brush_style = none
+    bool no_pen;
+    bool has_brush;
+    bool no_more_brush;
 
     gl_int_t x_right_up;
     gl_int_t x_ring;
@@ -2409,7 +2763,7 @@ static void _draw_rects_quarters(gl_point_t t1, gl_point_t t2, gl_int_t radius, 
         {
             rect_ring.top_left.y = rect.top_left.y;
             circle_equation_part = radius2*radius2 - (rect_ring.top_left.y - t2.y)*(rect_ring.top_left.y - t2.y);
-            while ((x_ring - t2.x)*(x_ring - t2.x) > circle_equation_part)
+            while (((x_ring - t2.x)*(x_ring - t2.x) > circle_equation_part) && (circle_equation_part >= 0))
                 x_ring -= 1;
 
             rect.width = x_ring - t2.x;
@@ -2598,7 +2952,6 @@ static void _draw_rect_rounded_non_standard( gl_rectangle_t *rect, gl_int_t radi
     }
 }
 
-
 void gl_draw_rect_rounded(gl_coord_t x, gl_coord_t y, gl_uint_t width, gl_uint_t height, gl_uint_t radius)
 {
     gl_int_t inner_offset = instance.pen.inner_width;
@@ -2613,13 +2966,11 @@ void gl_draw_rect_rounded(gl_coord_t x, gl_coord_t y, gl_uint_t width, gl_uint_t
     {
         gl_rectangle_t rect;
 
-        // pripremi vrednosti
         rect.height = height - (inner_offset << 1);
         rect.width = width - (inner_offset << 1);
         rect.top_left.x = x + inner_offset;
         rect.top_left.y = y + inner_offset;
 
-        // iscrtaj
         _draw_rect_rounded_non_standard(&rect, radius);
     }
     else
@@ -2630,7 +2981,6 @@ void gl_draw_rect_rounded(gl_coord_t x, gl_coord_t y, gl_uint_t width, gl_uint_t
         rect.top_left.x = x;
         rect.top_left.y = y;
 
-        // pripremi vrednosti
         original_color = instance.brush.color;
         original_brush_style = instance.brush.style;
 
@@ -2638,10 +2988,8 @@ void gl_draw_rect_rounded(gl_coord_t x, gl_coord_t y, gl_uint_t width, gl_uint_t
         instance.brush.style = GL_BRUSH_STYLE_FILL;
         instance.pen.inner_width = 0;
 
-        // odradi posao
         _draw_rect_rounded_non_standard(&rect, radius);
 
-        // vrati prosledjene vrednosti
         instance.brush.color = original_color;
         instance.brush.style =  original_brush_style;
         instance.pen.inner_width = inner_offset;

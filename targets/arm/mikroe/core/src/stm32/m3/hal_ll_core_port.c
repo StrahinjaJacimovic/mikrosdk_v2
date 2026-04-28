@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -70,7 +70,7 @@ void hal_ll_core_port_nvic_enable_irq( uint8_t IRQn )
     if ( IRQn >= 80 )
     {
         set_reg_bit( HAL_LL_CORE_NVIC_ISER_2, ( ( hal_ll_core_irq( IRQn ) ) & HAL_LL_CORE_IRQ_MASK ) );
-	} else if ( IRQn >= 48 ) {
+    } else if ( IRQn >= 48 ) {
         set_reg_bit( HAL_LL_CORE_NVIC_ISER_1, ( ( hal_ll_core_irq( IRQn ) ) & HAL_LL_CORE_IRQ_MASK ) );
     } else if ( IRQn >= 16 ) {
         set_reg_bit( HAL_LL_CORE_NVIC_ISER_0, ( ( hal_ll_core_irq( IRQn ) ) & HAL_LL_CORE_IRQ_MASK ) );
@@ -102,7 +102,7 @@ void hal_ll_core_port_nvic_disable_irq( uint8_t IRQn )
     if ( IRQn >= 80 )
     {
         set_reg_bit( HAL_LL_CORE_NVIC_ICER_2, ( ( hal_ll_core_irq( IRQn ) ) & HAL_LL_CORE_IRQ_MASK ) );
-	} else if ( IRQn >= 48 ) {
+    } else if ( IRQn >= 48 ) {
         set_reg_bit( HAL_LL_CORE_NVIC_ICER_1, ( ( hal_ll_core_irq( IRQn ) ) & HAL_LL_CORE_IRQ_MASK ) );
     } else if ( IRQn >= 16 ) {
         set_reg_bit( HAL_LL_CORE_NVIC_ICER_0, ( ( hal_ll_core_irq( IRQn ) ) & HAL_LL_CORE_IRQ_MASK ) );
@@ -114,23 +114,23 @@ void hal_ll_core_port_nvic_set_priority_irq( uint8_t IRQn, uint8_t IRQn_priority
     uintptr_t *reg;
     uint8_t    tmp_shift;
 
-	if ( IRQn > 15 )
-	{
+    if ( IRQn > 15 )
+    {
         reg = HAL_LL_CORE_NVIC_IPR_0 + ( ( hal_ll_core_irq( IRQn ) ) >> 2 );
         tmp_shift = ( ( ( hal_ll_core_irq( IRQn ) ) % 4 ) << 3 ) + 6;
-	} else if ( ( IRQn > 3 ) & ( IRQn <= 15 ) ) {
-		reg = HAL_LL_CORE_NVIC_SCB_SHPR1 + ( IRQn / 4 ) - 1;
-		tmp_shift = ( ( IRQn % 4 ) << 3 ) + 6;
-	} else {
-		return;
-	}
+    } else if ( ( IRQn > 3 ) & ( IRQn <= 15 ) ) {
+        reg = HAL_LL_CORE_NVIC_SCB_SHPR1 + ( IRQn / 4 ) - 1;
+        tmp_shift = ( ( IRQn % 4 ) << 3 ) + 6;
+    } else {
+        return;
+    }
 
-	if ( IRQn_priority & HAL_LL_CORE_LOW_NIBBLE ) {
+    if ( IRQn_priority & HAL_LL_CORE_LOW_NIBBLE ) {
         *reg &= ~( HAL_LL_CORE_LOW_NIBBLE << tmp_shift );
-		*reg |= ( uint32_t )IRQn_priority << tmp_shift;
-	} else {
+        *reg |= ( uint32_t )IRQn_priority << tmp_shift;
+    } else {
         *reg &= ~( HAL_LL_CORE_LOW_NIBBLE << tmp_shift );
-		*reg |= ( uint32_t )IRQn_priority << ( tmp_shift - 6 );
+        *reg |= ( uint32_t )IRQn_priority << ( tmp_shift - 6 );
     }
 }
 // ------------------------------------------------------------------------- END

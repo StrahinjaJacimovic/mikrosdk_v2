@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -50,6 +50,10 @@ extern "C"{
 
 #include "hal_target.h"
 
+#if !DRV_TO_HAL
+#include "hal_ll_adc.h"
+#endif
+
 /**
  * @brief ADC HAL level handle.
  * @details The context for storing  ADC level object handlers.
@@ -61,6 +65,7 @@ extern "C"{
 typedef struct
 {
     handle_t *hal_adc_handle; /*!< ADC HAL level handle */
+    handle_t *drv_adc_handle; /*!< ADC DRV level handle */
     bool init_state; /*!< ADC HAL object init state */
 } hal_adc_handle_register_t;
 
@@ -93,7 +98,7 @@ typedef enum
     HAL_ADC_RESOLUTION_16_BIT,       /*!< 16 bit resolution. */
 
     /*!< Default resolution. */
-    HAL_ADC_RESOLUTION_DEFAULT = HAL_ADC_RESOLUTION_MEMAKE
+    HAL_ADC_RESOLUTION_DEFAULT = HAL_ADC_RESOLUTION_CMAKE
 } hal_adc_resolution_t;
 
 /**

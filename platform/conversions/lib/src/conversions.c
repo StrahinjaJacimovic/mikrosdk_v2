@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -44,13 +44,16 @@
 #include "conversions.h"
 #include <string.h>
 
+#ifdef __MIKROC__
+#include "built_in.h"
+#endif
 // ------------------------------------------------------------- PRIVATE MACROS
 
 #define F32_ZERO        0x00000000
 #define F32_NAN         0xFFFFFFFF
-#ifdef __CONVERSIONS_CHIPS_32BIT__
+#ifdef __CONVERSIONS_CHIPS_16BIT_32BIT__
 #define F32_PLUS_INF    0x7F800000
-#elif defined(__CONVERSIONS_CHIPS_PIC__)
+#elif defined(__CONVERSIONS_CHIPS_8BIT__)
 #define F32_PLUS_INF    0xFF000000
 #endif
 #define F32_MINUS_INF   0xFF800000
@@ -82,9 +85,9 @@ union f64_ul
     uint8_t uc[8];
     struct
     {
-        fraction : 52;
-        exponent : 11;
-        sign : 1;
+        uint64_t fraction : 52;
+        unsigned exponent : 11;
+        unsigned sign : 1;
     };
 };
 #endif
@@ -110,9 +113,9 @@ static const char digits[] =
  * @return uint64_t
  */
 #ifdef __CONVERSIONS_SUBSET__
-static uint32_t forward_input( char * byte_in, char * buf_str2, char * counter );
+static uint32_t forward_input( char * byte_in, char * buf_str2, uint8_t * counter );
 #else
-static uint64_t forward_input( char * byte_in, char * buf_str2, char * counter );
+static uint64_t forward_input( char * byte_in, char * buf_str2, uint8_t * counter );
 #endif
 
 /**
@@ -849,14 +852,14 @@ uint8_t float_to_str( float f_num, char * string )
 
     i = 1;                          // The function returns 1 if +INF or 2 if -INF
 
-    #ifdef __CONVERSIONS_CHIPS_32BIT__
+    #ifdef __CONVERSIONS_CHIPS_16BIT_32BIT__
     if ( un.uc[F32_BO] & 0x80 )
     {                               // Byte ordering. 3 = Little endian.
         un.uc[F32_BO] ^= 0x80;      // If fnum < 0 then fnum = -fnum
         i++;
         *string++ = '-';
     }
-    #elif defined(__CONVERSIONS_CHIPS_PIC__)
+    #elif defined(__CONVERSIONS_CHIPS_8BIT__)
     if ( un.uc[F32_BO-1] & 0x80 )
     {                               // Byte ordering. 3 = Little endian.
         un.uc[F32_BO-1] ^= 0x80;      // If fnum < 0 then fnum = -fnum
@@ -903,9 +906,9 @@ uint8_t float_to_str( float f_num, char * string )
 
     // From here on, we'll treat it as a fixed-point fraction with byte
     // 1 = integer part, and bytes 2, 3 and 4 = fractional part
-    #ifdef __CONVERSIONS_CHIPS_32BIT__
+    #ifdef __CONVERSIONS_CHIPS_16BIT_32BIT__
     un.ul <<= 1;                              // move exponent into most significant byte
-    #elif defined(__CONVERSIONS_CHIPS_PIC__)
+    #elif defined(__CONVERSIONS_CHIPS_8BIT__)
     {
         uint32_t aux;
         aux = un.ul & 0x007FFFFF;

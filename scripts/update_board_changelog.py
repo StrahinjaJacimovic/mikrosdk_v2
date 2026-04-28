@@ -1,0 +1,115 @@
+import os, requests, argparse
+import support as support
+
+from datetime import datetime
+from packaging.version import Version
+
+# Gets latest release headers from repository
+def get_headers(api, token):
+    if api:
+        return {
+            'Authorization': f'token {token}'
+        }
+    else:
+        return {
+            'Authorization': f'Bearer {token}',
+            'Accept': 'application/octet-stream'
+        }
+
+def write_output_to_file(file, content):
+    with open(file, 'w') as file_write:
+        file_write.write(content)
+    file_write.close()
+
+def find_file(root_folder, filename):
+    for dirpath, dirnames, filenames in os.walk(root_folder):
+        if filename in filenames:
+            return os.path.join(dirpath, filename), dirpath
+    return None, None
+
+def fetch_latest_release_version(repo, token):
+    api_headers = get_headers(True, token)
+    url = f'https://api.github.com/repos/{repo}/releases'
+    response_acquired = False
+
+    # First: 5 fast attempts (10s timeout)
+    for attempt in range(1, 6):
+        try:
+            print(f'GitHub API attempt {attempt}/5 (timeout=10s)')
+            response = requests.get(url, headers=api_headers, timeout=10)
+            response.raise_for_status()
+            response_acquired = True
+            break
+
+        except requests.exceptions.RequestException as e:
+            last_exception = e
+            print(f'\033[93mAttempt {attempt} failed:\033[0m {e}')
+
+    if not response_acquired:
+        # Final fallback attempt (600s timeout)
+        try:
+            print('Final attempt with extended timeout (600s)')
+            response = requests.get(url, headers=api_headers, timeout=600)
+            response.raise_for_status()
+
+        except requests.exceptions.RequestException as e:
+            print('\033[91mFinal attempt failed too\033[0m')
+            raise last_exception from e
+    return support.get_latest_release(response.json())
+
+def edit_changelog(version):
+    found_file, file_dir = find_file(os.path.join(os.getcwd(), "changelog"), "new_hw.md")
+
+    if found_file:
+        current_date = datetime.now().strftime("%Y-%m-%d")
+        os.rename(found_file, os.path.join(file_dir, f'{current_date}.md'))
+        with open(os.path.join(file_dir, f'{current_date}.md'), 'r') as hw_changelog_file:
+            board_changelog = hw_changelog_file.read()
+        hw_changelog_file.close()
+        board_changelog = board_changelog.replace('`DATE`', current_date).replace('#date', f'#{current_date}')
+        with open(os.path.join(file_dir, f'{current_date}.md'), 'w') as hw_changelog_file:
+            hw_changelog_file.write(board_changelog)
+        hw_changelog_file.close()
+
+        os.makedirs(os.path.join(file_dir, f'v{version}', 'new_hw'), exist_ok=True)
+        os.rename(os.path.join(file_dir, f'{current_date}.md'), os.path.join(file_dir, f'v{version}', f'new_hw/{current_date}.md'))
+
+        if os.path.isfile(os.path.join(file_dir, 'new_hw.md')):
+            os.remove(os.path.join(file_dir, 'new_hw.md'))
+
+        write_output_to_file(os.path.join(os.getcwd(), 'sdk_tag.txt'), version)
+
+        # Return prettyfied local path to the changelog file for this release to use it in bsp header
+        return os.path.join(file_dir, f'v{version}', f'new_hw/{current_date}.md').replace(os.sep, '/').split('changelog/')[1]
+    else:
+        # Extract and sort versions, removing the 'v' prefix
+        # Take the highest version present in the repo itself, not github
+        latest_version = max(os.listdir(os.path.join(os.getcwd(), 'changelog')), key=lambda v: Version(v.lstrip('v'))).lstrip('v')
+        write_output_to_file(os.path.join(os.getcwd(), 'sdk_tag.txt'), latest_version)
+
+        return None
+
+def edit_bsp_header(changelog_path):
+    # Go recursively through all bsp headers
+    for root, _, files in os.walk(os.path.join(os.getcwd(), 'bsp')):
+        for file in files:
+            if 'board.h' == file or 'mcu_card.h' == file:
+                with open(os.path.join(root, file), 'r') as bsp_header_file:
+                    bsp_header = bsp_header_file.read()
+                # If placeholder for changelog path is found - replace it with actual changelog path
+                if '{markdown_path}' in bsp_header:
+                    write_output_to_file(os.path.join(root, file), bsp_header.replace('{markdown_path}', changelog_path))
+
+if __name__ == '__main__':
+    # Get arguments
+    parser = argparse.ArgumentParser(description="Upload directories as release assets.")
+    parser.add_argument("token", type=str, help="GitHub Token")
+    parser.add_argument("repo", type=str, help="Repository name, e.g., 'username/repo'")
+    args = parser.parse_args()
+
+    release = fetch_latest_release_version(args.repo, args.token)
+    changelog_path = edit_changelog(release['tag_name'].replace('mikroSDK-', ''))
+
+    # Update bsp header for board/card clock release
+    if changelog_path:
+        edit_bsp_header(changelog_path)

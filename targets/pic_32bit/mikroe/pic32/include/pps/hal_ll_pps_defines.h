@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -72,6 +72,7 @@ typedef enum
     HAL_LL_PPS_FUNCTIONALITY_SPI_MISO,  // SPI module
     HAL_LL_PPS_FUNCTIONALITY_SPI_MOSI,  // SPI module
     HAL_LL_PPS_FUNCTIONALITY_PWM,       // TIM/PWM module
+    HAL_LL_PPS_FUNCTIONALITY_CAN,       // CAN module
     HAL_LL_PPS_FUNCTIONALITY_IVT,       // Interrupt mapping
 
     HAL_LL_PPS_FUNCTIONALITY_NONE = 0xFF
@@ -100,6 +101,8 @@ typedef enum
 #define HAL_LL_INTCON_ADDRESS 0xBF881000UL
 #define HAL_LL_DMACON_ADDRESS 0xBF883000UL
 #define HAL_LL_CFGCON_ADDRESS 0xBF80F200UL
+#else
+#define HAL_LL_CFGCON_ADDRESS false
 #endif
 
 /*!< @brief Used in low level source */

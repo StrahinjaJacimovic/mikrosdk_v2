@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -49,11 +49,17 @@ extern "C"{
 #endif
 
 #include <stdint.h>
+#include "assembly.h"
+#ifdef __XC32__
+#include <sys/attribs.h>
+#endif
 
 #if defined(__MIKROC_AI_FOR_PIC32__)
 #define MIKROC_IV(x) iv x ilevel 7
+#define MARK_AS_IRQ_HANDLER(vec_num)
 #else
 #define MIKROC_IV(x)
+#define MARK_AS_IRQ_HANDLER(vec_num) __ISR(vec_num, IPL7SRS)
 #endif
 
 #define __weak __attribute__((weak))
@@ -70,15 +76,16 @@ typedef enum
     HAL_LL_IRQ_PRIORITY_LEVEL_7
 } hal_ll_core_irq_priority_levels;
 
-#define hal_ll_core_enable_int_asm asm nop; \
-                                   asm EI R30; \
-                                   asm nop
+#define hal_ll_core_enable_int_asm assembly(nop); \
+                                   assembly(ei); \
+                                   assembly(nop)
 
-#define hal_ll_core_disable_int_asm asm nop; \
-                                    asm DI R30; \
-                                    asm nop
+#define hal_ll_core_disable_int_asm assembly(nop); \
+                                    assembly(di); \
+                                    assembly(nop)
 
-#define HAL_LL_INTCON_MVEC_BIT 12
+#define HAL_LL_INTCON_MVEC_BIT (12)
+#define HAL_LL_INT_PRI_SHADOW_SET (0x76543210UL)
 
 #ifdef __cplusplus
 }

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -41,8 +41,8 @@
  * @brief This file contains all the functions prototypes for the ADC library.
  */
 
-#ifndef HAL_LL_ADC_H
-#define HAL_LL_ADC_H
+#ifndef _HAL_LL_ADC_H_
+#define _HAL_LL_ADC_H_
 
 #ifdef __cplusplus
 extern "C"{
@@ -67,6 +67,7 @@ extern "C"{
 typedef struct
 {
     handle_t *hal_ll_adc_handle;
+    handle_t *hal_drv_adc_handle;
     bool init_ll_state;
 } hal_ll_adc_handle_register_t;
 
@@ -94,7 +95,7 @@ typedef enum
     HAL_LL_ADC_RESOLUTION_16_BIT,    /**< 16 bit resolution */
 
     /*!< Default resolution. */
-    HAL_LL_ADC_RESOLUTION_DEFAULT = HAL_LL_ADC_RESOLUTION_MEMAKE
+    HAL_LL_ADC_RESOLUTION_DEFAULT = HAL_LL_ADC_RESOLUTION_CMAKE
 } hal_ll_adc_resolution_t;
 
 /**
@@ -221,5 +222,5 @@ void hal_ll_adc_close( handle_t *handle );
 }
 #endif
 
-#endif // HAL_LL_ADC_H
+#endif // _HAL_LL_ADC_H_
 // ------------------------------------------------------------------------- END

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -49,6 +49,16 @@ extern "C"{
 #endif
 
 #include "hal_ll_target.h"
+
+#if DRV_TO_HAL
+// For DRV -> HAL -> HAL_LL approach.
+#define DRV_TO_HAL_STATIC static
+#define DRV_TO_HAL_PREFIXED(prefix, name) name
+#else
+// For DRV -> HAL_LL approach.
+#define DRV_TO_HAL_STATIC
+#define DRV_TO_HAL_PREFIXED(prefix, name) prefix##_##name
+#endif
 
 #define HAL_MODULE_ERROR (hal_base_addr_t)(0xFFFFFFFF) /*!< @def General module error. */
 #define HAL_CHANNEL_ERROR (hal_channel_t)(0xFFFFFFFF) /*!< @def Channel error. ( Timer, ADC... ) */

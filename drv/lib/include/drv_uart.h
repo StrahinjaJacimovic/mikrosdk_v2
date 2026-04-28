@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -149,6 +149,9 @@ typedef struct
 
     size_t tx_ring_size; /*!< Tx ring size. */
     size_t rx_ring_size; /*!< Rx ring size. */
+
+    bool is_interrupt; /*!< Choose between interrupt and polling. */
+    uint32_t timeout_polling_write; /*!< UART polling write timeout value ( number of retries for each operation ) */
 } uart_config_t;
 
 /**
@@ -366,6 +369,34 @@ err_t uart_set_parity( uart_t *obj, uart_parity_t parity );
 err_t uart_set_stop_bits( uart_t *obj, uart_stop_bits_t stop );
 
 /**
+ * @brief Set UART polling write timeout value.
+ * @details Sets UART polling write timeout interval to \p timeout_polling_write value.
+ * This means that the module shall retry any given operation \p timeout_polling_write
+ * number of times before exiting with adequate timeout value.
+ * @param[in] obj UART driver object.
+ * See #uart_t structure definition for detailed explanation.
+ * @param[in] timeout_polling_write Specified UART polling write timeout value.
+ * @return The function can return one of the values defined by
+ * #uart_err_t, which is size dependant on the architecture.
+ * @pre Make sure that adequate memory has been allocated beforehand.
+ * See #uart_open definition for detailed explanation.
+ * @note It is recommended to check return value for error.
+ *
+ * @b Example
+ * @code
+ *   // UART driver context structure.
+ *   static uart_t uart;
+ *
+ *   // Set timeout value.
+ *   if ( uart_set_polling_write_timeout( &uart, 1000 ) == UART_ERROR )
+ *   {
+ *       // Error handling strategy
+ *   }
+ * @endcode
+ */
+err_t uart_set_polling_write_timeout( uart_t *obj, uint32_t timeout_polling_write );
+
+/**
  * @brief Set the number of  UART data bits.
  * @details Sets the number of data bits to be used by the UART driver.
  * @param[in,out] obj UART driver object.
@@ -419,7 +450,7 @@ void uart_set_blocking( uart_t *obj, bool blocking );
  * @param[in] buffer Array containing data to be written.
  * @param[in] size Number of bytes to be written.
  * @return Returns the number of bytes that were actually written,
- * or -1 if an error occurred or no data written.
+ * or -1 if an error occurred.
  * @pre Make sure that adequate memory has been allocated beforehand,
  * and the module was configured adequately ( bit-rate... ).
  * See #uart_open, #uart_set_baud, #uart_set_data_bits,
@@ -452,7 +483,7 @@ err_t uart_write( uart_t *obj, uint8_t *buffer, size_t size );
  * See #uart_t structure definition for detailed explanation.
  * @param[in] text Pointer to text array.
  * @return Returns the number of bytes that were actually written,
- * or -1 if an error occurred or no data written.
+ * or -1 if an error occurred.
  * @pre Make sure that adequate memory has been allocated beforehand,
  * and the module was configured adequately ( bit-rate... ).
  * See #uart_open, #uart_set_baud, #uart_set_data_bits,
@@ -482,7 +513,7 @@ err_t uart_print( uart_t *obj, char *text );
  * See #uart_t structure definition for detailed explanation.
  * @param[in] text Pointer to text array.
  * @return Returns the number of bytes that were actually written,
- * or -1 if an error occurred or no data written.
+ * or -1 if an error occurred.
  * @pre Make sure that adequate memory has been allocated beforehand,
  * and the module was configured adequately ( bit-rate... ).
  * See #uart_open, #uart_set_baud, #uart_set_data_bits,
@@ -513,7 +544,7 @@ err_t uart_println( uart_t *obj, char *text );
  * @param[out] buffer Array to place read data in.
  * @param[in] size Number of bytes to be written.
  * @return Returns the number of bytes that were actually read,
- * or -1 if an error occurred or no data read.
+ * or -1 if an error occurred.
  * @pre Make sure that adequate memory has been allocated beforehand,
  * and the module was configured adequately ( bit-rate... ).
  * See #uart_open, #uart_set_baud, #uart_set_data_bits,
@@ -585,7 +616,8 @@ void uart_clear( uart_t *obj );
  * clock for lower power consumption.
  * @param[in,out] obj UART driver object.
  * See #uart_t structure definition for detailed explanation.
- * @return Nothing.
+ * @return The function can return one of the values defined by
+ * err_t, which is dependant on the architecture and ported low level layer.
  *
  * @b Example
  * @code
@@ -593,10 +625,14 @@ void uart_clear( uart_t *obj );
  *   static uart_t uart;
  *
  *   // Close the UART module object handler.
- *   uart_close( &uart );
+ *   if ( UART_SUCCESS == uart_close( &uart ) {
+ *       // no error
+ *   } else {
+ *       // Handle the error
+ *   }
  * @endcode
  */
-void uart_close( uart_t *obj );
+err_t uart_close( uart_t *obj );
 
 /*! @} */ // drvuartgroup
 /*! @} */ // drvgroup

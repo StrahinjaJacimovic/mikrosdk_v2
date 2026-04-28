@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -113,7 +113,11 @@ typedef struct
  *   static digital_in_t input_pin;
  *
  *   // Initializes digital input driver context structure and individual GPIO pin as digital input.
- *   digital_in_init( &input_pin, PB2 );
+ *   if ( DIGITAL_IN_SUCCESS == digital_in_init( &input_pin, GPIO_PB2 ) ) {
+ *       // No error
+ *   } else {
+ *       // Handle the error
+ *   }
  * @endcode
  */
 err_t digital_in_init( digital_in_t *in, pin_name_t name );
@@ -138,7 +142,11 @@ err_t digital_in_init( digital_in_t *in, pin_name_t name );
  *   value = digital_in_read( &input_pin );
  * @endcode
  */
+#if defined(FLATTEN_ME) && (FLATTEN_ME_LEVEL >= FLATTEN_ME_LEVEL_HIGH)
+#define digital_in_read(_handle) hal_gpio_read_pin_input( (hal_gpio_pin_t *)_handle )
+#else
 uint8_t digital_in_read( digital_in_t *in );
+#endif
 
 /*! @} */ // digingroup
 /*! @} */ // drvgroup

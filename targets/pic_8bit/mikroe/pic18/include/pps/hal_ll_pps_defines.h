@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -111,7 +111,11 @@ typedef enum
 /*!< @brief Used in low level source */
 #define reg_addr_ptr(reg_addr) *(uint8_t *)reg_addr
 #define write_reg_ptr(reg_addr,reg_val) reg_addr_ptr(reg_addr)=reg_val
+#ifdef __XC8__
+#define clear_reg_ptr(reg_addr,reg_val) reg_addr_ptr(reg_addr)= reg_addr_ptr(reg_addr)&(~reg_val)
+#else
 #define clear_reg_ptr(reg_addr,reg_val) reg_addr_ptr(reg_addr)&=~reg_val
+#endif
 
 /*!< @brief All PIC18 chips have the same unlock sequence */
 #define HAL_LL_PPS_LOCK_UNLOCK_SEQUENCE_KEY_FIRST 0x55

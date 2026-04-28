@@ -1,5 +1,59 @@
+/****************************************************************************
+**
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
+** Contact: https://www.mikroe.com/contact
+**
+** This file is part of the mikroSDK package
+**
+** Commercial License Usage
+**
+** Licensees holding valid commercial NECTO compilers AI licenses may use this
+** file in accordance with the commercial license agreement provided with the
+** Software or, alternatively, in accordance with the terms contained in
+** a written agreement between you and The MikroElektronika Company.
+** For licensing terms and conditions see
+** https://www.mikroe.com/legal/software-license-agreement.
+** For further information use the contact form at
+** https://www.mikroe.com/contact.
+**
+**
+** GNU Lesser General Public License Usage
+**
+** Alternatively, this file may be used for
+** non-commercial projects under the terms of the GNU Lesser
+** General Public License version 3 as published by the Free Software
+** Foundation: https://www.gnu.org/licenses/lgpl-3.0.html.
+**
+** The above copyright notice and this permission notice shall be
+** included in all copies or substantial portions of the Software.
+**
+** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
+** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
+** OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+**
+****************************************************************************/
+/*!
+ * @file  mcu_definitions.h
+ * @brief MCU specific pin and module definitions for PIC32MZ1024EFH124.
+ */
+
 #ifndef _MCU_DEFINITIONS_H_
 #define _MCU_DEFINITIONS_H_
+
+#include "mcu_reg_addresses.h"
+#include "can_definitions.h"
+
+//DMA
+#define DMA_NUM_OF_MODULES 1
+#define DMA_NUM_OF_STREAMS 8
+#define DMA_NUM_OF_STREAMS_FAMILY 8
+#define DMA_NUM_OF_CHANNELS 255
+#define DMA_NUM_OF_CHANNELS_FAMILY 255
+//EOF DMA
 
 //ADC
 #define HAL_LL_RA0_AN24_ANSELA 24
@@ -1170,8 +1224,6 @@
 #define HAL_LL_SPI6CON_ADDRESS 0xBF821A00UL
 #define HAL_LL_SPI6CON2_ADDRESS 0xBF821A40UL
 #define HAL_LL_SPI6STAT_ADDRESS 0xBF821A10UL
-#define HAL_LL_SRCON0A_ADDRESS 0xBF8600C0UL
-#define HAL_LL_SRCON1A_ADDRESS 0xBF8600D0UL
 // EOF I2C and SPI Register addresses
 
 // TMR Register addresses
@@ -1522,5 +1574,18 @@
 #define HAL_LL_UART_6_TX_FLAG 30
 #define HAL_LL_UART_6_RX_FLAG 29
 // EOF UART Interrupt necessities
+
+// Slew rate registers
+#define HAL_LL_SRCON0A_ADDRESS 0xBF8600C0UL
+#define HAL_LL_SRCON1A_ADDRESS 0xBF8600D0UL
+#define HAL_LL_SRCON0B_ADDRESS 0xBF8601C0UL
+#define HAL_LL_SRCON1B_ADDRESS 0xBF8601D0UL
+#define HAL_LL_SRCON0E_ADDRESS 0xBF8604C0UL
+#define HAL_LL_SRCON1E_ADDRESS 0xBF8604D0UL
+#define HAL_LL_SRCON0F_ADDRESS 0xBF8605C0UL
+#define HAL_LL_SRCON1F_ADDRESS 0xBF8605D0UL
+#define HAL_LL_SRCON0G_ADDRESS 0xBF8606C0UL
+#define HAL_LL_SRCON1G_ADDRESS 0xBF8606D0UL
+// EOF Slew rate registers
 
 #endif // _MCU_DEFINITIONS_H_

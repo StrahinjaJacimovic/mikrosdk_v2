@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -52,50 +52,50 @@ static volatile hal_ll_tim_handle_register_t hal_ll_module_state[ TIM_MODULE_COU
 // ------------------------------------------------------------- PRIVATE MACROS
 /*!< CR1 constants. */
 #define HAL_LL_TIM_ENABLE_COUNTER_BIT       0
-#define HAL_LL_TIM_BDTR_MOE_BIT				15
-#define HAL_LL_TIM_BDTR_MOE					0x8000
+#define HAL_LL_TIM_BDTR_MOE_BIT             15
+#define HAL_LL_TIM_BDTR_MOE                 0x8000
 
-#define HAL_LL_TIM_CCMR_CC2S_BIT0			0x100u
-#define HAL_LL_TIM_CCMR_CC2S_BIT1			0x200u
-#define HAL_LL_TIM_CCMR_OC2PE				0x800u
-#define HAL_LL_TIM_CCMR_OC2M_BIT0			0x1000u
-#define HAL_LL_TIM_CCMR_OC2M_BIT1			0x2000u
-#define HAL_LL_TIM_CCMR_OC2M_BIT2			0x4000u
+#define HAL_LL_TIM_CCMR_CC2S_BIT0           0x100u
+#define HAL_LL_TIM_CCMR_CC2S_BIT1           0x200u
+#define HAL_LL_TIM_CCMR_OC2PE               0x800u
+#define HAL_LL_TIM_CCMR_OC2M_BIT0           0x1000u
+#define HAL_LL_TIM_CCMR_OC2M_BIT1           0x2000u
+#define HAL_LL_TIM_CCMR_OC2M_BIT2           0x4000u
 
-#define HAL_LL_TIM_CCMR_CC3S_BIT0			0x1u
-#define HAL_LL_TIM_CCMR_CC3S_BIT1			0x2u
-#define HAL_LL_TIM_CCMR_OC3PE				0x8u
-#define HAL_LL_TIM_CCMR_OC3M_BIT0			0x10u
-#define HAL_LL_TIM_CCMR_OC3M_BIT1			0x20u
-#define HAL_LL_TIM_CCMR_OC3M_BIT2			0x40u
+#define HAL_LL_TIM_CCMR_CC3S_BIT0           0x1u
+#define HAL_LL_TIM_CCMR_CC3S_BIT1           0x2u
+#define HAL_LL_TIM_CCMR_OC3PE               0x8u
+#define HAL_LL_TIM_CCMR_OC3M_BIT0           0x10u
+#define HAL_LL_TIM_CCMR_OC3M_BIT1           0x20u
+#define HAL_LL_TIM_CCMR_OC3M_BIT2           0x40u
 
-#define HAL_LL_TIM_CR1_DIR					0x10
-#define HAL_LL_TIM_CR1_DIR_BIT				4
+#define HAL_LL_TIM_CR1_DIR                  0x10
+#define HAL_LL_TIM_CR1_DIR_BIT              4
 
-#define HAL_LL_TIM_ENABLE_1				    11
-#define HAL_LL_TIM_ENABLE_2				    0
-#define HAL_LL_TIM_ENABLE_3				    1
-#define HAL_LL_TIM_ENABLE_4				    2
-#define HAL_LL_TIM_ENABLE_5				    3
-#define HAL_LL_TIM_ENABLE_8				    13
-#define HAL_LL_TIM_ENABLE_9				    16
-#define HAL_LL_TIM_ENABLE_10				17
-#define HAL_LL_TIM_ENABLE_11				18
-#define HAL_LL_TIM_ENABLE_12				6
-#define HAL_LL_TIM_ENABLE_13				7
-#define HAL_LL_TIM_ENABLE_14				8
-#define HAL_LL_TIM_ENABLE_15				16
-#define HAL_LL_TIM_ENABLE_16				17
-#define HAL_LL_TIM_ENABLE_17				18
-#define HAL_LL_TIM_ENABLE_19				19
-#define HAL_LL_TIM_ENABLE_20				20
-#define HAL_LL_TIM_ENABLE_21				2
-#define HAL_LL_TIM_ENABLE_22				5
+#define HAL_LL_TIM_ENABLE_1                 11
+#define HAL_LL_TIM_ENABLE_2                 0
+#define HAL_LL_TIM_ENABLE_3                 1
+#define HAL_LL_TIM_ENABLE_4                 2
+#define HAL_LL_TIM_ENABLE_5                 3
+#define HAL_LL_TIM_ENABLE_8                 13
+#define HAL_LL_TIM_ENABLE_9                 16
+#define HAL_LL_TIM_ENABLE_10                17
+#define HAL_LL_TIM_ENABLE_11                18
+#define HAL_LL_TIM_ENABLE_12                6
+#define HAL_LL_TIM_ENABLE_13                7
+#define HAL_LL_TIM_ENABLE_14                8
+#define HAL_LL_TIM_ENABLE_15                16
+#define HAL_LL_TIM_ENABLE_16                17
+#define HAL_LL_TIM_ENABLE_17                18
+#define HAL_LL_TIM_ENABLE_19                19
+#define HAL_LL_TIM_ENABLE_20                20
+#define HAL_LL_TIM_ENABLE_21                2
+#define HAL_LL_TIM_ENABLE_22                5
 
 #define HAL_LL_APB1_TIMER_CLOCK             1
 #define HAL_LL_APB2_TIMER_CLOCK             2
 
-#define hal_ll_tim_channel_static(_chn)		(_chn-1)
+#define hal_ll_tim_channel_static(_chn)     (_chn-1)
 
 /*!< @brief Helper macro for getting module specific control register structure */
 #define hal_ll_tim_get_base_struct(_handle) ((hal_ll_tim_base_handle_t *)_handle)
@@ -114,27 +114,27 @@ static volatile hal_ll_tim_handle_register_t hal_ll_module_state[ TIM_MODULE_COU
 /*!< @brief TIM register structure. */
 typedef struct
 {
-	uint32_t cr1;            /* Address offset 0x00 */
-	uint32_t cr2;            /* Address offset 0x04 */
-	uint32_t smcr;           /* Address offset 0x08 */
-	uint32_t dier;           /* Address offset 0x0C */
-	uint32_t sr;             /* Address offset 0x10 */
-	uint32_t egr;            /* Address offset 0x14 */
-	uint32_t ccmr1;          /* Address offset 0x18 */
-	uint32_t ccmr2;          /* Address offset 0x1C */
-	uint32_t ccer;           /* Address offset 0x20 */
-	uint32_t cnt; 		     /* Address offset 0x24 */
-	uint32_t psc;		     /* Address offset 0x28 */
-	uint32_t arr;		     /* Address offset 0x2C */
-	uint32_t rcr;			 /* Address offset 0x30 */
-	uint32_t ccr1;		     /* Address offset 0x34 */
-	uint32_t ccr2;		     /* Address offset 0x38 */
-	uint32_t ccr3;		     /* Address offset 0x3C */
-	uint32_t ccr4;		     /* Address offset 0x40 */
-	uint32_t bdtr;	  		 /* Address offset 0x44 */
-	uint32_t dcr;		     /* Address offset 0x48 */
-	uint32_t dmar;		     /* Address offset 0x4C */
-	uint32_t tim2_5_or;	  	 /* Address offset 0x50 */
+    uint32_t cr1;            /* Address offset 0x00 */
+    uint32_t cr2;            /* Address offset 0x04 */
+    uint32_t smcr;           /* Address offset 0x08 */
+    uint32_t dier;           /* Address offset 0x0C */
+    uint32_t sr;             /* Address offset 0x10 */
+    uint32_t egr;            /* Address offset 0x14 */
+    uint32_t ccmr1;          /* Address offset 0x18 */
+    uint32_t ccmr2;          /* Address offset 0x1C */
+    uint32_t ccer;           /* Address offset 0x20 */
+    uint32_t cnt;            /* Address offset 0x24 */
+    uint32_t psc;            /* Address offset 0x28 */
+    uint32_t arr;            /* Address offset 0x2C */
+    uint32_t rcr;            /* Address offset 0x30 */
+    uint32_t ccr1;           /* Address offset 0x34 */
+    uint32_t ccr2;           /* Address offset 0x38 */
+    uint32_t ccr3;           /* Address offset 0x3C */
+    uint32_t ccr4;           /* Address offset 0x40 */
+    uint32_t bdtr;           /* Address offset 0x44 */
+    uint32_t dcr;            /* Address offset 0x48 */
+    uint32_t dmar;           /* Address offset 0x4C */
+    uint32_t tim2_5_or;      /* Address offset 0x50 */
 } hal_ll_tim_base_handle_t;
 
 /*!< @brief TIM pin structure */
@@ -371,11 +371,10 @@ static inline void _hal_ll_tim22_set_clock( bool hal_ll_state );
 
 /**
   * @brief  Enable TIM module gate clock.
-  * @param  base - TIM module base
-  *                address
+  * @param  module_index - TIM module base index.
   * @return None
   */
-static void _hal_ll_tim_set_clock( hal_ll_base_addr_t base, bool hal_ll_state );
+static void _hal_ll_tim_set_clock( hal_ll_pin_name_t module_index, bool hal_ll_state );
 
 /**
   * @brief  Select TIM clock source
@@ -387,11 +386,10 @@ static uint32_t _hal_ll_tim_clock_source( uint8_t selector );
 /**
   * @brief  Based on selected TIM,
   *         return clock speed.
-  * @param  base - TIM module base
-  *                address
+  * @param  module_index - TIM module base index.
   * @return uint32_t clock source.
   */
-static uint32_t _hal_ll_tim_get_clock_speed( hal_ll_base_addr_t base );
+static uint32_t _hal_ll_tim_get_clock_speed( uint8_t module_index );
 
 /**
   * @brief  Initialize TIM module on hardware level.
@@ -444,7 +442,7 @@ static hal_ll_tim_hw_specifics_map_t *hal_ll_get_specifics( handle_t handle );
   * Returns pre-defined module index from pin maps, if pin
   * is adequate.
   */
-static hal_ll_pin_name_t _hal_ll_tim_check_pin( hal_ll_pin_name_t pin, uint8_t *index );
+static hal_ll_pin_name_t _hal_ll_tim_check_pin( hal_ll_pin_name_t pin, uint8_t *index, hal_ll_tim_handle_register_t *handle_map );
 
 /**
  * @brief  Maps new-found module specific values.
@@ -476,52 +474,51 @@ static void _hal_ll_tim_alternate_functions_set_state( hal_ll_tim_hw_specifics_m
 hal_ll_err_t hal_ll_tim_register_handle( hal_ll_pin_name_t pin, hal_ll_tim_handle_register_t *handle_map,
                                                                 uint8_t *hal_module_id ) {
 
-    uint8_t hal_ll_module_state_count = sizeof( hal_ll_module_state ) / ( sizeof( hal_ll_tim_handle_register_t ) );
     uint8_t index;
-    uint8_t pin_check_result;
+    uint16_t pin_check_result;
 
-    if ( ( pin_check_result = _hal_ll_tim_check_pin( pin, &index ) ) == HAL_LL_PIN_NC ) {
+    if ( ( pin_check_result = _hal_ll_tim_check_pin( pin, &index, handle_map ) ) == HAL_LL_PIN_NC ) {
         return HAL_LL_TIM_WRONG_PIN;
     }
 
-    if ( hal_ll_tim_hw_specifics_map[ pin_check_result ]->config.pin != pin ){
-        // Clear previous module alternate functions
-        _hal_ll_tim_alternate_functions_set_state( &hal_ll_tim_hw_specifics_map[ pin_check_result ], false );
+    if ( hal_ll_tim_hw_specifics_map[ pin_check_result ].config.pin != pin ){
+        // Clear previous module alternate functions only for pins on different ports.
+        // This way we ensure the use of channels on the same modul (always on the same port),
+        // but clear alternate functions it the same module is used on a different port, i.e.
+        // TIM4 channel 1 can be on PB6 but also on PD12.
+        if (hal_ll_gpio_port_index(hal_ll_tim_hw_specifics_map[ pin_check_result ].config.pin) != hal_ll_gpio_port_index(pin)) {
+            _hal_ll_tim_alternate_functions_set_state( &hal_ll_tim_hw_specifics_map[ pin_check_result ], false );
+        }
 
         _hal_ll_tim_map_pin( pin_check_result, index );
 
         _hal_ll_tim_alternate_functions_set_state( &hal_ll_tim_hw_specifics_map[ pin_check_result ], true );
 
-        handle_map[ pin_check_result ]->init_ll_state = false;
-
-        hal_ll_module_state[ pin_check_result ]->init_ll_state = false;
-
+        if (!handle_map[ pin_check_result ].init_ll_state) {
+            handle_map[ pin_check_result ].init_ll_state = false;
+            hal_ll_module_state[ pin_check_result ].init_ll_state = false;
+        }
     }
 
     *hal_module_id = pin_check_result;
 
-    hal_ll_module_state[ pin_check_result ]->hal_ll_tim_handle = ( handle_t * )&hal_ll_tim_hw_specifics_map[ pin_check_result ]->base;
+    hal_ll_module_state[ pin_check_result ].hal_ll_tim_handle = ( handle_t * )&hal_ll_tim_hw_specifics_map[ pin_check_result ].base;
 
-    handle_map[ pin_check_result ]->hal_ll_tim_handle = ( handle_t *)&hal_ll_module_state[ pin_check_result ]->hal_ll_tim_handle;
+    handle_map[ pin_check_result ].hal_ll_tim_handle = ( handle_t *)&hal_ll_module_state[ pin_check_result ].hal_ll_tim_handle;
 
     return HAL_LL_TIM_SUCCESS;
 }
 
 hal_ll_err_t hal_ll_module_configure_tim( handle_t *handle ) {
-
-    uint8_t index;
-    uint8_t pin_check_result;
-
-    low_level_handle = hal_ll_tim_get_handle;
     hal_ll_tim_hw_specifics_map_local = hal_ll_get_specifics( hal_ll_tim_get_module_state_address );
-
-    if ( ( pin_check_result = _hal_ll_tim_check_pin( hal_ll_tim_hw_specifics_map_local->config.pin, &index ) ) == HAL_LL_PIN_NC ) {
-        return HAL_LL_TIM_WRONG_PIN;
-    }
+    hal_ll_tim_handle_register_t *hal_handle = (hal_ll_tim_handle_register_t *)*handle;
+    uint8_t pin_check_result = hal_ll_tim_hw_specifics_map_local->module_index;
 
     _hal_ll_tim_init( hal_ll_tim_hw_specifics_map_local );
 
-    hal_ll_module_state[ pin_check_result ]->hal_ll_tim_handle = (handle_t *)&hal_ll_tim_hw_specifics_map[ pin_check_result ]->base;
+    hal_ll_module_state[ pin_check_result ].hal_ll_tim_handle = (handle_t *)&hal_ll_tim_hw_specifics_map[ pin_check_result ].base;
+    hal_ll_module_state[ pin_check_result ].init_ll_state = true;
+    hal_handle->init_ll_state = true;
 
     return HAL_LL_TIM_SUCCESS;
 }
@@ -529,10 +526,6 @@ hal_ll_err_t hal_ll_module_configure_tim( handle_t *handle ) {
 uint32_t hal_ll_tim_set_freq( handle_t *handle, uint32_t freq_hz ) {
 
     uint32_t tmp_channel;
-    uint32_t ck_psc;
-    uint32_t local_base_addr;
-    uint32_t local_freq;
-    uint32_t tmp_freq;
 
     low_level_handle = hal_ll_tim_get_handle;
     hal_ll_tim_hw_specifics_map_local = hal_ll_get_specifics( hal_ll_tim_get_module_state_address );
@@ -561,24 +554,11 @@ uint32_t hal_ll_tim_set_freq( handle_t *handle, uint32_t freq_hz ) {
 
     hal_ll_tim_hw_specifics_map_local->freq_hz = freq_hz;
 
-    local_freq      = hal_ll_tim_hw_specifics_map_local->freq_hz;
-    local_base_addr = hal_ll_tim_hw_specifics_map_local->base;
-
-    ck_psc = _hal_ll_tim_get_clock_speed( local_base_addr ) / local_freq;
-
-    if ( ck_psc > UINT16_MAX ) {
-        tmp_freq = _hal_ll_tim_get_clock_speed( local_base_addr ) / UINT16_MAX;
-        hal_ll_tim_hw_specifics_map_local->freq_hz = tmp_freq;
-    } else {
-        tmp_freq = freq_hz;
-        hal_ll_tim_hw_specifics_map_local->freq_hz = freq_hz;
-    }
-
     _hal_ll_tim_init( hal_ll_tim_hw_specifics_map_local );
 
     low_level_handle->init_ll_state = true;
 
-    return tmp_freq;
+    return hal_ll_tim_hw_specifics_map_local->freq_hz;
 }
 
 hal_ll_err_t hal_ll_tim_set_duty( handle_t *handle, float duty_ratio ) {
@@ -591,10 +571,6 @@ hal_ll_err_t hal_ll_tim_set_duty( handle_t *handle, float duty_ratio ) {
     hal_ll_tim_hw_specifics_map_local = hal_ll_get_specifics( hal_ll_tim_get_module_state_address );
 
     hal_ll_tim_base_handle_t *hal_ll_hw_reg = (hal_ll_tim_base_handle_t *)hal_ll_tim_hw_specifics_map_local->base;
-
-    if( low_level_handle->hal_ll_tim_handle == NULL ) {
-        return HAL_LL_TIM_MODULE_ERROR;
-    }
 
     if ( low_level_handle->init_ll_state == false ) {
         hal_ll_tim_start( handle );
@@ -615,21 +591,17 @@ hal_ll_err_t hal_ll_tim_start( handle_t *handle ) {
 
     uint32_t tmp_channel;
     volatile uint32_t  tmp,
-					  *tmpPtr;
+                       *tmpPtr;
 
     low_level_handle = hal_ll_tim_get_handle;
     hal_ll_tim_hw_specifics_map_local = hal_ll_get_specifics( hal_ll_tim_get_module_state_address );
 
     hal_ll_tim_base_handle_t *hal_ll_hw_reg = ( hal_ll_tim_base_handle_t *)hal_ll_tim_hw_specifics_map_local->base;
 
-    if( low_level_handle->hal_ll_tim_handle == NULL ) {
-        return HAL_LL_TIM_MODULE_ERROR;
-    }
-
     tmp_channel = hal_ll_tim_hw_specifics_map_local->config.channel;
 
     // Capture/Compare 1 output enable.
-	tmp = hal_ll_hw_reg->ccer;
+    tmp = hal_ll_hw_reg->ccer;
 
     // If complementary output channel is used.
     if ( HAL_LL_TIM_IS_COMPLEMENTARY )
@@ -646,43 +618,43 @@ hal_ll_err_t hal_ll_tim_start( handle_t *handle ) {
         tmp &= ~( 1UL << ( hal_ll_tim_channel_static( tmp_channel ) * 4 + 1 ) );
     }
 
-	hal_ll_hw_reg->ccer = tmp;
+    hal_ll_hw_reg->ccer = tmp;
 
-	#if defined(TIM_MODULE_1) || defined(TIM_MODULE_8) || defined(TIM_MODULE_20)
-	// Main output enabled.
+    #if defined(TIM_MODULE_1) || defined(TIM_MODULE_8) || defined(TIM_MODULE_20)
+    // Main output enabled.
     set_reg_bit( &hal_ll_hw_reg->bdtr, HAL_LL_TIM_BDTR_MOE_BIT );
-	#endif
+    #endif
 
     tmpPtr = &hal_ll_hw_reg->ccmr1;
 
-	if( hal_ll_tim_channel_static( tmp_channel ) > 1 )
-	{
-		tmpPtr = &hal_ll_hw_reg->ccmr2;
-	}
-
-	if( ( hal_ll_tim_channel_static( tmp_channel ) / 2 ) * 2 !=
-		  hal_ll_tim_channel_static( tmp_channel ) )
-	{
-		// Clear CCxS, OCxM[0].
-		*tmpPtr &= ~( HAL_LL_TIM_CCMR_CC2S_BIT0 |
-					  HAL_LL_TIM_CCMR_CC2S_BIT1 |
-					  HAL_LL_TIM_CCMR_OC2PE |
-					  HAL_LL_TIM_CCMR_OC2M_BIT0 );
-		// Set OCxM[2, 1]
-		*tmpPtr |= HAL_LL_TIM_CCMR_OC2M_BIT1 | HAL_LL_TIM_CCMR_OC2M_BIT2;
-	}else
+    if( hal_ll_tim_channel_static( tmp_channel ) > 1 )
     {
-		// Clear CCxS, OCxM[0].
-		*tmpPtr &= ~( HAL_LL_TIM_CCMR_CC3S_BIT0 |
-					  HAL_LL_TIM_CCMR_CC3S_BIT1 |
-					  HAL_LL_TIM_CCMR_OC3PE |
-					  HAL_LL_TIM_CCMR_OC3M_BIT0 );
+        tmpPtr = &hal_ll_hw_reg->ccmr2;
+    }
 
-		// Set OCxM[2, 1].
-		*tmpPtr |=  HAL_LL_TIM_CCMR_OC3M_BIT1 | HAL_LL_TIM_CCMR_OC3M_BIT2;
-	}
+    if( ( hal_ll_tim_channel_static( tmp_channel ) / 2 ) * 2 !=
+          hal_ll_tim_channel_static( tmp_channel ) )
+    {
+        // Clear CCxS, OCxM[0].
+        *tmpPtr &= ~( HAL_LL_TIM_CCMR_CC2S_BIT0 |
+                      HAL_LL_TIM_CCMR_CC2S_BIT1 |
+                      HAL_LL_TIM_CCMR_OC2PE |
+                      HAL_LL_TIM_CCMR_OC2M_BIT0 );
+        // Set OCxM[2, 1]
+        *tmpPtr |= HAL_LL_TIM_CCMR_OC2M_BIT1 | HAL_LL_TIM_CCMR_OC2M_BIT2;
+    }else
+    {
+        // Clear CCxS, OCxM[0].
+        *tmpPtr &= ~( HAL_LL_TIM_CCMR_CC3S_BIT0 |
+                      HAL_LL_TIM_CCMR_CC3S_BIT1 |
+                      HAL_LL_TIM_CCMR_OC3PE |
+                      HAL_LL_TIM_CCMR_OC3M_BIT0 );
 
-	// Enable counter.
+        // Set OCxM[2, 1].
+        *tmpPtr |=  HAL_LL_TIM_CCMR_OC3M_BIT1 | HAL_LL_TIM_CCMR_OC3M_BIT2;
+    }
+
+    // Enable counter.
     set_reg_bit( &hal_ll_hw_reg->cr1, HAL_LL_TIM_ENABLE_COUNTER_BIT );
 
     return HAL_LL_TIM_SUCCESS;
@@ -690,14 +662,10 @@ hal_ll_err_t hal_ll_tim_start( handle_t *handle ) {
 
 hal_ll_err_t hal_ll_tim_stop( handle_t *handle ) {
 
-	low_level_handle = hal_ll_tim_get_handle;
+    low_level_handle = hal_ll_tim_get_handle;
     hal_ll_tim_hw_specifics_map_local = hal_ll_get_specifics( hal_ll_tim_get_module_state_address );
 
     hal_ll_tim_base_handle_t *hal_ll_hw_reg = (hal_ll_tim_base_handle_t *)hal_ll_tim_hw_specifics_map_local->base;
-
-    if( low_level_handle->hal_ll_tim_handle == NULL ) {
-        return HAL_LL_TIM_MODULE_ERROR;
-    }
 
     // If complementary output channel is used.
     if ( HAL_LL_TIM_IS_COMPLEMENTARY ) {
@@ -716,14 +684,16 @@ void hal_ll_tim_close( handle_t *handle ) {
 
     if( low_level_handle->hal_ll_tim_handle != NULL ) {
         low_level_handle->hal_ll_tim_handle = NULL;
+        low_level_handle->hal_drv_tim_handle = NULL;
 
         low_level_handle->init_ll_state = false;
 
         hal_ll_tim_hw_specifics_map_local->max_period = 0;
         hal_ll_tim_hw_specifics_map_local->freq_hz = 0;
 
+        _hal_ll_tim_set_clock( hal_ll_tim_hw_specifics_map_local->module_index, true );
         _hal_ll_tim_alternate_functions_set_state( hal_ll_tim_hw_specifics_map_local, false );
-        _hal_ll_tim_set_clock( hal_ll_tim_hw_specifics_map_local->base, false );
+        _hal_ll_tim_set_clock( hal_ll_tim_hw_specifics_map_local->module_index, false );
 
         hal_ll_tim_hw_specifics_map_local->config.pin = HAL_LL_PIN_NC;
         hal_ll_tim_hw_specifics_map_local->config.channel = HAL_LL_PIN_NC;
@@ -733,219 +703,234 @@ void hal_ll_tim_close( handle_t *handle ) {
 
 // ----------------------------------------------- PRIVATE FUNCTION DEFINITIONS
 static inline void _hal_ll_tim1_set_clock( bool hal_ll_state ) {
-	if( hal_ll_state ) {
-		set_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_1 );
-	} else {
-		clear_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_1 );
-	}
+    if( hal_ll_state ) {
+        set_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_1 );
+    } else {
+        clear_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_1 );
+    }
 }
 
 static inline void _hal_ll_tim2_set_clock( bool hal_ll_state ) {
     #if defined(STM32L4xx)
-	if ( hal_ll_state ) {
-		set_reg_bit( _RCC_APB1ENR1, HAL_LL_TIM_ENABLE_2 );
-	} else {
-		clear_reg_bit( _RCC_APB1ENR1, HAL_LL_TIM_ENABLE_2 );
-	}
+    if ( hal_ll_state ) {
+        set_reg_bit( _RCC_APB1ENR1, HAL_LL_TIM_ENABLE_2 );
+    } else {
+        clear_reg_bit( _RCC_APB1ENR1, HAL_LL_TIM_ENABLE_2 );
+    }
     #else
-	if ( hal_ll_state ) {
-		set_reg_bit( _RCC_APB1ENR, HAL_LL_TIM_ENABLE_2 );
-	} else {
-		clear_reg_bit( _RCC_APB1ENR, HAL_LL_TIM_ENABLE_2 );
-	}
+    if ( hal_ll_state ) {
+        set_reg_bit( _RCC_APB1ENR, HAL_LL_TIM_ENABLE_2 );
+    } else {
+        clear_reg_bit( _RCC_APB1ENR, HAL_LL_TIM_ENABLE_2 );
+    }
     #endif
 }
 
 static inline void _hal_ll_tim3_set_clock( bool hal_ll_state ) {
     #if defined(STM32L4xx)
-	if ( hal_ll_state ) {
-		set_reg_bit( _RCC_APB1ENR1, HAL_LL_TIM_ENABLE_3 );
-	} else {
-		clear_reg_bit( _RCC_APB1ENR1, HAL_LL_TIM_ENABLE_3 );
-	}
-	#else
-	if ( hal_ll_state ) {
-		set_reg_bit( _RCC_APB1ENR, HAL_LL_TIM_ENABLE_3 );
-	} else {
-		clear_reg_bit( _RCC_APB1ENR, HAL_LL_TIM_ENABLE_3 );
-	}
+    if ( hal_ll_state ) {
+        set_reg_bit( _RCC_APB1ENR1, HAL_LL_TIM_ENABLE_3 );
+    } else {
+        clear_reg_bit( _RCC_APB1ENR1, HAL_LL_TIM_ENABLE_3 );
+    }
+    #else
+    if ( hal_ll_state ) {
+        set_reg_bit( _RCC_APB1ENR, HAL_LL_TIM_ENABLE_3 );
+    } else {
+        clear_reg_bit( _RCC_APB1ENR, HAL_LL_TIM_ENABLE_3 );
+    }
     #endif
 }
 
 static inline void _hal_ll_tim4_set_clock( bool hal_ll_state ) {
-	#if defined(STM32L4xx)
-	if ( hal_ll_state ) {
-		set_reg_bit( _RCC_APB1ENR1, HAL_LL_TIM_ENABLE_4 );
-	} else {
-		clear_reg_bit( _RCC_APB1ENR1, HAL_LL_TIM_ENABLE_4 );
-	}
+    #if defined(STM32L4xx)
+    if ( hal_ll_state ) {
+        set_reg_bit( _RCC_APB1ENR1, HAL_LL_TIM_ENABLE_4 );
+    } else {
+        clear_reg_bit( _RCC_APB1ENR1, HAL_LL_TIM_ENABLE_4 );
+    }
     #else
-	if ( hal_ll_state ) {
-		set_reg_bit( _RCC_APB1ENR, HAL_LL_TIM_ENABLE_4 );
-	} else {
-		clear_reg_bit( _RCC_APB1ENR, HAL_LL_TIM_ENABLE_4 );
-	}
+    if ( hal_ll_state ) {
+        set_reg_bit( _RCC_APB1ENR, HAL_LL_TIM_ENABLE_4 );
+    } else {
+        clear_reg_bit( _RCC_APB1ENR, HAL_LL_TIM_ENABLE_4 );
+    }
     #endif
 }
 
 static inline void _hal_ll_tim5_set_clock( bool hal_ll_state ) {
     #if defined(STM32L4xx)
-	if ( hal_ll_state ) {
-		set_reg_bit( _RCC_APB1ENR1, HAL_LL_TIM_ENABLE_5 );
-	} else {
-		clear_reg_bit( _RCC_APB1ENR1, HAL_LL_TIM_ENABLE_5 );
-	}
+    if ( hal_ll_state ) {
+        set_reg_bit( _RCC_APB1ENR1, HAL_LL_TIM_ENABLE_5 );
+    } else {
+        clear_reg_bit( _RCC_APB1ENR1, HAL_LL_TIM_ENABLE_5 );
+    }
     #else
-	if ( hal_ll_state ) {
-		set_reg_bit( _RCC_APB1ENR, HAL_LL_TIM_ENABLE_5 );
-	} else {
-		clear_reg_bit( _RCC_APB1ENR, HAL_LL_TIM_ENABLE_5 );
-	}
+    if ( hal_ll_state ) {
+        set_reg_bit( _RCC_APB1ENR, HAL_LL_TIM_ENABLE_5 );
+    } else {
+        clear_reg_bit( _RCC_APB1ENR, HAL_LL_TIM_ENABLE_5 );
+    }
     #endif
 }
 
 static inline void _hal_ll_tim8_set_clock( bool hal_ll_state ) {
-	if ( hal_ll_state ) {
-		set_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_8 );
-	} else {
-		clear_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_8 );
-	}
+    if ( hal_ll_state ) {
+        set_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_8 );
+    } else {
+        clear_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_8 );
+    }
 }
 
 static inline void _hal_ll_tim9_set_clock( bool hal_ll_state ) {
-	if ( hal_ll_state ) {
-		set_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_9 );
-	} else {
-		clear_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_9 );
-	}
+    if ( hal_ll_state ) {
+        set_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_9 );
+    } else {
+        clear_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_9 );
+    }
 }
 
 static inline void _hal_ll_tim10_set_clock( bool hal_ll_state ) {
-	if ( hal_ll_state ) {
-		set_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_10 );
-	} else {
-		clear_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_10 );
-	}
+    if ( hal_ll_state ) {
+        set_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_10 );
+    } else {
+        clear_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_10 );
+    }
 }
 
 static inline void _hal_ll_tim11_set_clock( bool hal_ll_state ) {
-	if ( hal_ll_state ) {
-		set_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_11 );
-	} else {
-		clear_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_11 );
-	}
+    if ( hal_ll_state ) {
+        set_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_11 );
+    } else {
+        clear_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_11 );
+    }
 }
 
 #if defined(STM32F3xx) || defined(STM32F1xx)
 static inline void _hal_ll_tim12_set_clock( bool hal_ll_state ) {
-	if ( hal_ll_state ) {
-		set_reg_bit( _RCC_APB1ENR, HAL_LL_TIM_ENABLE_12 );
-	} else {
-		clear_reg_bit( _RCC_APB1ENR, HAL_LL_TIM_ENABLE_12 );
-	}
+    if ( hal_ll_state ) {
+        set_reg_bit( _RCC_APB1ENR, HAL_LL_TIM_ENABLE_12 );
+    } else {
+        clear_reg_bit( _RCC_APB1ENR, HAL_LL_TIM_ENABLE_12 );
+    }
 }
 
 static inline void _hal_ll_tim13_set_clock( bool hal_ll_state ) {
-	if ( hal_ll_state ) {
-		set_reg_bit( _RCC_APB1ENR, HAL_LL_TIM_ENABLE_13 );
-	} else {
-		clear_reg_bit( _RCC_APB1ENR, HAL_LL_TIM_ENABLE_13 );
-	}
+    if ( hal_ll_state ) {
+        set_reg_bit( _RCC_APB1ENR, HAL_LL_TIM_ENABLE_13 );
+    } else {
+        clear_reg_bit( _RCC_APB1ENR, HAL_LL_TIM_ENABLE_13 );
+    }
 }
 #endif
 
 #if defined(STM32F3xx) || defined(STM32F0xx) || defined(STM32G0xx) || \
     defined(STM32F1xx)
 static inline void _hal_ll_tim14_set_clock( bool hal_ll_state ) {
-	if ( hal_ll_state ) {
-		set_reg_bit( _RCC_APB1ENR, HAL_LL_TIM_ENABLE_14 );
-	} else {
-		clear_reg_bit( _RCC_APB1ENR, HAL_LL_TIM_ENABLE_14 );
-	}
+    if ( hal_ll_state ) {
+        set_reg_bit( _RCC_APB1ENR, HAL_LL_TIM_ENABLE_14 );
+    } else {
+        clear_reg_bit( _RCC_APB1ENR, HAL_LL_TIM_ENABLE_14 );
+    }
 }
 #endif
 
 static inline void _hal_ll_tim15_set_clock( bool hal_ll_state ) {
-	if ( hal_ll_state ) {
-		set_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_15 );
-	} else {
-		clear_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_15 );
-	}
+    if ( hal_ll_state ) {
+        set_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_15 );
+    } else {
+        clear_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_15 );
+    }
 }
 
 static inline void _hal_ll_tim16_set_clock( bool hal_ll_state ) {
-	if ( hal_ll_state ) {
-		set_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_16 );
-	} else {
-		clear_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_16 );
-	}
+    if ( hal_ll_state ) {
+        set_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_16 );
+    } else {
+        clear_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_16 );
+    }
 }
 
 static inline void _hal_ll_tim17_set_clock( bool hal_ll_state ) {
-	if ( hal_ll_state ) {
-		set_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_17 );
-	} else {
-		clear_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_17 );
-	}
+    if ( hal_ll_state ) {
+        set_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_17 );
+    } else {
+        clear_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_17 );
+    }
 }
 
 static inline void _hal_ll_tim19_set_clock( bool hal_ll_state ) {
-	if ( hal_ll_state ) {
-		set_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_19 );
-	} else {
-		clear_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_19 );
-	}
+    if ( hal_ll_state ) {
+        set_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_19 );
+    } else {
+        clear_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_19 );
+    }
 }
 
 static inline void _hal_ll_tim20_set_clock( bool hal_ll_state ) {
-	if ( hal_ll_state ) {
-		set_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_20 );
-	} else {
-		clear_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_20 );
-	}
+    if ( hal_ll_state ) {
+        set_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_20 );
+    } else {
+        clear_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_20 );
+    }
 }
 
 static inline void _hal_ll_tim21_set_clock( bool hal_ll_state ) {
-	if ( hal_ll_state ) {
-		set_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_21 );
-	} else {
-		clear_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_21 );
-	}
+    if ( hal_ll_state ) {
+        set_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_21 );
+    } else {
+        clear_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_21 );
+    }
 }
 
 static inline void _hal_ll_tim22_set_clock( bool hal_ll_state ) {
-	if ( hal_ll_state ) {
-		set_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_22 );
-	} else {
-		clear_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_22 );
-	}
+    if ( hal_ll_state ) {
+        set_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_22 );
+    } else {
+        clear_reg_bit( _RCC_APB2ENR, HAL_LL_TIM_ENABLE_22 );
+    }
 }
 
-static hal_ll_pin_name_t _hal_ll_tim_check_pin( hal_ll_pin_name_t pin, uint8_t *index ) {
+static hal_ll_pin_name_t _hal_ll_tim_check_pin( hal_ll_pin_name_t pin, uint8_t *index, hal_ll_tim_handle_register_t *handle_map ) {
 
-    uint8_t tmp_channel;
     hal_ll_pin_name_t pin_num;
+    uint8_t index_counter = 0;
+    uint8_t hal_ll_module_id = 0;
     uint16_t map_size = ( sizeof( _tim_map ) / sizeof( hal_ll_tim_pin_map_t ) );
 
-	// Check if the selected pin is valid.
-	for ( pin_num = 0; pin_num < map_size; pin_num++ ) {
-		if ( _tim_map[ pin_num ]->pin == pin ) {
-            *index = pin_num;
+    if ( HAL_LL_PIN_NC == pin ) {
+        return HAL_LL_PIN_NC;
+    }
 
-            return _tim_map[ pin_num ]->module_index;
+    // Check if the selected pin is valid.
+    for ( pin_num = 0; pin_num < map_size; pin_num++ ) {
+        if ( _tim_map[ pin_num ].pin == pin ) {
+            // Get module number
+            hal_ll_module_id = _tim_map[ pin_num ].module_index;
+            if (( NULL == handle_map[hal_ll_module_id].hal_drv_tim_handle ) ||
+                ( _tim_map[ pin_num ].channel != hal_ll_tim_hw_specifics_map[hal_ll_module_id].config.channel )) {
+                *index = pin_num;
+                return hal_ll_module_id;
+            } else if ( TIM_MODULE_COUNT == ++index_counter ) {
+                return --index_counter;
+            }
         }
-	}
-	// By default return last error msg.
-	return HAL_LL_PIN_NC;
+    }
+    // By default return last error msg.
+    if ( index_counter ) {
+        return hal_ll_module_id;
+    } else {
+        return HAL_LL_PIN_NC;
+    }
 }
 
 static hal_ll_tim_hw_specifics_map_t *hal_ll_get_specifics( handle_t handle ) {
 
     uint8_t hal_ll_module_count = sizeof( hal_ll_module_state ) / ( sizeof( hal_ll_tim_handle_register_t ) );;
-    static uint8_t hal_ll_module_error = hal_ll_module_count;
+    static uint8_t hal_ll_module_error = sizeof(hal_ll_module_state) / (sizeof(hal_ll_tim_handle_register_t));
 
     while( hal_ll_module_count-- ) {
-        if ( hal_ll_tim_get_base_from_hal_handle == hal_ll_tim_hw_specifics_map [ hal_ll_module_count ]->base ) {
+        if ( hal_ll_tim_get_base_from_hal_handle == hal_ll_tim_hw_specifics_map [ hal_ll_module_count ].base ) {
             return &hal_ll_tim_hw_specifics_map[ hal_ll_module_count ];
         }
     }
@@ -953,105 +938,105 @@ static hal_ll_tim_hw_specifics_map_t *hal_ll_get_specifics( handle_t handle ) {
     return &hal_ll_tim_hw_specifics_map[ hal_ll_module_error ];
 }
 
-static void _hal_ll_tim_set_clock( hal_ll_base_addr_t base, bool hal_ll_state ) {
+static void _hal_ll_tim_set_clock( hal_ll_pin_name_t module_index, bool hal_ll_state ) {
 
-	switch ( ( uint32_t )base ) { // 32-bit base address.
-	#ifdef TIM_MODULE_1
-		case ( HAL_LL_TIM1_BASE_ADDR ):
-			_hal_ll_tim1_set_clock( hal_ll_state );
-			break;
-	#endif
-	#ifdef TIM_MODULE_2
-		case ( HAL_LL_TIM2_BASE_ADDR ):
-			_hal_ll_tim2_set_clock( hal_ll_state );
-			break;
-	#endif
-	#ifdef TIM_MODULE_3
-		case ( HAL_LL_TIM3_BASE_ADDR ):
-			_hal_ll_tim3_set_clock( hal_ll_state );
-			break;
-	#endif
-	#ifdef TIM_MODULE_4
-		case ( HAL_LL_TIM4_BASE_ADDR ):
-			_hal_ll_tim4_set_clock( hal_ll_state );
-			break;
-	#endif
+    switch ( module_index ) {
+    #ifdef TIM_MODULE_1
+        case ( hal_ll_tim_module_num(TIM_MODULE_1) ):
+            _hal_ll_tim1_set_clock( hal_ll_state );
+            break;
+    #endif
+    #ifdef TIM_MODULE_2
+        case ( hal_ll_tim_module_num(TIM_MODULE_2) ):
+            _hal_ll_tim2_set_clock( hal_ll_state );
+            break;
+    #endif
+    #ifdef TIM_MODULE_3
+        case ( hal_ll_tim_module_num(TIM_MODULE_3) ):
+            _hal_ll_tim3_set_clock( hal_ll_state );
+            break;
+    #endif
+    #ifdef TIM_MODULE_4
+        case ( hal_ll_tim_module_num(TIM_MODULE_4) ):
+            _hal_ll_tim4_set_clock( hal_ll_state );
+            break;
+    #endif
     #ifdef TIM_MODULE_5
-		case ( HAL_LL_TIM5_BASE_ADDR ):
-			_hal_ll_tim5_set_clock( hal_ll_state );
-			break;
-	#endif
-	#ifdef TIM_MODULE_8
-		case ( HAL_LL_TIM8_BASE_ADDR ):
-			_hal_ll_tim8_set_clock( hal_ll_state );
-			break;
-	#endif
+        case ( hal_ll_tim_module_num(TIM_MODULE_5) ):
+            _hal_ll_tim5_set_clock( hal_ll_state );
+            break;
+    #endif
+    #ifdef TIM_MODULE_8
+        case ( hal_ll_tim_module_num(TIM_MODULE_8) ):
+            _hal_ll_tim8_set_clock( hal_ll_state );
+            break;
+    #endif
     #ifdef TIM_MODULE_9
-		case ( HAL_LL_TIM9_BASE_ADDR ):
-			_hal_ll_tim9_set_clock( hal_ll_state );
-			break;
-	#endif
+        case ( hal_ll_tim_module_num(TIM_MODULE_9) ):
+            _hal_ll_tim9_set_clock( hal_ll_state );
+            break;
+    #endif
     #ifdef TIM_MODULE_10
-		case ( HAL_LL_TIM10_BASE_ADDR ):
-			_hal_ll_tim10_set_clock( hal_ll_state );
-			break;
-	#endif
+        case ( hal_ll_tim_module_num(TIM_MODULE_10) ):
+            _hal_ll_tim10_set_clock( hal_ll_state );
+            break;
+    #endif
     #ifdef TIM_MODULE_11
-		case ( HAL_LL_TIM11_BASE_ADDR ):
-			_hal_ll_tim11_set_clock( hal_ll_state );
-			break;
-	#endif
-	#ifdef TIM_MODULE_12
-		case ( HAL_LL_TIM12_BASE_ADDR ):
-			_hal_ll_tim12_set_clock( hal_ll_state );
-			break;
-	#endif
-	#ifdef TIM_MODULE_13
-		case ( HAL_LL_TIM13_BASE_ADDR ):
-			_hal_ll_tim13_set_clock( hal_ll_state );
-			break;
-	#endif
-	#ifdef TIM_MODULE_14
-		case ( HAL_LL_TIM14_BASE_ADDR ):
-			_hal_ll_tim14_set_clock( hal_ll_state );
-			break;
-	#endif
-		#ifdef TIM_MODULE_15
-		case ( HAL_LL_TIM15_BASE_ADDR ):
-			_hal_ll_tim15_set_clock( hal_ll_state );
-			break;
-	#endif
-	#ifdef TIM_MODULE_16
-		case ( HAL_LL_TIM16_BASE_ADDR ):
-			_hal_ll_tim16_set_clock( hal_ll_state );
-			break;
-	#endif
-	#ifdef TIM_MODULE_17
-		case ( HAL_LL_TIM17_BASE_ADDR ):
-			_hal_ll_tim17_set_clock( hal_ll_state );
-			break;
-	#endif
-	#ifdef TIM_MODULE_19
-		case ( HAL_LL_TIM19_BASE_ADDR ):
-			_hal_ll_tim19_set_clock( hal_ll_state );
-			break;
-	#endif
-	#ifdef TIM_MODULE_20
-		case ( HAL_LL_TIM20_BASE_ADDR ):
-			_hal_ll_tim20_set_clock( hal_ll_state );
-			break;
-	#endif
+        case ( hal_ll_tim_module_num(TIM_MODULE_11) ):
+            _hal_ll_tim11_set_clock( hal_ll_state );
+            break;
+    #endif
+    #ifdef TIM_MODULE_12
+        case ( hal_ll_tim_module_num(TIM_MODULE_12) ):
+            _hal_ll_tim12_set_clock( hal_ll_state );
+            break;
+    #endif
+    #ifdef TIM_MODULE_13
+        case ( hal_ll_tim_module_num(TIM_MODULE_13) ):
+            _hal_ll_tim13_set_clock( hal_ll_state );
+            break;
+    #endif
+    #ifdef TIM_MODULE_14
+        case ( hal_ll_tim_module_num(TIM_MODULE_14) ):
+            _hal_ll_tim14_set_clock( hal_ll_state );
+            break;
+    #endif
+        #ifdef TIM_MODULE_15
+        case ( hal_ll_tim_module_num(TIM_MODULE_15) ):
+            _hal_ll_tim15_set_clock( hal_ll_state );
+            break;
+    #endif
+    #ifdef TIM_MODULE_16
+        case ( hal_ll_tim_module_num(TIM_MODULE_16) ):
+            _hal_ll_tim16_set_clock( hal_ll_state );
+            break;
+    #endif
+    #ifdef TIM_MODULE_17
+        case ( hal_ll_tim_module_num(TIM_MODULE_17) ):
+            _hal_ll_tim17_set_clock( hal_ll_state );
+            break;
+    #endif
+    #ifdef TIM_MODULE_19
+        case ( hal_ll_tim_module_num(TIM_MODULE_19) ):
+            _hal_ll_tim19_set_clock( hal_ll_state );
+            break;
+    #endif
+    #ifdef TIM_MODULE_20
+        case ( hal_ll_tim_module_num(TIM_MODULE_20) ):
+            _hal_ll_tim20_set_clock( hal_ll_state );
+            break;
+    #endif
     #ifdef TIM_MODULE_21
-		case ( HAL_LL_TIM21_BASE_ADDR ):
-			_hal_ll_tim21_set_clock( hal_ll_state );
-			break;
-	#endif
+        case ( hal_ll_tim_module_num(TIM_MODULE_21) ):
+            _hal_ll_tim21_set_clock( hal_ll_state );
+            break;
+    #endif
     #ifdef TIM_MODULE_22
-		case ( HAL_LL_TIM22_BASE_ADDR ):
-			_hal_ll_tim22_set_clock( hal_ll_state );
-			break;
-	#endif
-	}
+        case ( hal_ll_tim_module_num(TIM_MODULE_22) ):
+            _hal_ll_tim22_set_clock( hal_ll_state );
+            break;
+    #endif
+    }
 }
 
 static uint32_t _hal_ll_tim_clock_source( uint8_t selector ) {
@@ -1061,124 +1046,124 @@ static uint32_t _hal_ll_tim_clock_source( uint8_t selector ) {
     RCC_GetClocksFrequency( &rcc_clocks );
 
     #if defined(STM32F0xx) || defined(STM32G0xx)
-        if( rcc_clocks.hclk/rcc_clocks.pclk > 1 ) {
-            return rcc_clocks.pclk * 2;
-        } else {
+        if ( rcc_clocks.pclk == rcc_clocks.hclk ) {
             return rcc_clocks.pclk;
+        } else {
+            return rcc_clocks.pclk * 2ul;
         }
     #else
     if( selector == HAL_LL_APB1_TIMER_CLOCK ) {
-        if( rcc_clocks.hclk/rcc_clocks.pclk1 > 1 ) {
-            return rcc_clocks.pclk1 * 2;
-        } else {
+        if ( rcc_clocks.pclk1 == rcc_clocks.hclk ) {
             return rcc_clocks.pclk1;
+        } else {
+            return rcc_clocks.pclk1 * 2ul;
         }
     } else if( selector == HAL_LL_APB2_TIMER_CLOCK ) {
-        if( rcc_clocks.hclk/rcc_clocks.pclk2 > 1 ) {
-            return rcc_clocks.pclk2 * 2;
-        } else {
+        if ( rcc_clocks.pclk2 == rcc_clocks.hclk ) {
             return rcc_clocks.pclk2;
+        } else {
+            return rcc_clocks.pclk2 * 2ul;
         }
     }
     #endif
     return 0;
 }
 
-static uint32_t _hal_ll_tim_get_clock_speed( hal_ll_base_addr_t base ) {
+static uint32_t _hal_ll_tim_get_clock_speed( uint8_t module_index ) {
 
-    switch ( ( uint32_t )base ) {
+    switch ( module_index ) {
         #ifdef TIM_MODULE_1
-        case ( HAL_LL_TIM1_BASE_ADDR ):
+        case ( hal_ll_tim_module_num(TIM_MODULE_1) ):
             return _hal_ll_tim_clock_source( TIM1_BUS );
             break;
         #endif
         #ifdef TIM_MODULE_2
-        case ( HAL_LL_TIM2_BASE_ADDR ):
+        case ( hal_ll_tim_module_num(TIM_MODULE_2) ):
             return _hal_ll_tim_clock_source( TIM2_BUS );
             break;
         #endif
         #ifdef TIM_MODULE_3
-        case ( HAL_LL_TIM3_BASE_ADDR ):
+        case ( hal_ll_tim_module_num(TIM_MODULE_3) ):
             return _hal_ll_tim_clock_source( TIM3_BUS );
             break;
         #endif
         #ifdef TIM_MODULE_4
-        case ( HAL_LL_TIM4_BASE_ADDR ):
+        case ( hal_ll_tim_module_num(TIM_MODULE_4) ):
             return _hal_ll_tim_clock_source( TIM4_BUS );
             break;
         #endif
         #ifdef TIM_MODULE_5
-        case ( HAL_LL_TIM5_BASE_ADDR ):
+        case ( hal_ll_tim_module_num(TIM_MODULE_5) ):
             return _hal_ll_tim_clock_source( TIM5_BUS );
             break;
         #endif
         #ifdef TIM_MODULE_8
-        case ( HAL_LL_TIM8_BASE_ADDR ):
+        case ( hal_ll_tim_module_num(TIM_MODULE_8) ):
             return _hal_ll_tim_clock_source( TIM8_BUS );
             break;
         #endif
         #ifdef TIM_MODULE_9
-        case ( HAL_LL_TIM9_BASE_ADDR ):
+        case ( hal_ll_tim_module_num(TIM_MODULE_9) ):
             return _hal_ll_tim_clock_source( TIM9_BUS );
             break;
         #endif
         #ifdef TIM_MODULE_10
-        case ( HAL_LL_TIM10_BASE_ADDR ):
+        case ( hal_ll_tim_module_num(TIM_MODULE_10) ):
             return _hal_ll_tim_clock_source( TIM10_BUS );
             break;
         #endif
         #ifdef TIM_MODULE_11
-        case ( HAL_LL_TIM11_BASE_ADDR ):
+        case ( hal_ll_tim_module_num(TIM_MODULE_11) ):
             return _hal_ll_tim_clock_source( TIM11_BUS );
             break;
         #endif
         #ifdef TIM_MODULE_12
-        case ( HAL_LL_TIM12_BASE_ADDR ):
+        case ( hal_ll_tim_module_num(TIM_MODULE_12) ):
             return _hal_ll_tim_clock_source( TIM12_BUS );
             break;
         #endif
         #ifdef TIM_MODULE_13
-        case ( HAL_LL_TIM13_BASE_ADDR ):
+        case ( hal_ll_tim_module_num(TIM_MODULE_13) ):
             return _hal_ll_tim_clock_source( TIM13_BUS );
             break;
         #endif
         #ifdef TIM_MODULE_14
-        case ( HAL_LL_TIM14_BASE_ADDR ):
+        case ( hal_ll_tim_module_num(TIM_MODULE_14) ):
             return _hal_ll_tim_clock_source( TIM14_BUS );
             break;
         #endif
         #ifdef TIM_MODULE_15
-        case ( HAL_LL_TIM15_BASE_ADDR ):
+        case ( hal_ll_tim_module_num(TIM_MODULE_15) ):
             return _hal_ll_tim_clock_source( TIM15_BUS );
             break;
         #endif
         #ifdef TIM_MODULE_16
-        case ( HAL_LL_TIM16_BASE_ADDR ):
+        case ( hal_ll_tim_module_num(TIM_MODULE_16) ):
             return _hal_ll_tim_clock_source( TIM16_BUS );
             break;
         #endif
         #ifdef TIM_MODULE_17
-        case ( HAL_LL_TIM17_BASE_ADDR ):
+        case ( hal_ll_tim_module_num(TIM_MODULE_17) ):
             return _hal_ll_tim_clock_source( TIM17_BUS );
             break;
         #endif
         #ifdef TIM_MODULE_19
-        case ( HAL_LL_TIM19_BASE_ADDR ):
+        case ( hal_ll_tim_module_num(TIM_MODULE_19) ):
             return _hal_ll_tim_clock_source( TIM19_BUS );
             break;
         #endif
         #ifdef TIM_MODULE_20
-        case ( HAL_LL_TIM20_BASE_ADDR ):
+        case ( hal_ll_tim_module_num(TIM_MODULE_20) ):
             return _hal_ll_tim_clock_source( TIM20_BUS );
             break;
         #endif
         #ifdef TIM_MODULE_21
-        case ( HAL_LL_TIM21_BASE_ADDR ):
+        case ( hal_ll_tim_module_num(TIM_MODULE_21) ):
             return _hal_ll_tim_clock_source( TIM21_BUS );
             break;
         #endif
         #ifdef TIM_MODULE_22
-        case ( HAL_LL_TIM22_BASE_ADDR ):
+        case ( hal_ll_tim_module_num(TIM_MODULE_22) ):
             return _hal_ll_tim_clock_source( TIM22_BUS );
             break;
         #endif
@@ -1191,23 +1176,23 @@ static void _hal_ll_tim_map_pin( uint8_t module_index, uint8_t index ) {
     uint8_t tmp_channel;
 
     // Map new pin
-    hal_ll_tim_hw_specifics_map[ module_index ]->config.pin = _tim_map[ index ]->pin;
-    tmp_channel = _tim_map[ index ]->channel;
-    hal_ll_tim_hw_specifics_map[ module_index ]->config.af = _tim_map[ index ]->af;
+    hal_ll_tim_hw_specifics_map[ module_index ].config.pin = _tim_map[ index ].pin;
+    tmp_channel = _tim_map[ index ].channel;
+    hal_ll_tim_hw_specifics_map[ module_index ].config.af = _tim_map[ index ].af;
 
     if ( tmp_channel >= HAL_LL_TIM_CHANNEL_1N ) {
         HAL_LL_TIM_IS_COMPLEMENTARY = true;
-        hal_ll_tim_hw_specifics_map[ module_index ]->config.channel = tmp_channel - 4;
+        hal_ll_tim_hw_specifics_map[ module_index ].config.channel = tmp_channel - 4;
     } else {
         HAL_LL_TIM_IS_COMPLEMENTARY = false;
-        hal_ll_tim_hw_specifics_map[ module_index ]->config.channel = tmp_channel;
+        hal_ll_tim_hw_specifics_map[ module_index ].config.channel = tmp_channel;
     }
 }
 
 static void _hal_ll_tim_alternate_functions_set_state( hal_ll_tim_hw_specifics_map_t *map, bool hal_ll_state ) {
 
-    uint32_t	    tim_config = 0;
-    module_struct	module;
+    uint32_t      tim_config = 0;
+    module_struct module;
 
     if( map->config.pin != HAL_LL_PIN_NC ) {
         if( hal_ll_state == false ) {
@@ -1235,43 +1220,97 @@ static void _hal_ll_tim_alternate_functions_set_state( hal_ll_tim_hw_specifics_m
 
 static void _hal_ll_tim_hw_init( hal_ll_tim_hw_specifics_map_t *map ) {
 
-    uint32_t tmp_channel;
-	uint32_t ck_psc;
+    uint32_t tim_clk = 0;
+    uint32_t prescaler = 0;
+    uint32_t period = 0;
+    uint32_t ticks = 0;
 
-    tmp_channel = map->config.channel;
-
+    /**
+     * Obtain pointer to TIM register block (TIMx)
+     */
     hal_ll_tim_base_handle_t *hal_ll_hw_reg = hal_ll_tim_get_base_struct( map->base );
 
-	// Counter used as upcounter.
-	clear_reg_bit( &hal_ll_hw_reg->cr1, HAL_LL_TIM_CR1_DIR_BIT );
+    /**
+     * Configure timer as up-counter (edge-aligned mode)
+     * Clear DIR bit -> counter counts from 0 up to ARR
+     */
+    clear_reg_bit( &hal_ll_hw_reg->cr1, HAL_LL_TIM_CR1_DIR_BIT );
 
-	// Get clock speed.
-	ck_psc = _hal_ll_tim_get_clock_speed( map->base ) / map->freq_hz;
+    /**
+     * Get actual timer input clock (already includes APB x2 rule
+     * or other MCU-specific timer clock selection logic)
+     */
+    tim_clk = _hal_ll_tim_get_clock_speed( map->module_index );
 
-    // This should not be the case. ck_psc should not be greater than 65535, which is max value.
-    if( ck_psc > UINT16_MAX ) {
-        // In case of duty period beeing greater than 65535 set ck_psc to max value.
-        ck_psc = UINT16_MAX - 1; // Because of ( ck_psc / UINT16_MAX + 1 ) ), has to be minus 1.
-    }else if ( ck_psc < 1 ) {
-        ck_psc = 1;
+    /**
+     * Total number of timer ticks required for one PWM period
+     *
+     * ticks = TIM_CLK / desired_frequency
+     *
+     * This represents:
+     *   (PSC + 1) x (ARR + 1)
+     */
+    ticks = tim_clk / map->freq_hz;
+
+    /**
+     * Compute prescaler so that ARR fits into 16 bits.
+     *
+     * prescaler is chosen as:
+     *   prescaler = floor( ticks / 65536 )
+     *
+     * This ensures:
+     *   (ARR + 1) <= 65536
+     */
+    prescaler = ( ticks / ( UINT16_MAX + 1ul ) );
+
+    /**
+     * Clamp prescaler to 16-bit hardware limit.
+     * If this happens, requested frequency is too low
+     * to be represented exactly.
+     */
+    if ( prescaler > UINT16_MAX ) {
+        prescaler = UINT16_MAX;
+
+        /**
+         * Update effective frequency to maximum achievable value
+         * (used by higher layers to report actual output frequency)
+         */
+        map->freq_hz = tim_clk;
     }
 
-	// Write prescale value.
-	hal_ll_hw_reg->psc = ( uint16_t )( ck_psc / UINT16_MAX );
+    /**
+     * Compute ARR value based on prescaler:
+     *
+     *   ARR = (ticks / (PSC + 1)) - 1
+     *
+     * PWM frequency becomes:
+     *   f = TIM_CLK / ((PSC + 1) x (ARR + 1))
+     */
+    period = ( ticks / ( prescaler + 1 ) ) - 1;
 
-	// Write max count value.
-	hal_ll_hw_reg->arr = ( uint16_t )( ck_psc/( ck_psc / UINT16_MAX + 1 ) );
+    /* Clamp ARR to 16-bit limit */
+    if ( period > UINT16_MAX )
+        period = UINT16_MAX;
 
-    // Write max period to global array.
-    map->max_period = ( uint16_t )ck_psc;
+    // Write prescaler register (PSC)
+    hal_ll_hw_reg->psc = (uint16_t)prescaler;
+
+    // Write auto-reload register (ARR)
+    hal_ll_hw_reg->arr = (uint16_t)period;
+
+    /**
+     * Store maximum period value for duty-cycle scaling
+     * (used as CCRx upper limit)
+     */
+    map->max_period = (uint16_t)period;
 }
 
 static void _hal_ll_tim_init( hal_ll_tim_hw_specifics_map_t *map ) {
 
-    _hal_ll_tim_set_clock( map->base, true );
+    _hal_ll_tim_set_clock( map->module_index, true );
 
-	_hal_ll_tim_alternate_functions_set_state( map, true );
+    _hal_ll_tim_alternate_functions_set_state( map, true );
 
-	_hal_ll_tim_hw_init( map );
+    _hal_ll_tim_hw_init( map );
 }
 // ------------------------------------------------------------------------- END

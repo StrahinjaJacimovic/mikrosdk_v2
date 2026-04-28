@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -55,6 +55,16 @@ extern "C"{
 
 /*!< @brief Macro */
 #define selected_reg(__reg) (*(uint32_t *)(__reg))
+
+/*!< @brief Low nibble macros */
+#define HAL_LL_NIBBLE_LOW_8BIT (0xF)
+#define HAL_LL_NIBBLE_LOW_16BIT (0xFFU)
+#define HAL_LL_NIBBLE_LOW_32BIT (0xFFFFUL)
+
+/*!< @brief High nibble macros */
+#define HAL_LL_NIBBLE_HIGH_8BIT (0xF0)
+#define HAL_LL_NIBBLE_HIGH_16BIT (0xFF00U)
+#define HAL_LL_NIBBLE_HIGH_32BIT (0xFFFF0000UL)
 
 /**
  * @brief Sets one bit in a register.

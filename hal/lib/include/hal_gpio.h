@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -72,14 +72,14 @@ typedef hal_ll_gpio_mask_t hal_gpio_mask_t; /*!< Mask type. */
  * must not be altered. Reading or writing data directly from a control structure
  * by user should be avoided.
  */
-typedef struct hal_gpio_t
+typedef struct hal_gpio
 {
     hal_gpio_base_t base; /*!< Port base address. */
     hal_gpio_mask_t mask; /*!< Port bit mask. */
-};
+} hal_gpio_t;
 
-typedef struct hal_gpio_t hal_gpio_pin_t;  /*!< Forward declaration of the gpio pin typedef. */
-typedef struct hal_gpio_t hal_gpio_port_t; /*!< Forward declaration of the gpio port typedef. */
+typedef hal_gpio_t hal_gpio_pin_t;  /*!< Forward declaration of the gpio pin typedef. */
+typedef hal_gpio_t hal_gpio_port_t; /*!< Forward declaration of the gpio port typedef. */
 
 /*!
  * @addtogroup pergroup Microcontroller Peripherals
@@ -125,7 +125,7 @@ typedef struct hal_gpio_t hal_gpio_port_t; /*!< Forward declaration of the gpio 
  *   static hal_gpio_pin_t *pin;
  *
  *   // Configures pin as digital output.
- *   hal_gpio_configure_pin( &pin, PB2, HAL_GPIO_DIGITAL_OUTPUT );
+ *   hal_gpio_configure_pin( &pin, GPIO_PB2, HAL_GPIO_DIGITAL_OUTPUT );
  * @endcode
  */
 void hal_gpio_configure_pin( hal_gpio_pin_t *pin, hal_pin_name_t name, hal_gpio_direction_t direction );
@@ -148,7 +148,11 @@ void hal_gpio_configure_pin( hal_gpio_pin_t *pin, hal_pin_name_t name, hal_gpio_
  *   value = hal_gpio_read_pin_input( &pin );
  * @endcode
  */
+#if defined(FLATTEN_ME) && (FLATTEN_ME_LEVEL >= FLATTEN_ME_LEVEL_MID)
+#define hal_gpio_read_pin_input(_handle) hal_ll_gpio_read_pin_input( (hal_ll_gpio_pin_t *)_handle )
+#else
 uint8_t hal_gpio_read_pin_input( hal_gpio_pin_t *pin );
+#endif
 
 /**
  * @brief Read pin.
@@ -168,7 +172,11 @@ uint8_t hal_gpio_read_pin_input( hal_gpio_pin_t *pin );
  *   value = hal_gpio_read_pin_output( &pin );
  * @endcode
  */
+#if defined(FLATTEN_ME) && (FLATTEN_ME_LEVEL >= FLATTEN_ME_LEVEL_MID)
+#define hal_gpio_read_pin_output(_handle) hal_ll_gpio_read_pin_output( (hal_ll_gpio_pin_t *)_handle )
+#else
 uint8_t hal_gpio_read_pin_output( hal_gpio_pin_t *pin );
+#endif
 
 /**
  * @brief Sets pin state.
@@ -188,7 +196,11 @@ uint8_t hal_gpio_read_pin_output( hal_gpio_pin_t *pin );
  *   hal_gpio_write_pin_output( &pin, 1 );
  * @endcode
  */
+#if defined(FLATTEN_ME) && (FLATTEN_ME_LEVEL >= FLATTEN_ME_LEVEL_MID)
+#define hal_gpio_write_pin_output(_handle,_value) hal_ll_gpio_write_pin_output( (hal_ll_gpio_pin_t *)_handle, _value )
+#else
 void hal_gpio_write_pin_output( hal_gpio_pin_t *pin, uint8_t value );
+#endif
 
 /**
  * @brief Toggle pin state.
@@ -207,7 +219,11 @@ void hal_gpio_write_pin_output( hal_gpio_pin_t *pin, uint8_t value );
  *   hal_gpio_toggle_pin_output( &pin );
  * @endcode
  */
+#if defined(FLATTEN_ME) && (FLATTEN_ME_LEVEL >= FLATTEN_ME_LEVEL_MID)
+#define hal_gpio_toggle_pin_output(_handle) hal_ll_gpio_toggle_pin_output( (hal_ll_gpio_pin_t *)_handle )
+#else
 void hal_gpio_toggle_pin_output( hal_gpio_pin_t *pin );
+#endif
 
 /**
  * @brief Set pin state high.
@@ -226,7 +242,11 @@ void hal_gpio_toggle_pin_output( hal_gpio_pin_t *pin );
  *   hal_gpio_set_pin_output( &pin );
  * @endcode
  */
+#if defined(FLATTEN_ME) && (FLATTEN_ME_LEVEL >= FLATTEN_ME_LEVEL_MID)
+#define hal_gpio_set_pin_output(_handle) hal_ll_gpio_set_pin_output( (hal_ll_gpio_pin_t *)_handle )
+#else
 void hal_gpio_set_pin_output( hal_gpio_pin_t *pin );
+#endif
 
 /**
  * @brief Set pin state low.
@@ -245,7 +265,11 @@ void hal_gpio_set_pin_output( hal_gpio_pin_t *pin );
  *   hal_gpio_clear_pin_output( &pin );
  * @endcode
  */
+#if defined(FLATTEN_ME) && (FLATTEN_ME_LEVEL >= FLATTEN_ME_LEVEL_MID)
+#define hal_gpio_clear_pin_output(_handle) hal_ll_gpio_clear_pin_output( (hal_ll_gpio_pin_t *)_handle )
+#else
 void hal_gpio_clear_pin_output( hal_gpio_pin_t *pin );
+#endif
 
 /**
  * @brief Configure port.
@@ -300,7 +324,11 @@ void hal_gpio_configure_port( hal_gpio_port_t *port, hal_port_name_t name, hal_g
  *   value = hal_gpio_read_port_input( &port );
  * @endcode
  */
+#if defined(FLATTEN_ME) && (FLATTEN_ME_LEVEL >= FLATTEN_ME_LEVEL_MID)
+#define hal_gpio_read_port_input(_handle) hal_ll_gpio_read_port_input( (hal_ll_gpio_port_t *)_handle )
+#else
 hal_port_size_t hal_gpio_read_port_input( hal_gpio_port_t *port );
+#endif
 
 /**
  * @brief Read port.
@@ -320,7 +348,11 @@ hal_port_size_t hal_gpio_read_port_input( hal_gpio_port_t *port );
  *   value = hal_gpio_read_port_output( &port );
  * @endcode
  */
+#if defined(FLATTEN_ME) && (FLATTEN_ME_LEVEL >= FLATTEN_ME_LEVEL_MID)
+#define hal_gpio_read_port_output(_handle) hal_ll_gpio_read_port_output( (hal_ll_gpio_port_t *)_handle )
+#else
 hal_port_size_t hal_gpio_read_port_output( hal_gpio_port_t *port );
+#endif
 
 /**
  * @brief Sets port state.
@@ -341,7 +373,42 @@ hal_port_size_t hal_gpio_read_port_output( hal_gpio_port_t *port );
  *   hal_gpio_write_port_output( &port, 0xAA );
  * @endcode
  */
+#if defined(FLATTEN_ME) && (FLATTEN_ME_LEVEL >= FLATTEN_ME_LEVEL_MID)
+#define hal_gpio_write_port_output(_handle,_value) hal_ll_gpio_write_port_output( (hal_ll_gpio_port_t *)_handle, _value )
+#else
 void hal_gpio_write_port_output( hal_gpio_port_t *port, hal_port_size_t value );
+#endif
+
+/**
+ * @brief Fetches the pin number within a port.
+ *
+ * This function extracts the pin number from the given pin name
+ * by computing its position within the port.
+ *
+ * @param[in] pin_name The full pin name identifier.
+ * @return The pin number within the port.
+ */
+static inline hal_pin_name_t hal_gpio_fetch_pin(hal_pin_name_t pin_name) {
+    return (hal_pin_name_t)((uint8_t)pin_name % PORT_SIZE);
+}
+
+/**
+ * @brief Fetches the port number from a given pin name.
+ *
+ * This function determines the port associated with the given pin name.
+ * For 8-bit PIC microcontrollers, it extracts the higher nibble.
+ * Otherwise, it calculates the port by dividing by PORT_SIZE.
+ *
+ * @param[in] pin_name The full pin name identifier.
+ * @return The corresponding port number.
+ */
+static inline hal_port_name_t hal_gpio_fetch_port(hal_pin_name_t pin_name) {
+    #if defined(__XC8__) || defined(__MIKROC_AI_FOR_PIC__)
+    return (hal_port_name_t)((((uint8_t)pin_name & 0xF0) >> 4));
+    #else
+    return (hal_port_name_t)((uint8_t)pin_name / PORT_SIZE);
+    #endif
+}
 
 /*! @} */ // halgpiogroup
 /*! @} */ // halgroup

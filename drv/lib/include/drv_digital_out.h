@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -113,7 +113,11 @@ typedef struct
  *   static digital_out_t output_pin;
  *
  *   // Initializes digital output driver context structure and individual GPIO pin as digital output.
- *   digital_out_init( &output_pin, PB2 );
+ *   if ( DIGITAL_OUT_SUCCESS == digital_out_init( &output_pin, GPIO_PB2 ) ) {
+ *       // No error
+ *   } else {
+ *       // Handle the error
+ *   }
  * @endcode
  */
 err_t digital_out_init( digital_out_t *out, pin_name_t name );
@@ -123,7 +127,8 @@ err_t digital_out_init( digital_out_t *out, pin_name_t name );
  * @details Sets digital output individual pin \p out->pin to logic 1.
  * @param[in] out Digital output driver context structure.
  * See #digital_out_t structure definition for detailed explanation.
- * @return Nothing.
+ * @return The function can return one of the values defined in
+ * the #digital_out_err_t enum list.
  * @pre Make sure that \p out structure has been declared and
  * initialized beforehand.
  * See #digital_out_t structure definition and #digital_out_init for detailed explanation.
@@ -131,17 +136,26 @@ err_t digital_out_init( digital_out_t *out, pin_name_t name );
  * @b Example
  * @code
  *   // Initializes output_pin to logical high state (1).
- *   digital_out_high( &output_pin );
+ *   if ( DIGITAL_OUT_SUCCESS == digital_out_high( &output_pin ) ) {
+ *       // No error
+ *   } else {
+ *       // Handle the error
+ *   }
  * @endcode
  */
-void digital_out_high( digital_out_t *out );
+#if defined(FLATTEN_ME) && (FLATTEN_ME_LEVEL >= FLATTEN_ME_LEVEL_HIGH)
+#define digital_out_high(_handle) hal_gpio_set_pin_output( (hal_gpio_pin_t *)_handle )
+#else
+err_t digital_out_high( digital_out_t *out );
+#endif
 
 /**
  * @brief Set pin state to logical low.
  * @details Sets digital output individual pin \p out->pin to logic 0.
  * @param[in] out Digital output driver context structure.
  * See #digital_out_t structure definition for detailed explanation.
- * @return Nothing.
+ * @return The function can return one of the values defined in
+ * the #digital_out_err_t enum list.
  * @pre Make sure that \p out structure has been declared and
  * initialized beforehand.
  * See #digital_out_t structure definition and #digital_out_init for detailed explanation.
@@ -149,17 +163,26 @@ void digital_out_high( digital_out_t *out );
  * @b Example
  * @code
  *   // Initializes output_pin to logical low state (0).
- *   digital_out_low( &output_pin );
+ *   if ( DIGITAL_OUT_SUCCESS == digital_out_low( &output_pin ) ) {
+ *       // No error
+ *   } else {
+ *       // Handle the error
+ *   }
  * @endcode
  */
-void digital_out_low( digital_out_t *out );
+#if defined(FLATTEN_ME) && (FLATTEN_ME_LEVEL >= FLATTEN_ME_LEVEL_HIGH)
+#define digital_out_low(_handle) hal_gpio_clear_pin_output( (hal_gpio_pin_t *)_handle )
+#else
+err_t digital_out_low( digital_out_t *out );
+#endif
 
 /**
  * @brief Toggle pin state.
  * @details Toggles digital output individual pin \p out->pin logic state.
  * @param[in] out Digital output driver context structure.
  * See #digital_out_t structure definition for detailed explanation.
- * @return Nothing.
+ * @return The function can return one of the values defined in
+ * the #digital_out_err_t enum list.
  * @pre Make sure that \p out structure has been declared and
  * initialized beforehand.
  * See #digital_out_t structure definition and #digital_out_init for detailed explanation.
@@ -167,10 +190,18 @@ void digital_out_low( digital_out_t *out );
  * @b Example
  * @code
  *   // Toggle pin state.
- *   digital_out_toggle( &output_pin );
+ *   if ( DIGITAL_OUT_SUCCESS == digital_out_toggle( &output_pin ) ) {
+ *       // No error
+ *   } else {
+ *       // Handle the error
+ *   }
  * @endcode
  */
-void digital_out_toggle( digital_out_t *out );
+#if defined(FLATTEN_ME) && (FLATTEN_ME_LEVEL >= FLATTEN_ME_LEVEL_HIGH)
+#define digital_out_toggle(_handle) hal_gpio_toggle_pin_output( (hal_gpio_pin_t *)_handle )
+#else
+err_t digital_out_toggle( digital_out_t *out );
+#endif
 
 /**
  * @brief Set pin state.
@@ -179,7 +210,8 @@ void digital_out_toggle( digital_out_t *out );
  * @param[in] out Digital output driver context structure.
  * See #digital_out_t structure definition for detailed explanation.
  * @param[in] value Logic value to write.
- * @return Nothing.
+ * @return The function can return one of the values defined in
+ * the #digital_out_err_t enum list.
  * @pre Make sure that \p out structure has been declared and
  * initialized beforehand.
  * See #digital_out_t structure definition and #digital_out_init for detailed explanation.
@@ -187,10 +219,44 @@ void digital_out_toggle( digital_out_t *out );
  * @b Example
  * @code
  *   // Write value to GPIO port.
- *   digital_out_write( &output_pin, 1 );
+ *   if ( DIGITAL_OUT_SUCCESS == digital_out_write( &output_pin, 1 ) ) {
+ *       // No error
+ *   } else {
+ *       // Handle the error
+ *   }
  * @endcode
  */
-void digital_out_write( digital_out_t *out, uint8_t value );
+#if defined(FLATTEN_ME) && (FLATTEN_ME_LEVEL >= FLATTEN_ME_LEVEL_HIGH)
+#define digital_out_write(_handle,_value) hal_gpio_write_pin_output( (hal_gpio_pin_t *)_handle, _value )
+#else
+err_t digital_out_write( digital_out_t *out, uint8_t value );
+#endif
+
+/**
+ * @brief Read GPIO pin.
+ * @details Reads the current output value of the individual GPIO pin.
+ * @param[in] out Digital output driver context structure.
+ * See #digital_out_t structure definition for detailed explanation.
+ * @return Function returns pin logical state (1 or 0).
+ * @pre Make sure that \p out structure has been declared and
+ * initialized beforehand.
+ * See #digital_out_t structure definition and #digital_out_init for detailed explanation.
+ * @note Return value depends on signal being output to current pin.
+ *
+ * @b Example
+ * @code
+ *   // GPIO value holder.
+ *   uint8_t value;
+ *
+ *   // Read digital output value.
+ *   value = digital_out_read( &output_pin );
+ * @endcode
+ */
+#if defined(FLATTEN_ME) && (FLATTEN_ME_LEVEL >= FLATTEN_ME_LEVEL_HIGH)
+#define digital_out_read(_handle) hal_gpio_read_pin_output( (hal_gpio_pin_t *)_handle )
+#else
+uint8_t digital_out_read( digital_out_t *out );
+#endif
 
 /*! @} */ // digoutgroup
 /*! @} */ // drvgroup

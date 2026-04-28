@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -49,6 +49,7 @@ extern "C"{
 #endif
 
 #include "hal_target.h"
+#include "generic_pointer.h"
 #include "hal_ll_spi_master.h"
 #include "hal_gpio.h"
 
@@ -63,6 +64,7 @@ extern "C"{
 typedef struct
 {
     handle_t *hal_spi_master_handle; /*!< SPI Master HAL level handle */
+    handle_t *drv_spi_master_handle; /*!< SPI Master DRV level handle */
     bool init_state; /*!< SPI Master HAL object init state */
 } hal_spi_master_handle_register_t;
 
@@ -266,7 +268,7 @@ err_t hal_spi_master_open( handle_t *handle, bool hal_obj_open_state );
  * @b Example
  * @code
  *   // Select desired device.
- *   hal_spi_master_select_device( PA1 );
+ *   hal_spi_master_select_device( GPIO_PA1 );
  * @endcode
  */
 void hal_spi_master_select_device( hal_pin_name_t chip_select );
@@ -283,7 +285,7 @@ void hal_spi_master_select_device( hal_pin_name_t chip_select );
  * @b Example
  * @code
  *   // Deselect desired device.
- *   hal_spi_master_deselect_device( PA1 );
+ *   hal_spi_master_deselect_device( GPIO_PA1 );
  * @endcode
  */
 void hal_spi_master_deselect_device( hal_pin_name_t chip_select );
@@ -401,8 +403,8 @@ err_t hal_spi_master_set_mode( handle_t *handle, hal_spi_master_config_t *config
  *   hal_spi_master_write( handle, &write_sequence, DATA_LENGTH );
  * @endcode
  */
-err_t hal_spi_master_write( handle_t handle, uint8_t *write_data_buffer,
-                                              size_t write_data_length );
+err_t hal_spi_master_write( handle_t handle, uint8_t * __generic_ptr write_data_buffer,
+                                             size_t write_data_length );
 
 /**
  * @brief Read byte from SPI bus.
@@ -483,6 +485,39 @@ err_t hal_spi_master_write_then_read( handle_t handle, uint8_t *write_data_buffe
                                                         size_t length_write_data,
                                                        uint8_t *read_data_buffer,
                                                         size_t length_read_data );
+
+/**
+ * @brief Perform full-duplex SPI transfer.
+ * @details Simultaneously writes and reads a sequence of bytes on the
+ * SPI bus in blocking mode. For each transmitted byte, a byte is received.
+ *
+ * @param[in] handle SPI master handle.
+ * See #hal_spi_master_t structure definition for detailed explanation.
+ * @param[in] write_data_buffer Buffer containing bytes to transmit.
+ * @param[out] read_data_buffer Buffer to store received bytes.
+ * @param[in] data_length Number of bytes to transmit and receive.
+ *
+ * @return The function can return one of the values defined by
+ * #hal_spi_master_err_t, which is size dependant on the architecture.
+ *
+ * @pre Before calling this function,
+ * the user is expected to call #hal_spi_master_open function.
+ *
+ * @note The transfer is performed in blocking mode.
+ *
+ * @b Example
+ * @code
+ *   #define DATA_LENGTH 128
+ *
+ *   uint8_t tx_data[ DATA_LENGTH ] = { 0xA5, 0x5A, ... };
+ *   uint8_t rx_data[ DATA_LENGTH ];
+ *
+ *   hal_spi_master_transfer( handle, tx_data, rx_data, DATA_LENGTH );
+ * @endcode
+ */
+err_t hal_spi_master_transfer( handle_t handle, uint8_t *write_data_buffer,
+                                                uint8_t *read_data_buffer,
+                                                size_t data_length );
 
 /**
  * @brief  Close SPI Master HAL context object.

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -43,6 +43,9 @@
 
 #ifndef _MCU_DEFINITIONS_H_
 #define _MCU_DEFINITIONS_H_
+
+#include "mcu_reg_addresses.h"
+#include "can_definitions.h"
 
 //ADC
 #define HAL_LL_RA0_AN0_ANCON0_BIT 0
@@ -153,17 +156,31 @@
 #define PWM_CCP8_RE4
 #define PWM_CCP9_RE3
 
+#define EPWM_CCP2_RE1_P2C
+#define EPWM_CCP2_RE0_P2D
+#define EPWM_CCP3_RG0_P3A
+#define EPWM_CCP3_RG3_P3D
+#define EPWM_CCP1_RG4_P1D
+#define EPWM_CCP2_RC1_P2A
+#define EPWM_CCP1_RC2_P1A
+#define EPWM_CCP2_RB3_P2A
+#define EPWM_CCP2_RE7_P2A
+#define EPWM_CCP1_RE6_P1B
+#define EPWM_CCP1_RE5_P1C
+#define EPWM_CCP3_RE4_P3B
+#define EPWM_CCP3_RE3_P3C
+#define EPWM_CCP2_RE2_P2B
 
 #define CCP_MODULE_1 1
-#define CCP_MODULE_10 2
-#define CCP_MODULE_2 3
-#define CCP_MODULE_3 4
-#define CCP_MODULE_4 5
-#define CCP_MODULE_5 6
-#define CCP_MODULE_6 7
-#define CCP_MODULE_7 8
-#define CCP_MODULE_8 9
-#define CCP_MODULE_9 10
+#define CCP_MODULE_10 10
+#define CCP_MODULE_2 2
+#define CCP_MODULE_3 3
+#define CCP_MODULE_4 4
+#define CCP_MODULE_5 5
+#define CCP_MODULE_6 6
+#define CCP_MODULE_7 7
+#define CCP_MODULE_8 8
+#define CCP_MODULE_9 9
 
 #define CCP_MODULE_COUNT 10
 
@@ -326,6 +343,9 @@
 // EOF PMD & PIR Register defines
 
 // TMR Register addresses
+#define HAL_LL_PSTR3CON_ADDRESS 0xF1AU
+#define HAL_LL_PSTR2CON_ADDRESS 0xF1BU
+#define HAL_LL_PSTR1CON_ADDRESS 0xF9CU
 #define HAL_LL_CCP10CON_ADDRESS 0xF40U
 #define HAL_LL_CCP1CON_ADDRESS 0xFBBU
 #define HAL_LL_CCP2CON_ADDRESS 0xF4EU

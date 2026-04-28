@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -43,6 +43,21 @@
 
 #ifndef _MCU_DEFINITIONS_H_
 #define _MCU_DEFINITIONS_H_
+
+#include "mcu_reg_addresses.h"
+#include "can_definitions.h"
+
+//DMA
+#define DMA_NUM_OF_MODULES 2
+#define DMA_NUM_OF_STREAMS 1
+#define DMA_NUM_OF_STREAMS_FAMILY 1
+#define DMA_NUM_OF_CHANNELS 82
+#define DMA_NUM_OF_CHANNELS_FAMILY 82
+
+#define DMA_MODULE_1 0
+#define DMA_MODULE_2 1
+#define DMA_STREAM 0
+//EOF DMA
 
 //ADC
 #define HAL_LL_RA0_ANA0_ANSELA_BIT 0
@@ -547,6 +562,8 @@
 // EOF PMD Register addresses
 
 // I2C and SPI Register addresses
+#define HAL_LL_I2C1ERR_ADDRESS 0x3D76U
+#define HAL_LL_I2C2ERR_ADDRESS 0x3D60U
 #define HAL_LL_I2C1ADB0_ADDRESS 0x3D6DU
 #define HAL_LL_I2C1ADB1_ADDRESS 0x3D6EU
 #define HAL_LL_I2C1CLK_ADDRESS 0x3D7BU

@@ -1,6 +1,0 @@
-type: subdirs
-
-subdirs: {
-    ssd1963
-    ft5xx6
-}

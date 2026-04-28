@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -71,6 +71,7 @@ typedef enum
     VTFT_COMPONENT_BOX,
     VTFT_COMPONENT_ROUNDED_BOX,
     VTFT_COMPONENT_CIRCLE,
+    VTFT_COMPONENT_ELLIPSE,
     VTFT_COMPONENT_LINE,
     VTFT_COMPONENT_LABEL,
     VTFT_COMPONENT_BUTTON,
@@ -149,7 +150,7 @@ vtft_font;
 
 typedef struct
 {
-    vtft_byte_t * __generic caption;
+    vtft_byte_t * __generic_ptr caption;
     vtft_index_t max_length;
     vtft_font font;
 }
@@ -271,6 +272,22 @@ typedef struct
     vtft_ucoord_t radius;
 }
 vtft_circle;
+
+typedef struct
+{
+    vtft_comp_type_t type;
+    vtft_index_t order;
+    vtft_bool_t visible;
+    vtft_coord_t left;
+    vtft_coord_t top;
+    vtft_bool_t active;
+    vtft_event_set event_set;
+    vtft_pen pen;
+    vtft_press_gradient press_gradient;
+    vtft_ucoord_t width;
+    vtft_ucoord_t height;
+}
+vtft_ellipse;
 
 typedef struct
 {
@@ -472,21 +489,21 @@ typedef struct
     vtft_event down_event;
     vtft_event up_event;
 
-    vtft_component *__generic * __generic components;
+    vtft_component *__generic_ptr * __generic_ptr components;
     vtft_index_t component_count;
 }
 vtft_screen;
 
 // Drawing Functions
 // The function signature for drawing a component.
-typedef void (*vtft_draw_handle)(struct vtft_s *instance, vtft_component * __generic component);
+typedef void (*vtft_draw_handle)(struct vtft_s *instance, vtft_component * __generic_ptr component);
 
 // VTFT Instance
 
 typedef struct vtft_s
 {
     // The TP instance.
-    tp_t * tp_instance;     //!<-- menja se u okviru nekih funkcija
+    tp_t * tp_instance;
 
     // The draw handles for all the various components.
     vtft_draw_handle draw_handles[VTFT_COMPONENT_COUNT];
@@ -500,10 +517,10 @@ typedef struct vtft_s
     vtft_bool_t screen_changed;
 
     // The component currently under the cursor.
-    vtft_active_component * __generic current_active_component;
+    vtft_active_component * __generic_ptr current_active_component;
 
     // The currently pressed component.
-    vtft_active_component * __generic pressed_component;
+    vtft_active_component * __generic_ptr pressed_component;
 }
 vtft_t;
 

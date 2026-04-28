@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -78,17 +78,17 @@ typedef enum
 /**
  *  Enum used for pin direction selection.
  */
-typedef struct hal_ll_gpio_t
+typedef struct hal_ll_gpio
 {
     hal_ll_gpio_base_t base;
     hal_ll_gpio_mask_t mask;
-};
+} hal_ll_gpio_t;
 
 /**
  *  Pin and port data types.
  */
-typedef struct hal_ll_gpio_t hal_ll_gpio_pin_t;
-typedef struct hal_ll_gpio_t hal_ll_gpio_port_t;
+typedef hal_ll_gpio_t hal_ll_gpio_pin_t;
+typedef hal_ll_gpio_t hal_ll_gpio_port_t;
 
 /**
   * @brief  Get pins port index within a list of available ports

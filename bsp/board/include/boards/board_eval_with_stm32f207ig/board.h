@@ -1,0 +1,306 @@
+/****************************************************************************
+**
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
+** Contact: https://www.mikroe.com/contact
+**
+** This file is part of the mikroSDK package
+**
+** Commercial License Usage
+**
+** Licensees holding valid commercial NECTO compilers AI licenses may use this
+** file in accordance with the commercial license agreement provided with the
+** Software or, alternatively, in accordance with the terms contained in
+** a written agreement between you and The MikroElektronika Company.
+** For licensing terms and conditions see
+** https://www.mikroe.com/legal/software-license-agreement.
+** For further information use the contact form at
+** https://www.mikroe.com/contact.
+**
+**
+** GNU Lesser General Public License Usage
+**
+** Alternatively, this file may be used for
+** non-commercial projects under the terms of the GNU Lesser
+** General Public License version 3 as published by the Free Software
+** Foundation: https://www.gnu.org/licenses/lgpl-3.0.html.
+**
+** The above copyright notice and this permission notice shall be
+** included in all copies or substantial portions of the Software.
+**
+** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
+** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
+** OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+**
+****************************************************************************/
+/*!
+ * @file  board.h
+ * @brief Main board pin mapping.
+ *
+ * @note For board-specific changes and version history, refer to the changelogs:
+ *       https://github.com/MikroElektronika/mikrosdk_v2/blob/master/changelog/v2.14.4/new_hw/2025-06-04.md
+ */
+
+#ifndef _BOARD_H_
+#define _BOARD_H_
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+#define BOARD_NAME "STM32F207IG-Eval"
+
+#include "hal_target.h"
+
+// Mapping
+#define HEADER_CONNECTOR_CN2_D1  	// Pin not routed
+#define HEADER_CONNECTOR_CN2_D2  	// Pin not routed
+#define HEADER_CONNECTOR_CN2_D3  	GPIO_PA3
+#define HEADER_CONNECTOR_CN2_D4  	GPIO_PA4
+#define HEADER_CONNECTOR_CN2_D5  	GPIO_PA5
+#define HEADER_CONNECTOR_CN2_D6  	GPIO_PA6
+#define HEADER_CONNECTOR_CN2_D7  	GPIO_PA7
+#define HEADER_CONNECTOR_CN2_D8  	GPIO_PC4
+#define HEADER_CONNECTOR_CN2_D9  	GPIO_PC5
+#define HEADER_CONNECTOR_CN2_D10 	// Pin not routed
+#define HEADER_CONNECTOR_CN2_D11 	GPIO_PB0
+#define HEADER_CONNECTOR_CN2_D12 	GPIO_PB1
+#define HEADER_CONNECTOR_CN2_D13 	GPIO_PB2
+#define HEADER_CONNECTOR_CN2_D14 	GPIO_PF11
+#define HEADER_CONNECTOR_CN2_D15 	GPIO_PF12
+#define HEADER_CONNECTOR_CN2_D16 	GPIO_PF13
+#define HEADER_CONNECTOR_CN2_D17 	GPIO_PF14
+#define HEADER_CONNECTOR_CN2_D18 	GPIO_PF15
+#define HEADER_CONNECTOR_CN2_D19 	// Pin not routed
+#define HEADER_CONNECTOR_CN2_D20 	GPIO_PG0
+#define HEADER_CONNECTOR_CN2_D21 	GPIO_PG1
+#define HEADER_CONNECTOR_CN2_D22 	GPIO_PE7
+#define HEADER_CONNECTOR_CN2_D23 	GPIO_PE8
+#define HEADER_CONNECTOR_CN2_D24 	GPIO_PE9
+#define HEADER_CONNECTOR_CN2_D25 	GPIO_PE10
+#define HEADER_CONNECTOR_CN2_D26 	GPIO_PE11
+#define HEADER_CONNECTOR_CN2_D27 	GPIO_PE12
+#define HEADER_CONNECTOR_CN2_D28 	GPIO_PE13
+#define HEADER_CONNECTOR_CN2_D29 	GPIO_PE14
+#define HEADER_CONNECTOR_CN2_D30 	// Pin not routed
+#define HEADER_CONNECTOR_CN2_D31 	GPIO_PE15
+#define HEADER_CONNECTOR_CN2_D32 	GPIO_PB10
+#define HEADER_CONNECTOR_CN2_D33 	GPIO_PB11
+#define HEADER_CONNECTOR_CN2_D34 	GPIO_PH6
+#define HEADER_CONNECTOR_CN2_D35 	GPIO_PH7
+#define HEADER_CONNECTOR_CN2_D36 	GPIO_PH8
+#define HEADER_CONNECTOR_CN2_D37 	GPIO_PH9
+#define HEADER_CONNECTOR_CN2_D38 	GPIO_PH10
+#define HEADER_CONNECTOR_CN2_D39 	// Pin not routed
+#define HEADER_CONNECTOR_CN2_D40 	GPIO_PH11
+
+#define HEADER_CONNECTOR_CN3_D1  	// Pin not routed
+#define HEADER_CONNECTOR_CN3_D2  	GPIO_PI2
+#define HEADER_CONNECTOR_CN3_D3  	GPIO_PI1
+#define HEADER_CONNECTOR_CN3_D4  	GPIO_PI0
+#define HEADER_CONNECTOR_CN3_D5  	GPIO_PH15
+#define HEADER_CONNECTOR_CN3_D6  	GPIO_PH14
+#define HEADER_CONNECTOR_CN3_D7  	GPIO_PH13
+#define HEADER_CONNECTOR_CN3_D8  	GPIO_PA13
+#define HEADER_CONNECTOR_CN3_D9  	GPIO_PC13
+#define HEADER_CONNECTOR_CN3_D10 	// Pin not routed
+#define HEADER_CONNECTOR_CN3_D11 	// Pin not routed
+#define HEADER_CONNECTOR_CN3_D12 	GPIO_PA12
+#define HEADER_CONNECTOR_CN3_D13 	GPIO_PA11
+#define HEADER_CONNECTOR_CN3_D14 	GPIO_PA10
+#define HEADER_CONNECTOR_CN3_D15 	GPIO_PA9
+#define HEADER_CONNECTOR_CN3_D16 	GPIO_PA8
+#define HEADER_CONNECTOR_CN3_D17 	GPIO_PC9
+#define HEADER_CONNECTOR_CN3_D18 	GPIO_PC8
+#define HEADER_CONNECTOR_CN3_D19 	// Pin not routed
+#define HEADER_CONNECTOR_CN3_D20 	GPIO_PC7
+#define HEADER_CONNECTOR_CN3_D21 	GPIO_PC6
+#define HEADER_CONNECTOR_CN3_D22 	GPIO_PG8
+#define HEADER_CONNECTOR_CN3_D23 	GPIO_PG7
+#define HEADER_CONNECTOR_CN3_D24 	GPIO_PG6
+#define HEADER_CONNECTOR_CN3_D25 	GPIO_PG5
+#define HEADER_CONNECTOR_CN3_D26 	GPIO_PG4
+#define HEADER_CONNECTOR_CN3_D27 	GPIO_PG3
+#define HEADER_CONNECTOR_CN3_D28 	GPIO_PG2
+#define HEADER_CONNECTOR_CN3_D29 	GPIO_PD15
+#define HEADER_CONNECTOR_CN3_D30 	// Pin not routed
+#define HEADER_CONNECTOR_CN3_D31 	GPIO_PD14
+#define HEADER_CONNECTOR_CN3_D32 	GPIO_PD13
+#define HEADER_CONNECTOR_CN3_D33 	GPIO_PD12
+#define HEADER_CONNECTOR_CN3_D34 	GPIO_PD11
+#define HEADER_CONNECTOR_CN3_D35 	GPIO_PD10
+#define HEADER_CONNECTOR_CN3_D36 	GPIO_PD9
+#define HEADER_CONNECTOR_CN3_D37 	GPIO_PD8
+#define HEADER_CONNECTOR_CN3_D38 	GPIO_PB15
+#define HEADER_CONNECTOR_CN3_D39 	// Pin not routed
+#define HEADER_CONNECTOR_CN3_D40 	GPIO_PB14
+#define HEADER_CONNECTOR_CN3_D41 	GPIO_PB13
+#define HEADER_CONNECTOR_CN3_D42 	GPIO_PB12
+#define HEADER_CONNECTOR_CN3_D43 	GPIO_PH12
+#define HEADER_CONNECTOR_CN3_D44 	// Pin not routed
+#define HEADER_CONNECTOR_CN3_D45 	// Pin not routed
+#define HEADER_CONNECTOR_CN3_D46 	// Pin not routed
+#define HEADER_CONNECTOR_CN3_D47 	// Pin not routed
+#define HEADER_CONNECTOR_CN3_D48 	// Pin not routed
+#define HEADER_CONNECTOR_CN3_D49 	// Pin not routed
+#define HEADER_CONNECTOR_CN3_D50 	// Pin not routed
+
+#define HEADER_CONNECTOR_CN4_D1  	// Pin not routed
+#define HEADER_CONNECTOR_CN4_D2  	GPIO_PI7
+#define HEADER_CONNECTOR_CN4_D3  	GPIO_PI6
+#define HEADER_CONNECTOR_CN4_D4  	GPIO_PI5
+#define HEADER_CONNECTOR_CN4_D5  	GPIO_PI4
+#define HEADER_CONNECTOR_CN4_D6  	GPIO_PE1
+#define HEADER_CONNECTOR_CN4_D7  	GPIO_PE0
+#define HEADER_CONNECTOR_CN4_D8  	GPIO_PB9
+#define HEADER_CONNECTOR_CN4_D9  	GPIO_PB8
+#define HEADER_CONNECTOR_CN4_D10 	// Pin not routed
+#define HEADER_CONNECTOR_CN4_D11 	// Pin not routed
+#define HEADER_CONNECTOR_CN4_D12 	GPIO_PB7
+#define HEADER_CONNECTOR_CN4_D13 	GPIO_PB6
+#define HEADER_CONNECTOR_CN4_D14 	GPIO_PB5
+#define HEADER_CONNECTOR_CN4_D15 	GPIO_PB4
+#define HEADER_CONNECTOR_CN4_D16 	GPIO_PB3
+#define HEADER_CONNECTOR_CN4_D17 	GPIO_PG15
+#define HEADER_CONNECTOR_CN4_D18 	GPIO_PG14
+#define HEADER_CONNECTOR_CN4_D19 	// Pin not routed
+#define HEADER_CONNECTOR_CN4_D20 	GPIO_PG13
+#define HEADER_CONNECTOR_CN4_D21 	GPIO_PG12
+#define HEADER_CONNECTOR_CN4_D22 	GPIO_PG11
+#define HEADER_CONNECTOR_CN4_D23 	GPIO_PG10
+#define HEADER_CONNECTOR_CN4_D24 	GPIO_PG9
+#define HEADER_CONNECTOR_CN4_D25 	GPIO_PD7
+#define HEADER_CONNECTOR_CN4_D26 	GPIO_PD6
+#define HEADER_CONNECTOR_CN4_D27 	GPIO_PD5
+#define HEADER_CONNECTOR_CN4_D28 	GPIO_PD4
+#define HEADER_CONNECTOR_CN4_D29 	GPIO_PD3
+#define HEADER_CONNECTOR_CN4_D30 	// Pin not routed
+#define HEADER_CONNECTOR_CN4_D31 	GPIO_PD2
+#define HEADER_CONNECTOR_CN4_D32 	GPIO_PD1
+#define HEADER_CONNECTOR_CN4_D33 	GPIO_PD0
+#define HEADER_CONNECTOR_CN4_D34 	GPIO_PC12
+#define HEADER_CONNECTOR_CN4_D35 	GPIO_PC11
+#define HEADER_CONNECTOR_CN4_D36 	GPIO_PC10
+#define HEADER_CONNECTOR_CN4_D37 	GPIO_PA15
+#define HEADER_CONNECTOR_CN4_D38 	GPIO_PA14
+#define HEADER_CONNECTOR_CN4_D39 	// Pin not routed
+#define HEADER_CONNECTOR_CN4_D40 	GPIO_PI3
+
+#define HEADER_CONNECTOR_CN6_D1  	GPIO_PC10
+#define HEADER_CONNECTOR_CN6_D2  	GPIO_PC11
+#define HEADER_CONNECTOR_CN6_D3  	GPIO_PD2
+#define HEADER_CONNECTOR_CN6_D4  	// Pin not routed
+#define HEADER_CONNECTOR_CN6_D5  	GPIO_PC12
+#define HEADER_CONNECTOR_CN6_D6  	// Pin not routed
+#define HEADER_CONNECTOR_CN6_D7  	GPIO_PC8
+#define HEADER_CONNECTOR_CN6_D8  	GPIO_PC9
+#define HEADER_CONNECTOR_CN6_D9  	// Pin not routed
+#define HEADER_CONNECTOR_CN6_D10 	GPIO_PH13
+
+#define HEADER_CONNECTOR_CN8_D1  	GPIO_PA9
+#define HEADER_CONNECTOR_CN8_D2  	GPIO_PA11
+#define HEADER_CONNECTOR_CN8_D3  	GPIO_PA12
+#define HEADER_CONNECTOR_CN8_D4  	GPIO_PA10
+#define HEADER_CONNECTOR_CN8_D5  	// Pin not routed
+
+#define HEADER_CONNECTOR_CN14_D1 	// Pin not routed
+#define HEADER_CONNECTOR_CN14_D2 	// Pin not routed
+#define HEADER_CONNECTOR_CN14_D3 	GPIO_PB4
+#define HEADER_CONNECTOR_CN14_D4 	// Pin not routed
+#define HEADER_CONNECTOR_CN14_D5 	GPIO_PA15
+#define HEADER_CONNECTOR_CN14_D6 	// Pin not routed
+#define HEADER_CONNECTOR_CN14_D7 	GPIO_PA13
+#define HEADER_CONNECTOR_CN14_D8 	// Pin not routed
+#define HEADER_CONNECTOR_CN14_D9 	GPIO_PA14
+#define HEADER_CONNECTOR_CN14_D10	// Pin not routed
+#define HEADER_CONNECTOR_CN14_D11	// Pin not routed
+#define HEADER_CONNECTOR_CN14_D12	// Pin not routed
+#define HEADER_CONNECTOR_CN14_D13	GPIO_PB3
+#define HEADER_CONNECTOR_CN14_D14	// Pin not routed
+#define HEADER_CONNECTOR_CN14_D15	// Pin not routed
+#define HEADER_CONNECTOR_CN14_D16	// Pin not routed
+#define HEADER_CONNECTOR_CN14_D17	// Pin not routed
+#define HEADER_CONNECTOR_CN14_D18	// Pin not routed
+#define HEADER_CONNECTOR_CN14_D19	// Pin not routed
+#define HEADER_CONNECTOR_CN14_D20	// Pin not routed
+
+#define HEADER_CONNECTOR_CN15_D1 	// Pin not routed
+#define HEADER_CONNECTOR_CN15_D2 	// Pin not routed
+#define HEADER_CONNECTOR_CN15_D3 	GPIO_PB9
+#define HEADER_CONNECTOR_CN15_D4 	// Pin not routed
+#define HEADER_CONNECTOR_CN15_D5 	GPIO_PB6
+#define HEADER_CONNECTOR_CN15_D6 	// Pin not routed
+#define HEADER_CONNECTOR_CN15_D7 	GPIO_PI5
+#define HEADER_CONNECTOR_CN15_D8 	// Pin not routed
+#define HEADER_CONNECTOR_CN15_D9 	GPIO_PH8
+#define HEADER_CONNECTOR_CN15_D10	// Pin not routed
+#define HEADER_CONNECTOR_CN15_D11	// Pin not routed
+#define HEADER_CONNECTOR_CN15_D12	GPIO_PI7
+#define HEADER_CONNECTOR_CN15_D13	// Pin not routed
+#define HEADER_CONNECTOR_CN15_D14	GPIO_PI6
+#define HEADER_CONNECTOR_CN15_D15	// Pin not routed
+#define HEADER_CONNECTOR_CN15_D16	GPIO_PI4
+#define HEADER_CONNECTOR_CN15_D17	GPIO_PA6
+#define HEADER_CONNECTOR_CN15_D18	GPIO_PH14
+#define HEADER_CONNECTOR_CN15_D19	GPIO_PH9
+#define HEADER_CONNECTOR_CN15_D20	GPIO_PH12
+#define HEADER_CONNECTOR_CN15_D21	GPIO_PH10
+#define HEADER_CONNECTOR_CN15_D22	GPIO_PH11
+#define HEADER_CONNECTOR_CN15_D23	// Pin not routed
+#define HEADER_CONNECTOR_CN15_D24	// Pin not routed
+
+#define HEADER_CONNECTOR_CN16_D1 	// Pin not routed
+#define HEADER_CONNECTOR_CN16_D2 	GPIO_PC11
+#define HEADER_CONNECTOR_CN16_D3 	GPIO_PC10
+#define HEADER_CONNECTOR_CN16_D4 	// Pin not routed
+#define HEADER_CONNECTOR_CN16_D5 	// Pin not routed
+#define HEADER_CONNECTOR_CN16_D6 	// Pin not routed
+#define HEADER_CONNECTOR_CN16_D7 	// Pin not routed
+#define HEADER_CONNECTOR_CN16_D8 	// Pin not routed
+#define HEADER_CONNECTOR_CN16_D9 	// Pin not routed
+
+#define HEADER_CONNECTOR_CN19_D1 	// Pin not routed
+#define HEADER_CONNECTOR_CN19_D2 	// Pin not routed
+#define HEADER_CONNECTOR_CN19_D3 	// Pin not routed
+#define HEADER_CONNECTOR_CN19_D4 	// Pin not routed
+#define HEADER_CONNECTOR_CN19_D5 	// Pin not routed
+#define HEADER_CONNECTOR_CN19_D6 	GPIO_PD1
+#define HEADER_CONNECTOR_CN19_D7 	GPIO_PD2
+#define HEADER_CONNECTOR_CN19_D8 	GPIO_PD3
+#define HEADER_CONNECTOR_CN19_D9 	GPIO_PD4
+#define HEADER_CONNECTOR_CN19_D10	GPIO_PD5
+#define HEADER_CONNECTOR_CN19_D11	GPIO_PD6
+#define HEADER_CONNECTOR_CN19_D12	GPIO_PD7
+#define HEADER_CONNECTOR_CN19_D13	GPIO_PD8
+#define HEADER_CONNECTOR_CN19_D14	GPIO_PD10
+#define HEADER_CONNECTOR_CN19_D15	GPIO_PD11
+#define HEADER_CONNECTOR_CN19_D16	GPIO_PD12
+#define HEADER_CONNECTOR_CN19_D17	GPIO_PD13
+#define HEADER_CONNECTOR_CN19_D18	GPIO_PD14
+#define HEADER_CONNECTOR_CN19_D19	GPIO_PD15
+#define HEADER_CONNECTOR_CN19_D20	GPIO_PD16
+#define HEADER_CONNECTOR_CN19_D21	GPIO_PD17
+#define HEADER_CONNECTOR_CN19_D22	// Pin not routed
+#define HEADER_CONNECTOR_CN19_D23	// Pin not routed
+#define HEADER_CONNECTOR_CN19_D24	// Pin not routed
+#define HEADER_CONNECTOR_CN19_D25	// Pin not routed
+#define HEADER_CONNECTOR_CN19_D26	// Pin not routed
+#define HEADER_CONNECTOR_CN19_D27	// Pin not routed
+#define HEADER_CONNECTOR_CN19_D28	// Pin not routed
+#define HEADER_CONNECTOR_CN19_D29	// Pin not routed
+#define HEADER_CONNECTOR_CN19_D30	// Pin not routed
+#define HEADER_CONNECTOR_CN19_D31	// Pin not routed
+#define HEADER_CONNECTOR_CN19_D32	// Pin not routed
+#define HEADER_CONNECTOR_CN19_D33	// Pin not routed
+#define HEADER_CONNECTOR_CN19_D34	// Pin not routed
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif    // _BOARD_H_
+// ------------------------------------------------------------------------- END

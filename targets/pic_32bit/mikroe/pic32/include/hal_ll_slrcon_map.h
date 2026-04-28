@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -57,15 +57,79 @@ extern "C"{
 typedef struct
 {
     hal_ll_pin_name_t pin;
-    uint8_t slrcon_address_bit;
-    hal_ll_base_addr_t slrcon_address;
+    uint8_t srconx_address_bit;
+    hal_ll_base_addr_t srconx_address[2];
 } hal_ll_slew_rate_t;
 
 /*!< @brief Hal low level map list */
-// TODO -- implementation shall be added in a future release
-__weak static const hal_ll_slew_rate_t slew_rate_map[] =
+static const hal_ll_slew_rate_t slew_rate_map[] =
 {
-    { HAL_LL_PIN_NC, HAL_LL_PIN_NC, HAL_LL_MODULE_ERROR }
+    #ifdef PIC32MZxx
+    // PORTA
+    #ifdef __RA6_CN
+    { GPIO_PA6,  6,  {HAL_LL_SRCON0A_ADDRESS,HAL_LL_SRCON1A_ADDRESS} },
+    #endif
+    #ifdef __RA7_CN
+    { GPIO_PA7,  7,  {HAL_LL_SRCON0A_ADDRESS,HAL_LL_SRCON1A_ADDRESS} },
+    #endif
+    // PORTB
+    #ifdef __RB3_CN
+    { GPIO_PB3,  3,  {HAL_LL_SRCON0B_ADDRESS,HAL_LL_SRCON1B_ADDRESS} },
+    #endif
+    #ifdef __RB5_CN
+    { GPIO_PB5,  5,  {HAL_LL_SRCON0B_ADDRESS,HAL_LL_SRCON1B_ADDRESS} },
+    #endif
+    #ifdef __RB8_CN
+    { GPIO_PB8,  8,  {HAL_LL_SRCON0B_ADDRESS,HAL_LL_SRCON1B_ADDRESS} },
+    #endif
+    #ifdef __RB9_CN
+    { GPIO_PB9,  9,  {HAL_LL_SRCON0B_ADDRESS,HAL_LL_SRCON1B_ADDRESS} },
+    #endif
+    #ifdef __RB10_CN
+    { GPIO_PB10, 10, {HAL_LL_SRCON0B_ADDRESS,HAL_LL_SRCON1B_ADDRESS} },
+    #endif
+    #ifdef __RB14_CN
+    { GPIO_PB14, 14, {HAL_LL_SRCON0B_ADDRESS,HAL_LL_SRCON1B_ADDRESS} },
+    #endif
+    // PORTE
+    #ifdef __RE0_CN
+    { GPIO_PE0,  0,  {HAL_LL_SRCON0E_ADDRESS,HAL_LL_SRCON1E_ADDRESS} },
+    #endif
+    #ifdef __RE1_CN
+    { GPIO_PE1,  1,  {HAL_LL_SRCON0E_ADDRESS,HAL_LL_SRCON1E_ADDRESS} },
+    #endif
+    #ifdef __RE2_CN
+    { GPIO_PE2,  2,  {HAL_LL_SRCON0E_ADDRESS,HAL_LL_SRCON1E_ADDRESS} },
+    #endif
+    #ifdef __RE3_CN
+    { GPIO_PE3,  3,  {HAL_LL_SRCON0E_ADDRESS,HAL_LL_SRCON1E_ADDRESS} },
+    #endif
+    // PORTF
+    #ifdef __RF0_CN
+    { GPIO_PF0,  0,  {HAL_LL_SRCON0F_ADDRESS,HAL_LL_SRCON1F_ADDRESS} },
+    #endif
+    #ifdef __RF1_CN
+    { GPIO_PF1,  1,  {HAL_LL_SRCON0F_ADDRESS,HAL_LL_SRCON1F_ADDRESS} },
+    #endif
+    // PORTG
+    #ifdef __RG6_CN
+    { GPIO_PG6,  6,  {HAL_LL_SRCON0G_ADDRESS,HAL_LL_SRCON1G_ADDRESS} },
+    #endif
+    #ifdef __RG9_CN
+    { GPIO_PG9,  9,  {HAL_LL_SRCON0G_ADDRESS,HAL_LL_SRCON1G_ADDRESS} },
+    #endif
+    #ifdef __RG12_CN
+    { GPIO_PG12, 12, {HAL_LL_SRCON0G_ADDRESS,HAL_LL_SRCON1G_ADDRESS} },
+    #endif
+    #ifdef __RG13_CN
+    { GPIO_PG13, 13, {HAL_LL_SRCON0G_ADDRESS,HAL_LL_SRCON1G_ADDRESS} },
+    #endif
+    #ifdef __RG14_CN
+    { GPIO_PG14, 14, {HAL_LL_SRCON0G_ADDRESS,HAL_LL_SRCON1G_ADDRESS} },
+    #endif
+    #endif
+
+    { HAL_LL_PIN_NC, HAL_LL_PIN_NC, {HAL_LL_MODULE_ERROR,HAL_LL_MODULE_ERROR} }
     //------------ END SLRCON
 };
 

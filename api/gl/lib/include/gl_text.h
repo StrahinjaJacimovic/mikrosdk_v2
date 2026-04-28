@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -77,7 +77,7 @@ extern "C"{
  *
  * @sa @ref gl_set_font @ref gl_set_font_orientation @ref gl_set_pen @ref gl_set_font_background_color @ref gl_set_font_background
  */
-void gl_draw_char(char ch, gl_coord_t x, gl_coord_t y);
+void gl_draw_char(uint8_t ch, gl_coord_t x, gl_coord_t y);
 
 /**
  * @brief Draws text to display driver with top left pixel situated at given @p x and @p y coordinates using current font and pen.
@@ -93,7 +93,7 @@ void gl_draw_char(char ch, gl_coord_t x, gl_coord_t y);
  *
  * @sa @ref gl_set_font, @ref gl_set_font_orientation, @ref gl_set_pen, @ref gl_set_font_background_color, @ref gl_set_font_background.
  */
-void gl_draw_text(const char * __generic text, gl_coord_t x, gl_coord_t y);
+void gl_draw_text(const uint8_t * __generic_ptr text, gl_coord_t x, gl_coord_t y);
 
 
 /**
@@ -109,7 +109,7 @@ void gl_draw_text(const char * __generic text, gl_coord_t x, gl_coord_t y);
  *
  * @sa @ref gl_draw_text, @ref gl_draw_char, @ref gl_set_font.
  */
-gl_size_t gl_get_text_dimensions(const char * __generic text);
+gl_size_t gl_get_text_dimensions(const uint8_t * __generic_ptr text);
 
 #ifdef __cplusplus
 } // extern "C"

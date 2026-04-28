@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 MikroElektronika d.o.o.
+** Copyright (C) ${COPYRIGHT_YEAR} MikroElektronika d.o.o.
 ** Contact: https://www.mikroe.com/contact
 **
 ** This file is part of the mikroSDK package
@@ -28,8 +28,8 @@
 ** included in all copies or substantial portions of the Software.
 **
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-** OF MERCHANTABILITY, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-** TO THE WARRANTIES FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+** EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+** OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ** IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 ** DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 ** OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
@@ -51,6 +51,12 @@ extern "C"{
 #include "hal_target.h"
 #include "ring.h"
 
+#if !DRV_TO_HAL
+#include "hal_ll_uart.h"
+#include "hal_ll_core.h"
+#include "delays.h"
+#endif
+
 /**
  * @details The context for storing  HAL level object handlers.
  * Contains specific hardware module handle and
@@ -61,6 +67,7 @@ extern "C"{
 typedef struct
 {
     handle_t *hal_uart_handle; /*!< UART HAL level handle */
+    handle_t *drv_uart_handle; /*!< UART DRV level handle */
     bool init_state;           /*!< UART HAL object init state */
 } hal_uart_handle_register_t;
 
@@ -169,6 +176,9 @@ typedef struct
 
     size_t tx_ring_size; /*!< Tx ring size. */
     size_t rx_ring_size; /*!< Rx ring size. */
+
+    bool is_interrupt; /*!< Choose between interrupt and polling. */
+    uint32_t timeout_polling_write; /*!< Timeout value for polling write function. */
 } hal_uart_config_t;
 
 /**
@@ -379,6 +389,32 @@ err_t hal_uart_set_stop_bits( handle_t *handle, hal_uart_config_t *config );
  * @endcode
  */
 err_t hal_uart_set_data_bits( handle_t *handle, hal_uart_config_t *config );
+
+/**
+ * @brief Set UART polling write timeout value.
+ * @details Sets UART module timeout interval to \p config->timeout_polling_write value.
+ * This means that the module shall retry any given operation \p config->timeout_polling_write
+ * number of times before exiting with adequate timeout value.
+ * @param[in] handle UART handle.
+ * See #uart_t structure definition for detailed explanation.
+ * @param[in] config UART HAL configuration structure.
+ * See #hal_uart_config_t structure definition for detailed explanation.
+ * @return The function can return one of the values defined by
+ * #hal_uart_err_t, which is size dependant on the architecture.
+ * @pre Make sure that adequate memory has been allocated beforehand.
+ * See #hal_uart_open definition for detailed explanation.
+ * @note It is recommended to check return value for error.
+ *
+ * @b Example
+ * @code
+ *   // Set timeout value.
+ *   if ( hal_uart_set_polling_write_timeout( &hal_uart->handle, 1000 ) == HAL_UART_ERROR )
+ *   {
+ *       // Error handling strategy
+ *   }
+ * @endcode
+ */
+void hal_uart_set_polling_write_timeout( handle_t *handle, hal_uart_config_t *config );
 
 /**
  * @brief Set UART HAL in blocking/non-blocking mode.
